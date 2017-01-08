@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>WHOIS REST Client</title>
+  <link href="./css/bootstrap.min.css" rel="stylesheet">
+  <link href="./css/cover.css" rel="stylesheet">
+  <link href="./css/custom.css" rel="stylesheet">
+  <link rel="stylesheet" href="./css/railscasts.css">
+</head>
+
+<body>
+  <div class="site-wrapper">
+    <div class="site-wrapper-inner">
+      <div class="cover-container">
+        <div class="masthead clearfix">
+          <div class="inner">
+            <h3 class="masthead-brand">
+              <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>
+              <em class="whois-brand">WHOIS</em> REST Client</h3>
+            <nav class="nav nav-masthead">
+              <!--
+                <a class="nav-link active" href="#">Home</a>
+                <a class="nav-link" href="#">Features</a>
+                <a class="nav-link" href="#">Contact</a>
+                -->
+            </nav>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8">
+            <!--BEGIN Search input section-->
+            <!--BEGIN section-->
+            <h1>
+              <span class="glyphicon glyphicon-cloud-upload shadow-text upload-color" aria-hidden="true"></span> Call API
+            </h1>
+            <div class="jumbotron el-box">
+              <h2 class="border-box icon-size pull-left">Q1</h2>
+              <p>Find anything matching "Apple"</p>
+              <div class="search-form">
+                
+                <form class="form-inline" id="q1_form">
+                  <div class="form-group">
+                    <label class="label-big" for="q1_primary_search"></label>
+                    <input type="text" class="form-control" id="q1_primary_search" placeholder="Search String" value="Apple">
+                  </div>
+                  <br><br>
+                  <button type="submit" class="btn btn-primary" id="q1_submit">Search</button>
+                </form>      
+        
+<pre><code>//input is one string, no flags
+
+//Q1 produces the following URLs:
+/orgs;name=Apple* AND /customers;name=Apple* AND /pocs;name=Apple* 
+AND /asns;name=Apple* AND /nets;name=Apple*
+
+//TODO
+//a query should check for exact name match, if none, then add wildcard
+//consider spaces, e.g. "Apple Computer" and "AppleComputer"
+//consider showing linked records together, e.g. customer+poc 
+</code></pre>
+
+
+                
+              </div>
+            </div>
+            <!--END section-->
+
+            <!--BEGIN section-->
+            <div class="jumbotron el-box">
+              <h2 class="border-box icon-size pull-left">Q2</h2>
+              <p>Find "org" records matching "Apple"</p>
+              <div class="search-form">
+                <form class="form-inline" id="q2_form">
+                  <div class="form-group">
+                    <label class="label-big" for="q2_primary_search"></label>
+                    <input type="text" class="form-control" id="q2_primary_search" placeholder="Search String" value="Apple">
+                  </div>
+                  <select class="form-control" id="q2_primary_record_flag" placeholder="record type">
+                    <!--<option value="" disabled selected>Record Type...</option>-->
+                    <option value="asn" disabled>AS Number</option>
+                    <option value="cust" disabled>Customer</option>
+                    <option value="net" disabled>NET block</option>
+                    <option value="ip" disabled>IP or CIDR</option>
+                    <option value="org" selected>Organization</option>
+                    <option value="poc" disabled>Point of Contact</option>
+                    <option value="rdns" disabled>RDNS</option>
+                  </select>
+                  <br><br>
+                  <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+<pre><code>//input is one string, one flag
+
+//Q2 produces the following URLs:
+/orgs;name=Apple OR /org/apple-203 OR /orgs;name=Apple*
+
+//NOTES
+//a flag limits the search results to one record type, increasing risk of "no result"
+//"no result" is important, but some entities are both orgs and customers, for example
+//if no results, consider a second round of searches
+</code></pre>
+
+              </div>
+            </div><!--END section-->
+          
+            <!--BEGIN section-->
+            <div class="jumbotron el-box">
+              <h2 class="border-box icon-size pull-left">Q3</h2>
+              <p>Find the IP addresses of any "org" record matching "Apple"</p>
+              <div class="search-form">
+                <form class="form-inline" id="q3_form">
+                  <div class="form-group">
+                    <label class="label-big" for="q3_primary_search"></label>
+                    <input type="text" class="form-control" id="q3_primary_search" placeholder="Search String" value="Apple">
+                  </div>
+                  <select class="form-control" id="q3_secondary_record_flag" placeholder="record type">
+                    <!--<option value="" disabled selected>Record Type...</option>-->
+                    <option value="asn" disabled>AS Number</option>
+                    <option value="cust" disabled>Customer</option>
+                    <option value="net" disabled>NET block</option>
+                    <option value="ip" disabled>IP or CIDR</option>
+                    <option value="org" selected>Organization</option>
+                    <option value="poc" disabled>Point of Contact</option>
+                    <option value="rdns" disabled>RDNS</option>
+                  </select>
+                  <select class="form-control" id="q3_primary_record_flag" placeholder="record type">
+                    <!--<option value="" disabled selected>Record Type...</option>-->
+                    <option value="asn" disabled>AS Number</option>
+                    <option value="cust" disabled>Customer</option>
+                    <option value="net" disabled>NET block</option>
+                    <option value="ip" selected>IP or CIDR</option>
+                    <option value="org" disabled>Organization</option>
+                    <option value="poc" disabled>Point of Contact</option>
+                    <option value="rdns" disabled>RDNS</option>
+                  </select>
+                  <br><br>
+                  <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+<pre><code>//input is one string, two *ordered* record flags
+//Q3 produces the following URLs in two steps:
+1: $ORG-HANDLE = CallApi(/orgs;name=Apple*) 
+2: /org/$ORG-HANDLE/ip
+
+//NOTES
+//This allows us to grab records by association
+//The ideal query output would be "org/apple*/ip"...
+//...but the wildcard is not allowed between slashes	
+
+</code></pre>
+
+              </div>
+            </div><!--END section-->          
+
+            <!--BEGIN section-->
+            <div class="jumbotron el-box">
+              <h2 class="border-box icon-size pull-left">Q4</h2>
+              <p>Find the org "Apple" with any IP record matching "192.100.69.16"</p>
+              <div class="search-form">
+                <form class="form-inline" id="q4_form">
+                  <div class="form-group">
+                    <label class="label-big" for="q4_primary_search"></label>
+                    <input type="text" class="form-control" id="q4_primary_search" placeholder="Search String" value="Apple">
+                  </div>
+                  <select class="form-control" id="q4_primary_record_flag" placeholder="record type">
+                    <!--<option value="" disabled selected>Record Type...</option>-->
+                    <option value="asn" disabled>AS Number</option>
+                    <option value="cust" disabled>Customer</option>
+                    <option value="net" disabled>NET block</option>
+                    <option value="ip" disabled>IP or CIDR</option>
+                    <option value="org" selected>Organization</option>
+                    <option value="poc" disabled>Point of Contact</option>
+                    <option value="rdns" disabled>RDNS</option>
+                  </select>
+                  <br><br>
+                  <input type="text" class="form-control" id="q4_secondary_search" placeholder="Search String" value="192.100.69.16">
+
+                  <select class="form-control" id="q4_secondary_record_flag" placeholder="record type">
+                    <!--<option value="" disabled selected>Record Type...</option>-->
+                    <option value="asn" disabled>AS Number</option>
+                    <option value="cust" disabled>Customer</option>
+                    <option value="net" disabled>NET block</option>
+                    <option value="ip" disabled>IP or CIDR</option>
+                    <option value="org" disabled>Organization</option>
+                    <option value="poc" selected>Point of Contact</option>
+                    <option value="rdns" disabled>RDNS</option>
+                  </select>
+                  <br><br>
+                  <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+<pre><code>//input is two strings, two *ordered* record flags
+//Q4 produces the following URLs in two steps:
+1: $ORG-HANDLE = CallApi(/orgs;name=Apple*) 
+2: $RESULT = FilterByIP
+  (url = /org/$ORG-HANDLE/pocs, 
+  ip = "192.100.69.16")
+
+//NOTES
+//consider wildcards on the IP address
+</code></pre>
+
+              </div>
+            </div><!--END section-->
+
+          </div>
+          <!--END Search input section-->
+          <div class="col-md-4">
+            <h1 class="results-title"><span class="glyphicon glyphicon-cloud-download shadow-text download-color" aria-hidden="true"></span> Results</h1>
+          <div class="jumbotron el-box">
+
+            <div>
+              <span class="subsection-title">Status:</span><pre><code id="ajax-status-box"></code></pre>
+              <span class="subsection-title">URL:</span><pre><code id="ajax-url-box"></code></pre>
+              <span class="subsection-title">Raw JSON:</span><pre><code id="ajax-response-box" class="json"></code></pre></p>
+            </div>            
+          </div>
+
+              <div>
+<pre><code>//Queries return sets of records: 
+ASN  -> org+net+poc
+CUST -> net+poc
+ORG  -> asn+net+poc
+NET  -> cust/org/asn/poc
+POC  -> cust/org/asn/net
+</code></pre>     
+              </div> 
+          </div>
+        </div>
+        <div class="mastfoot">
+          <div class="inner">
+            <p>Last Updated 2016-12-30</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="./js/jquery-2.2.4.min.js"></script>
+  <script src="./js/bootstrap.min.js"></script>
+  <script src="./js/highlight.pack.js"></script>
+
+  <script src="./js/fixed-query.js"></script>
+
+
+  <script>hljs.initHighlightingOnLoad();</script>
+</body>
+
+</html>

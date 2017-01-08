@@ -1,0 +1,29 @@
+
+pre {background-color:transparent;border:none;text-align:left;}
+
+.whois-brand {color:rgb(226,143,0)}
+.download-color {color:rgb(122,222,255)}
+.upload-color {color:rgb(245,155,0)}
+
+.shadow-text {text-shadow: 1px 1px 3px rgb(0,0,0);}
+
+
+.dark-skin {background-color:rgb(130,130,130);box-shadow: -4px 4px 5px 0px rgba(0,0,0,0.75);border-radius: 2px}
+.dark-skin:hover {background-color:rgb(170,170,170)}
+
+.label-big {}
+.input-group {margin: 0px !important;}
+
+.el-box {}
+.spacer {margin-top:3em;}
+.border-box {padding:5px;background-color:rgb(200,100,0);border:1px solid rgb(30,30,30);}
+.icon-size {padding:5px;width:2em;margin-top:-20px;}
+
+.jumbotron {width:100%;background-color:rgb(70,70,70);border-radius: 2px;border-bottom:5px solid rgb(30,30,30); border-top:2px solid rgb(30,30,30);padding:1em;}
+
+.notes-box {position:relative;left:5px;background-color:purple;}
+.notes-list {list-style:none;}
+
+
+#ajax-response-box {max-width:1200px;max-height:200px;overflow:scroll;}
+.subsection-title {display:block;text-align:left;font-size:1.1em;margin-bottom:-5px;}

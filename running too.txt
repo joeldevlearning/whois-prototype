@@ -1,0 +1,9 @@
+
+
+
+- make wrapper function around jquery.ajax
+- make url variable
+
+- setup PHP script to receive input form, use api call for testing
+- check that PHP is getting the api call
+- have php then call the api and return the results
