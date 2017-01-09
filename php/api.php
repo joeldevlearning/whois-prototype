@@ -5,7 +5,11 @@
 
 $client = new GuzzleHttp\Client(['base_uri' => 'http://whois.arin.net/rest/']);
 
-// Send a request to https://foo.com/api/test
-$response = $client->request('GET', 'test');
-// Send a request to https://foo.com/root
-$response = $client->request('GET', '/root');
+$response = $client->get('orgs;name=Apple*');
+
+$statusCode = $response->getStatusCode(); // 200
+$reasonText = $response->getReasonPhrase(); // OK
+$body = $response->getBody();
+
+echo $body;
+
