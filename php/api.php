@@ -11,6 +11,12 @@ $statusCode = $response->getStatusCode(); // 200
 $reasonText = $response->getReasonPhrase(); // OK
 $body = $response->getBody();
 
-echo $body;
+$data = json_decode($body, true);
+?>
+
+<pre>
+<?php print_r($data); ?>
+</pre>
+
 
 
