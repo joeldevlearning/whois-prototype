@@ -1,21 +1,15 @@
 <?php 
 error_reporting(E_ALL | E_STRICT);
 
-//require('api-helper.php');
 require('vendor/autoload.php');
 use GuzzleHttp\Client;
 
-//step 1, assign input to query
-//need to refactor to test if other fields are set; if so, make correct type of query
+//handle incoming requests
+
 $pr = filter_input(INPUT_GET, 'pr', FILTER_SANITIZE_STRING);
 
-//step 2, check for wildcards
-//step 3, build out queries
-
-$query = 'orgs;name=' . $pr . '*';
-//pass into ARIN APIs
 $client = new GuzzleHttp\Client(['base_uri' => 'http://whois.arin.net/rest/']);
-$response = $client->request('GET', $query, [
+$response = $client->request('GET', 'orgs;name=Apple*', [
     'headers' => [ 'Accept'     => 'application/json' ]
 ]);
 

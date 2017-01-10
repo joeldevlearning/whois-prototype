@@ -44,7 +44,7 @@
               <p>Find anything matching "Apple"</p>
               <div class="search-form">
                 
-                <form class="form-inline" id="q1_form">
+                <form class="form-inline" id="q1_form" method="get">
                   <div class="form-group">
                     <label class="label-big" for="q1_primary_search"></label>
                     <input type="text" class="form-control" id="q1_primary_search" placeholder="Search String" value="Apple">
@@ -70,6 +70,7 @@ AND /asns;name=Apple* AND /nets;name=Apple*
 //  (search box on arin.net seems to have no or different caps?)
 
 //should be counting returned records
+//should be collecting records for the same entity, e.g. customers APPLE-1, APPLE-2
 //should be returning links to related records, if they exist
 //can we link and display records together, e.g. POC and org-of-poc?
 
@@ -86,7 +87,7 @@ AND /asns;name=Apple* AND /nets;name=Apple*
               <h2 class="border-box icon-size pull-left">Q2</h2>
               <p>Find "org" records matching "Apple"</p>
               <div class="search-form">
-                <form class="form-inline" id="q2_form">
+                <form class="form-inline" id="q2_form" method="get">
                   <div class="form-group">
                     <label class="label-big" for="q2_primary_search"></label>
                     <input type="text" class="form-control" id="q2_primary_search" placeholder="Search String" value="Apple">
@@ -123,7 +124,7 @@ AND /asns;name=Apple* AND /nets;name=Apple*
               <h2 class="border-box icon-size pull-left">Q3</h2>
               <p>Find the IP addresses of any "org" record matching "Apple"</p>
               <div class="search-form">
-                <form class="form-inline" id="q3_form">
+                <form class="form-inline" id="q3_form" method="get">
                   <div class="form-group">
                     <label class="label-big" for="q3_primary_search"></label>
                     <input type="text" class="form-control" id="q3_primary_search" placeholder="Search String" value="Apple">
@@ -171,7 +172,7 @@ AND /asns;name=Apple* AND /nets;name=Apple*
               <h2 class="border-box icon-size pull-left">Q4</h2>
               <p>Find the org "Apple" with any IP record matching "192.100.69.16"</p>
               <div class="search-form">
-                <form class="form-inline" id="q4_form">
+                <form class="form-inline" id="q4_form" method="get">
                   <div class="form-group">
                     <label class="label-big" for="q4_primary_search"></label>
                     <input type="text" class="form-control" id="q4_primary_search" placeholder="Search String" value="Apple">
