@@ -1,15 +1,16 @@
 <?php 
-'vendor/autoload.php';
-
-//orgs;name=Apple*
+require('vendor/autoload.php');
+use GuzzleHttp\Client;
 
 $client = new GuzzleHttp\Client(['base_uri' => 'http://whois.arin.net/rest/']);
-
-$response = $client->get('orgs;name=Apple*');
+$response = $client->request('GET', 'orgs;name=Apple*', [
+    'headers' => [ 'Accept'     => 'application/json' ]
+]);
 
 $statusCode = $response->getStatusCode(); // 200
 $reasonText = $response->getReasonPhrase(); // OK
 $body = $response->getBody();
 
 echo $body;
+
 

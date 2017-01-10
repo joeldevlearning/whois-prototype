@@ -17,6 +17,22 @@
             "request": "attach",
             "name": "Attach to Process",
             "port": 5858
-        }
+        },
+        {
+      "name": "Listen for XDebug",
+      "type": "php",
+      "request": "launch",
+      "port": 9000,
+      "log": true
+    },
+    {
+      "name": "Launch",
+      "request": "launch",
+      "type": "php",
+      "program": "${file}",
+      "cwd": "${workspaceRoot}",
+      "externalConsole": false
+    }
     ]
 }
+
