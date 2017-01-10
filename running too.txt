@@ -1,10 +1,7 @@
 
 
-- setup PHP script to use same fixed query to call api DONE
-    - test that it gets the json back DONE
-    - send that data back to the jquery client
-    - make jquery call the PHP, test that results come back
-
+- make php query ANYTHING client sends DONE
+- put online so that people can play with client
 
 - make wrapper function around jquery.ajax
 
