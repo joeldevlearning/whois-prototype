@@ -60,9 +60,19 @@
 AND /asns;name=Apple* AND /nets;name=Apple*
 
 //TODO
-//a query should check for exact name match, if none, then add wildcard
-//consider spaces, e.g. "Apple Computer" and "AppleComputer"
-//consider showing linked records together, e.g. customer+poc 
+//end-boundary wildcards are optional; 
+//if no-wildcard gives no results in a record type, try adding a wildcard
+
+//what about wildcards between string char? and multiple wildcards?
+//what about spaces (e.g. "Apple Computer" and "AppleComputer")?
+
+//API caps results at 255; how can we call to get more? 
+//  (search box on arin.net seems to have no or different caps?)
+
+//should be counting returned records
+//should be returning links to related records, if they exist
+//can we link and display records together, e.g. POC and org-of-poc?
+
 </code></pre>
 
 
@@ -219,20 +229,11 @@ AND /asns;name=Apple* AND /nets;name=Apple*
             </div>            
           </div>
 
-              <div>
-<pre><code>//Queries return sets of records: 
-ASN  -> org+net+poc
-CUST -> net+poc
-ORG  -> asn+net+poc
-NET  -> cust/org/asn/poc
-POC  -> cust/org/asn/net
-</code></pre>     
-              </div> 
           </div>
         </div>
         <div class="mastfoot">
           <div class="inner">
-            <p>Last Updated 2016-12-30</p>
+            <p>Last Updated 2017-01-09</p>
           </div>
         </div>
       </div>
