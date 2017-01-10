@@ -1,15 +1,8 @@
 
 
-- make php query ANYTHING client sends DONE
 - put online so that people can play with client
 
-- make wrapper function around jquery.ajax
 
 
-- make some options for the PHP client
-    - xml or json
-    - query type flag
 
-- setup PHP script to receive input form, use api call for testing
-- check that PHP is getting the api call
-- have php then call the api and return the results
+

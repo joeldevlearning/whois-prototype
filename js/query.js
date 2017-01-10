@@ -1,25 +1,39 @@
 //test hardcoded queries
 
 var fixedUrl = 'http://whois.arin.net/rest/orgs;name=Apple*';
-var PhpApiUrl = 'http://127.0.0.1/whois/php/api.php';
+var localPhpApiUrl = 'http://127.0.0.1/whois/php/api.php';
+var remotePhpApiUrl = 'http://who.nfshost.com/api.php';
 
 $("#q1_form").submit(function(){
         var query = $('#q1_form').serialize();
         $.ajax({
-            url         : PhpApiUrl,    
+            url         : remotePhpApiUrl,    
             type        : $(this).attr('method'),
             dataType    : 'json',
             data        : $(this).serialize(),
+
+            beforeSend: function() {
+                    $('#ajax-status-box').html('loading...');
+                    $('#ajax-url-box').removeClass("feedback-on").addClass("feedback-off").html(" ");
+                    $('#ajax-query-box').removeClass("feedback-on").addClass("feedback-off").html(" ");
+                    $('#ajax-response-box').html(" ");
+            },
+
             success     : function( url, status, jqXHR ) {
-                        $( "#ajax-url-box" ).html(this.url);
-                        $( "#ajax-status-box" ).html(status);
-                        $( "#ajax-query-box" ).html( query );
+                
+                        $( "#ajax-status-box" ).removeClass("feedback-off").addClass("feedback-on success").html(status);
+                        $( "#ajax-url-box" ).removeClass("feedback-off").addClass("feedback-on").html(this.url);
+                        $( "#ajax-query-box" ).removeClass("feedback-off").addClass("feedback-on").html( query );
                         var justJSON = jqXHR.responseText.replace(/(^\.+|\.+$)/mg, '');
                         $( "#ajax-response-box" ).html(justJSON);
                         $( "#ajax-response-box" ).each(function(i, block) {
                             hljs.highlightBlock(block);
                         });
-                        }           
+                        },
+            error       : function() {
+                        $( "#ajax-status-box" ).removeClass("feedback-off").addClass("feedback-on error").html("error");
+                        }  ///                      
         });
 return false;
 });
+

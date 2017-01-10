@@ -10,11 +10,11 @@
   <title>WHOIS REST Client</title>
   <link href="./css/bootstrap.min.css" rel="stylesheet">
   <link href="./css/cover.css" rel="stylesheet">
-  <link href="./css/custom.css" rel="stylesheet">
   <link rel="stylesheet" href="./css/railscasts.css">
+  <link href="./css/custom.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="text-default">
   <div class="site-wrapper">
     <div class="site-wrapper-inner">
       <div class="cover-container">
@@ -224,9 +224,9 @@ AND /asns;name=Apple* AND /nets;name=Apple*
           <div class="jumbotron el-box">
 
             <div>
-              <span class="subsection-title">Status:</span><pre><code id="ajax-status-box"></code></pre>
-              <span class="subsection-title">URL:</span><pre><code id="ajax-url-box"></code></pre>
-                            <span class="subsection-title">Query:</span><pre><code id="ajax-query-box"></code></pre>
+              <span class="subsection-title">Status:</span><span id="ajax-status-box" class="message-box feedback-off"></span>
+              <span class="subsection-title">URL:</span><span id="ajax-url-box" class="message-box feedback-off"></span>
+                            <span class="subsection-title">Query:</span><span id="ajax-query-box" class="message-box feedback-off"></span>
               <span class="subsection-title">Raw JSON:</span><pre><code id="ajax-response-box" class="json"></code></pre></p>
             </div>            
           </div>
@@ -235,7 +235,7 @@ AND /asns;name=Apple* AND /nets;name=Apple*
         </div>
         <div class="mastfoot">
           <div class="inner">
-            <p>Last Updated 2017-01-09</p>
+            <p>Last Updated 2017-01-10</p>
           </div>
         </div>
       </div>

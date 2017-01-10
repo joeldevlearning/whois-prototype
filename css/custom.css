@@ -27,3 +27,8 @@ pre {background-color:transparent;border:none;text-align:left;}
 
 #ajax-response-box {max-width:1200px;max-height:200px;overflow:scroll;}
 .subsection-title {display:block;text-align:left;font-size:1.1em;}
+.feedback-on {background-color:rgb(20,20,20);}
+.feedback-off {background-color:rgb(50,50,50);}
+.message-box {display:block; width:100%;min-height:25px;font-size:1em;font-family:'Segoe UI';padding:2px 3px 2px 3px;margin-bottom:10px;font-weight:bold;}
+span.error {color:red !important;}
+span.success {color:lawngreen !important;}
