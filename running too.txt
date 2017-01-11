@@ -1,7 +1,6 @@
 
 
-- put online so that people can play with client
-
+- expand php client to pull multiple records from a single query
 
 
 
