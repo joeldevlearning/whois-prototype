@@ -41,7 +41,7 @@
             </h1>
             <div class="jumbotron el-box">
               <h2 class="border-box icon-size pull-left">Q1</h2>
-              <p>Find anything matching "Apple"</p>
+              <p>Find anything matching <span id="q1_pr_target" class="as-you-type">"Apple"</span></p>
               <div class="search-form">
                 
                 <form class="form-inline" id="q1_form" method="get">
@@ -85,7 +85,7 @@ AND /asns;name=Apple* AND /nets;name=Apple*
             <!--BEGIN section-->
             <div class="jumbotron el-box">
               <h2 class="border-box icon-size pull-left">Q2</h2>
-              <p>Find "org" records matching "Apple"</p>
+              <p>Find "org" records matching <span id="q2_pr_target">"Apple"</span></p>
               <div class="search-form">
                 <form class="form-inline" id="q2_form" method="get">
                   <div class="form-group">
@@ -246,7 +246,6 @@ AND /asns;name=Apple* AND /nets;name=Apple*
   <script src="./js/highlight.pack.js"></script>
 
   <script src="./js/query.js"></script>
-
 
   <script>hljs.initHighlightingOnLoad();</script>
 </body>

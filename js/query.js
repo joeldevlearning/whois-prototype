@@ -37,3 +37,7 @@ $("#q1_form").submit(function(){
 return false;
 });
 
+$("#pr").on('keyup', function(event) {
+       var data=$(this).val();
+       $("#q1_pr_target").text(data);
+});
