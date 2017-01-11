@@ -1,3 +1,4 @@
 # composer loads vendor
 /php/vendor/*
-.vscode
+/.vscode/*
+/notes/*
