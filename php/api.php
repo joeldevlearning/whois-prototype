@@ -1,4 +1,4 @@
-<?php 
+<?php
 error_reporting(E_ALL | E_STRICT);
 
 require('vendor/autoload.php');
@@ -9,13 +9,9 @@ use Utility\Run as run;
 use Query\Query as q;
 use GuzzleHttp\Client as restClient;
 
-//step 1, assign input to variable
-//need to refactor to test if other fields are set; if so, make correct type of query
-$pr = filter_input(INPUT_GET, 'pr', FILTER_SANITIZE_STRING);
 
-$rawQuery = new RawQuery();
-$passInput = $rawQuery->Filter();
-$cleanInput= $rawQuery->Validate($passInput);
+$passInput = clean::Filter();
+$cleanInput= clean::Validate($passInput);
 
 //step 3, build query, right now just pass a value along
 $query = 'orgs;name=' . $cleanInput['primary_search'] . '*';
@@ -36,8 +32,3 @@ $dataJson = json_encode($data);
 //step 6, send data back to client
 header('Content-Type: application/json');
 echo $dataJson;
-?>
-
-
-
-
