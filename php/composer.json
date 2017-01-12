@@ -1,6 +1,14 @@
 {
-   "require": {
-      "guzzlehttp/guzzle": "~6.0",
-      "respect/validation": "^1.1"
-   }
+    "name": "Utility",
+    "type": "library",
+    "description": "For experimental use only.",
+
+    "require": {
+    "guzzlehttp/guzzle": "~6.0",
+    "respect/validation": "^1.1"
+    },
+
+    "autoload": {
+        "psr-4": {"Utility\\": "Utility/"}
+    }
 }

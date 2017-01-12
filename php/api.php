@@ -3,6 +3,9 @@ error_reporting(E_ALL | E_STRICT);
 
 require('vendor/autoload.php');
 require('RawQuery.php');
+use Utility\Clean as clean;
+use Utility\Build as build;
+use Utility\Run as run;
 use GuzzleHttp\Client as restClient;
 
 //step 1, assign input to variable
