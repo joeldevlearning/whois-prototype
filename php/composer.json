@@ -9,6 +9,9 @@
     },
 
     "autoload": {
-        "psr-4": {"Utility\\": "Utility/"}
+        "psr-4": {
+        "Utility\\": "Utility/",
+        "Query\\": "Query/"
+        }
     }
 }

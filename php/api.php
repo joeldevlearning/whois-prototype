@@ -6,6 +6,7 @@ require('RawQuery.php');
 use Utility\Clean as clean;
 use Utility\Build as build;
 use Utility\Run as run;
+use Query\Query as q;
 use GuzzleHttp\Client as restClient;
 
 //step 1, assign input to variable
