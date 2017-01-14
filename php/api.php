@@ -3,9 +3,10 @@ error_reporting(E_ALL | E_STRICT);
 
 require('vendor/autoload.php');
 use Query\Query; 
-use Query\Utility\Clean as clean;
-use Query\Utility\Build as build;
-use Query\Utility\Run as run;
+use Query\Action\Clean as clean;
+use Query\Action\Analyze as analyze;
+use Query\Action\Build as build;
+use Query\Action\Run as run;
 use GuzzleHttp\Client as restClient;
 
 

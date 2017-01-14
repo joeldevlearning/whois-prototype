@@ -1,5 +1,5 @@
 <?php
-namespace Query\Utility;
+namespace Query\Action;
 
 use Respect\Validation\Validator as validate;
 use Query\Query;
@@ -30,19 +30,19 @@ class Clean
         $isSecondaryFlagValid = $recordFlagStringValidator->validate($srFlagTemp);
     
         if ($isPrimarySearchValid == FALSE) {
-            $query->qElements['pr']  = "empty"; //magic null value
+            $query->qElements['pr']  = NULL; //magic null value
         }
 
         if ($isPrimaryFlagValid == FALSE) {
-            $query->qElements['prFlag']  = "empty"; //magic null value
+            $query->qElements['prFlag']  = NULL; //magic null value
         }
 
         if ($isSecondarySearchValid == FALSE) {
-            $query->qElements['se']  = "empty"; //magic null value
+            $query->qElements['se']  = NULL; //magic null value
         }
 
         if ($isSecondaryFlagValid == FALSE) {
-            $query->qElements['seFlag']  = "empty"; //magic null value
+            $query->qElements['seFlag']  = NULL; //magic null value
         }
     }
 }

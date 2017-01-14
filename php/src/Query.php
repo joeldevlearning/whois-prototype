@@ -4,14 +4,24 @@ namespace Query;
 
 class Query {
         /* @var array Contains mutable state of GET variables
-        * "primary" refers to the *desired* record type
-        * "secondary" refers to a where-like condition on the primary
+        * "primary" refers to the *desired* record type;"secondary" to a where-like condition on the primary
+        * set by Query constructor, written to by Clean class
         */
         public $qElements = array();
+        
+        /* @var integer Defines constraints on query, based on user input
+        * 1 = only primary search string, no specific record type 
+        * 2 = only primary search string, ONE specific record type desired
+        * 3 = only primary search string, ONE specific record type desired based on matching specific primary record type
+        * 4 = primary and secondary search strings, specific record AND field desired
+        * set by Analyze class
+        */
+        public $qType = "";
         
         /* @var array Contains bool flags for records
         * used to direct which record types to search and return
         * alphabetical order
+        * set by Analyze class
         */
         public $qRecordList = [
             'asn' => FALSE,
@@ -25,6 +35,7 @@ class Query {
         /* @var array Contains bools flags of fields within records
         * used to direct searches on specific fields
         * same order as whois.arin.net search results
+        * set by Analyze class
         */
         public $qFieldList = array(
             'asn' => array(
