@@ -3,23 +3,17 @@
 namespace Query;
 
 class Query {
-        /** @var array Contains validated query strings and parameters
-        * primary refers to the *desired* record type
-        * secondary refers to a where-like condition on the primary
-        * e.g. Find any (primary:)"org" "Apple" with (secondary:) "poc" "Jane Doe"
+        /* @var array Contains mutable state of GET variables
+        * "primary" refers to the *desired* record type
+        * "secondary" refers to a where-like condition on the primary
         */
-        var $qElements = [
-            "primary_record" => "",
-            "primary_field" => "",
-            "secondary_record" => "",
-            "secondary_field" => "",            
-        ];
+        public $qElements = array();
         
-        /** @var array Contains bool flags for records
+        /* @var array Contains bool flags for records
         * used to direct which record types to search and return
         * alphabetical order
         */
-        var $qRecordList = [
+        public $qRecordList = [
             'asn' => FALSE,
             'cus' => FALSE,
             'del' => FALSE,
@@ -28,11 +22,11 @@ class Query {
             'org' => FALSE,            
         ];
 
-        /** @var array Contains bools flags of fields within records
+        /* @var array Contains bools flags of fields within records
         * used to direct searches on specific fields
         * same order as whois.arin.net search results
         */
-        var $qFieldList = array(
+        public $qFieldList = array(
             'asn' => array(
                 'number'        => FALSE, //a range, but you can search by a single value within the range, e.g. "12345" returns "12288 - 13311"
                 'name'          => FALSE, //e.g. RIPE-ASNBLOCK8
@@ -80,17 +74,17 @@ class Query {
             ),
         );
 
+        public $qBatch;
 
-        var $qBatch;
+		/* @var DateTime */
+        public $timestamp; 
 
-		/** @var DateTime */
-        var $timestamp; 
-
-        function Fill(){} //fill record and field lists
-        function Run(){}  //run query batches
-
-        function __construct(array $cleanInput) {
-            $this->$timestamp = new DateTime();
-            $this->$qElements = $cleanInput;
+        function __construct() {
+            $this->qElements = [
+            "pr"        => filter_input(INPUT_GET, 'pr', FILTER_SANITIZE_STRING),
+            "prFlag"    => filter_input(INPUT_GET, 'pr_flag', FILTER_SANITIZE_STRING),
+            "se"        => filter_input(INPUT_GET, 'sr', FILTER_SANITIZE_STRING),
+            "seFlag"    => filter_input(INPUT_GET, 'sr_flag', FILTER_SANITIZE_STRING),
+            ];
         }
 	}

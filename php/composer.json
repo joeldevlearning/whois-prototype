@@ -10,8 +10,7 @@
 
     "autoload": {
         "psr-4": {
-        "Utility\\": "Utility/",
-        "Query\\": "Query/"
+        "Query\\": "src/"
         }
     }
 }

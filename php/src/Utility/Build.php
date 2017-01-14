@@ -9,7 +9,7 @@ can alias as "build", e.g. build::Batch($query)
 
 */
 
-namespace Utility;
+namespace Query\Utility;
 
 class Build {
     public static function hello() {echo "Hello Build!";}

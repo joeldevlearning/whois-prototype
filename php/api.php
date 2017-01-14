@@ -2,19 +2,20 @@
 error_reporting(E_ALL | E_STRICT);
 
 require('vendor/autoload.php');
-require('RawQuery.php');
-use Utility\Clean as clean;
-use Utility\Build as build;
-use Utility\Run as run;
-use Query\Query as q;
+use Query\Query; 
+use Query\Utility\Clean as clean;
+use Query\Utility\Build as build;
+use Query\Utility\Run as run;
 use GuzzleHttp\Client as restClient;
 
 
-$passInput = clean::Filter();
-$cleanInput= clean::Validate($passInput);
+
+$q = new Query();
+clean::Validate($q);
+print_r($q);
 
 //step 3, build query, right now just pass a value along
-$query = 'orgs;name=' . $cleanInput['primary_search'] . '*';
+$query = 'orgs;name=' . "Apple" . '*';
 
 //step 4, call ARIN API
 $client = new restClient(['base_uri' => 'http://whois.arin.net/rest/']);
