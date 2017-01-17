@@ -97,5 +97,17 @@ class Query {
             "se"        => filter_input(INPUT_GET, 'sr', FILTER_SANITIZE_STRING),
             "seFlag"    => filter_input(INPUT_GET, 'sr_flag', FILTER_SANITIZE_STRING),
             ];
+            if(empty($query->qElements['pr'])) {
+            $query->qElements['pr'] = NULL;
+            }
+            if(empty($query->qElements['prFlag'])) {
+                $query->qElements['prFlag'] = NULL;
+            }
+            if(empty($query->qElements['se'])) {
+                $query->qElements['se'] = NULL;
+            }
+            if(empty($query->qElements['seFlag'])) {
+                $query->qElements['seFlag'] = NULL;
+            }
         }
 	}

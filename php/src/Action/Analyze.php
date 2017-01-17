@@ -4,15 +4,27 @@ use Query\Query;
 
 /*
 analyze::WhatQueryType()
-analyze::WhichRecordsToQuery()
-analyze::WhichFieldsToQuery()
+analyze::WhatRecordsToQuery()
+analyze::WhatFieldsToQuery()
 */
 
 class Analyze {
-    public static function hello() {echo "Hello Build!";}
+   
+    private function walk_array_check_null($array){
+        $counter = 0;
+        foreach ($array as $key) {
+            if(empty($key)) {
+            break;
+            }	
+            else{
+            $counter++;
+            }
+        return $counter;
+        }
+    }
 
-    public static function WhatQueryType(){
-
+    public static function WhatQueryType(Query $query){
+        return walk_array_check_null($query->qElement);    
     }
 
 }
