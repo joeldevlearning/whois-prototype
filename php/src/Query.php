@@ -14,7 +14,7 @@ class Query {
         * 2 = only primary search string, ONE specific record type desired
         * 3 = only primary search string, ONE specific record type desired based on matching specific primary record type
         * 4 = primary and secondary search strings, specific record AND field desired
-        * set by Analyze class
+        * set and read by Analyze class
         */
         public $qType = "";
         
@@ -93,21 +93,21 @@ class Query {
         function __construct() {
             $this->qElements = [
             "pr"        => filter_input(INPUT_GET, 'pr', FILTER_SANITIZE_STRING),
-            "prFlag"    => filter_input(INPUT_GET, 'prFlag', FILTER_SANITIZE_STRING),
+            "prflag"    => filter_input(INPUT_GET, 'prFlag', FILTER_SANITIZE_STRING),
             "se"        => filter_input(INPUT_GET, 'se', FILTER_SANITIZE_STRING),
-            "seFlag"    => filter_input(INPUT_GET, 'seFlag', FILTER_SANITIZE_STRING),
+            "seflag"    => filter_input(INPUT_GET, 'seFlag', FILTER_SANITIZE_STRING),
             ];
             if(empty($query->qElements['pr'])) {
             $query->qElements['pr'] = NULL;
             }
-            if(empty($query->qElements['prFlag'])) {
-                $query->qElements['prFlag'] = NULL;
+            if(empty($query->qElements['prflag'])) {
+                $query->qElements['prflag'] = NULL;
             }
             if(empty($query->qElements['se'])) {
                 $query->qElements['se'] = NULL;
             }
-            if(empty($query->qElements['seFlag'])) {
-                $query->qElements['seFlag'] = NULL;
+            if(empty($query->qElements['seflag'])) {
+                $query->qElements['seflag'] = NULL;
             }
         }
 	}

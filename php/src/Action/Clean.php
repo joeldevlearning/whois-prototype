@@ -17,9 +17,9 @@ class Clean
     public static function Validate(Query $query)
     {
         $prTemp = $query->qElements['pr'];
-        $prFlagTemp = $query->qElements['prFlag'];
+        $prFlagTemp = $query->qElements['prflag'];
         $srTemp = $query->qElements['se'];
-        $srFlagTemp = $query->qElements['seFlag'];
+        $srFlagTemp = $query->qElements['seflag'];
 
         $searchStringValidator = validate::stringType()->length(1, 255);
         $recordFlagStringValidator = validate::stringType()->length(1, 12);
@@ -34,7 +34,7 @@ class Clean
         }
 
         if ($isPrimaryFlagValid == FALSE) {
-            $query->qElements['prFlag']  = NULL; //magic null value
+            $query->qElements['prflag']  = NULL; //magic null value
         }
 
         if ($isSecondarySearchValid == FALSE) {
@@ -42,7 +42,7 @@ class Clean
         }
 
         if ($isSecondaryFlagValid == FALSE) {
-            $query->qElements['seFlag']  = NULL; //magic null value
+            $query->qElements['seflag']  = NULL; //magic null value
         }
     }
 }
