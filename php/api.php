@@ -2,18 +2,22 @@
 error_reporting(E_ALL | E_STRICT);
 
 require('vendor/autoload.php');
-use Query\Query; 
-use Query\Action\Clean as clean;
-use Query\Action\Analyze as analyze;
-use Query\Action\Build as build;
-use Query\Action\Run as run;
+use RestQuery\Query; 
+use RestQuery\Action\Clean as clean;
+use RestQuery\Action\Analyze as analyze;
+use RestQuery\Action\Build as build;
+use RestQuery\Action\Run as run;
 use GuzzleHttp\Client as restClient;
 
 
 
 $q = new Query();
 clean::Validate($q);
-print_r($q);
+//print_r($q);
+
+$query_type = analyze::WhatQueryType($q);
+print_r($query_type);
+print_r($q->qElements);
 
 //step 3, build query, right now just pass a value along
 $query = 'orgs;name=' . "Apple" . '*';

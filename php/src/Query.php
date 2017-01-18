@@ -1,6 +1,6 @@
 <?php
 
-namespace Query;
+namespace RestQuery;
 
 class Query {
         /* @var array Contains mutable state of GET variables
@@ -93,9 +93,9 @@ class Query {
         function __construct() {
             $this->qElements = [
             "pr"        => filter_input(INPUT_GET, 'pr', FILTER_SANITIZE_STRING),
-            "prFlag"    => filter_input(INPUT_GET, 'pr_flag', FILTER_SANITIZE_STRING),
-            "se"        => filter_input(INPUT_GET, 'sr', FILTER_SANITIZE_STRING),
-            "seFlag"    => filter_input(INPUT_GET, 'sr_flag', FILTER_SANITIZE_STRING),
+            "prFlag"    => filter_input(INPUT_GET, 'prFlag', FILTER_SANITIZE_STRING),
+            "se"        => filter_input(INPUT_GET, 'se', FILTER_SANITIZE_STRING),
+            "seFlag"    => filter_input(INPUT_GET, 'seFlag', FILTER_SANITIZE_STRING),
             ];
             if(empty($query->qElements['pr'])) {
             $query->qElements['pr'] = NULL;

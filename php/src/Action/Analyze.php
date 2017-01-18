@@ -1,18 +1,17 @@
 <?php
-namespace Query\Action;
-use Query\Query;
+namespace RestQuery\Action;
+use RestQuery\Query;
 
 /*
-analyze::WhatQueryType()
 analyze::WhatRecordsToQuery()
 analyze::WhatFieldsToQuery()
 */
 
 class Analyze {
-   
-    private function walk_array_check_null($array){
+
+    public static function WhatQueryType(Query $query){
         $counter = 0;
-        foreach ($array as $key) {
+        foreach ($query->qElements as $key) {
             if(empty($key)) {
             break;
             }	
@@ -21,10 +20,13 @@ class Analyze {
             }
         return $counter;
         }
+        $query->qType = $counter;
+        print_r(qElements);    
     }
 
-    public static function WhatQueryType(Query $query){
-        return walk_array_check_null($query->qElement);    
+    public static function WhatRecordsToQuery(){
+
+        
     }
 
 }

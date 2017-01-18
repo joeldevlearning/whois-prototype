@@ -1,6 +1,6 @@
 <?php
-namespace Query\Action;
-use Query\Query;
+namespace RestQuery\Action;
+use RestQuery\Query;
 
 /*
 

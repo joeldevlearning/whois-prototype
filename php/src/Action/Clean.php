@@ -1,8 +1,8 @@
 <?php
-namespace Query\Action;
+namespace RestQuery\Action;
 
 use Respect\Validation\Validator as validate;
-use Query\Query;
+use RestQuery\Query;
 class Clean
 {
     /**
