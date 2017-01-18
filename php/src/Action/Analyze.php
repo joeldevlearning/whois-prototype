@@ -2,15 +2,37 @@
 namespace RestQuery\Action;
 use RestQuery\Query;
 
+/*
+TODO add IsCharacterType() and IsNumericType() for hinting 
+*/
+
 class Analyze {
 
     /*
     *
-    * Why break the foreach loop naively like this?
-    * Because only FOUR sets have meaning
+    * NOTE: We break the loop like this becaus right now only FOUR sets have meaning
     * (pr) OR (pr+prflag) OR (pr,prflag,se) OR (pr,prflag,se,seflag)
-    * Note that order is NOT important
-    * TODO consider making (pr,se) a valid combination
+    * order is NOT important
+    * TODO consider expanding the number of meaningful query sets (out of ~14? total)    
+    * consider the following sets as VALID: 
+        - pr (Q1)
+        - pr,prflag (Q2)
+        - pr,prflag,se (Q3) 
+        - pr,prflag,se,seflag (Q4)
+        - pr,se
+        - pr,se,seflag (naive pr search, then filter by se+seflag)
+        - prflag,se,seflag (get all records of prflag type, search by se+seflag)
+        - se, seflag (e.g. all records with city=Cleveland)
+
+    * INVALID sets are:
+        - se (would have to assume that this is pr; bad assumption)
+        - prflag (no search string)
+		- seflag (no string search)
+		- prflag,seflag (no search string) 
+        - pr,seflag (would have to assume seflag is prflag OR pr is really se; bad assumptions)
+		- prflag,se (would have to assume se is pr OR prflag is seflag; bad assumptions)	
+    *
+    * TODO, given the above combinations, we need a new way to determine query type
     */
     public static function WhatQueryType(Query $query){
         $counter = 0;
