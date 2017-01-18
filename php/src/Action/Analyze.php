@@ -40,13 +40,47 @@ class Analyze {
         $query->qType = $counter;
         echo $query->qType; 
     }
+    
+    
+    /*
+      Valid query combinations are:  
+        a) pr (Q1)
+        b) pr,prflag (Q2)
+        c) pr,prflag,se (Q3) 
+        d) pr,prflag,se,seflag (Q4)
+        e) pr,se
+        f) pr,se,seflag (naive pr search, then filter by se+seflag)
+        g) prflag,se,seflag (get all records of prflag type, search by se+seflag)
+        h) se, seflag (e.g. all records with city=Cleveland)
 
+1) if pr is set, prflag,se,seflag =  null        
+2) if pr,prflag are set AND se,seflag = null
+3) if pr,prflag,se are set AND seflag = null
+4) if pr,prflag,se,seflag are set
+5) if pr,se are set AND prflag,seflag = null
+6) if pr,se,seflag are set AND prflag = null
+7) if prflag,se,setflag are set AND pr = null
+8) if se,seflag are set AND pr,prflag = null
+
+    */
     public static function WhatQueryType(Query $query){
         //underlying data structure is bad 
         //need to fix so that we can accept different query combinations
         
-        $query->qType = 1;
-        echo $query->qType; 
+        //match (pr), Q1
+        if( $query->qElement['pr'] !== NULL && 
+            $query->qElement['prflag'] === NULL && 
+            $query->qElement['se'] === NULL &&
+            $query->qElement['seflag'] === NULL ){
+            //do something
+        }
+        else{
+            respond::QueryNotSupported();
+            exit;
+        }
+
+        //$query->qType = 1;
+        //echo $query->qType; 
     }
     
     //TODO return the proper headers here with an error message
