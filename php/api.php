@@ -7,6 +7,7 @@ use RestQuery\Action\Clean as clean;
 use RestQuery\Action\Analyze as analyze;
 use RestQuery\Action\Build as build;
 use RestQuery\Action\Run as run;
+use RestQuery\Action\Respond as respond;
 use GuzzleHttp\Client as restClient;
 
 
@@ -14,11 +15,10 @@ use GuzzleHttp\Client as restClient;
 $q = new Query();
 clean::Validate($q);
 
+analyze::IsQueryValid($q);
 analyze::WhatQueryType($q);
 print_r($q->qType);
 print_r($q->qElements);
-analyze::IsQueryValid($q);
-
 
 //this logic should go inside the 
 
@@ -36,8 +36,5 @@ $statusCode = $response->getStatusCode(); // 200
 $reasonText = $response->getReasonPhrase(); // OK
 $body = $response->getBody();
 $data = json_decode($body, true);
-$dataJson = json_encode($data);
 
-//step 6, send data back to client
-header('Content-Type: application/json');
-echo $dataJson;
+respond::Results($data);
