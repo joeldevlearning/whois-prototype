@@ -13,11 +13,14 @@ use GuzzleHttp\Client as restClient;
 
 $q = new Query();
 clean::Validate($q);
-//print_r($q);
 
-$query_type = analyze::WhatQueryType($q);
-print_r($query_type);
+analyze::WhatQueryType($q);
+print_r($q->qType);
 print_r($q->qElements);
+analyze::IsQueryValid($q);
+
+
+//this logic should go inside the 
 
 //step 3, build query, right now just pass a value along
 $query = 'orgs;name=' . "Apple" . '*';

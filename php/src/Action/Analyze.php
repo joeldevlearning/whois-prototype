@@ -6,10 +6,11 @@ class Analyze {
 
     /*
     *
-    * Why break the loop naively like this?
+    * Why break the foreach loop naively like this?
     * Because only FOUR sets have meaning
-    * var1 OR var1+var2 OR var1+var2+var3 OR var1+var2+var3+var4
+    * (pr) OR (pr+prflag) OR (pr,prflag,se) OR (pr,prflag,se,seflag)
     * Note that order is NOT important
+    * TODO consider making (pr,se) a valid combination
     */
     public static function WhatQueryType(Query $query){
         $counter = 0;
@@ -24,6 +25,16 @@ class Analyze {
         }
         $query->qType = $counter;
         echo $query->qType; 
+    }
+
+    //TODO return the proper headers here with an error message
+    public static function IsQueryValid(Query $query){
+        if($query->qType === 0){
+            exit;
+        }
+        else{
+            return;
+        }
     }
 
     //only works for Q1 right now
