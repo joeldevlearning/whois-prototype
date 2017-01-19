@@ -1,6 +1,6 @@
 # whois-prototype
 
-###Experimental client and middleware to search ARIN's whois REST API
+###Experimental client and api for ARIN's whois REST API
 
 ##Purpose
 Prototype the features of a friendlier wrapper to ARIN's whois API. 
@@ -22,8 +22,7 @@ An **HTML/bootstrap3** frontend, **JQuery** for UI tasks, and a **PHP/Guzzle** b
 - One minimal search form for all possible queries 
 - Return only active links to related records
 
-###Feature Wishlist
-- Overcome query limits (255 records per query) and offer pagination
+###Wishlist Features
 - Group similar entities together in search results
 - Interactive feedback for parsing errors in formatting (e.g. of IP addresses)
 - As-you-type searches to check for any results
@@ -31,6 +30,7 @@ An **HTML/bootstrap3** frontend, **JQuery** for UI tasks, and a **PHP/Guzzle** b
 - Graphical tree of entities by IP address blocks
 - Wildcards for IP addresses
 - Support for domain names (mixing results from another API with ARIN's)
+- Overcome query limits (255 records per query) and offer pagination
 
 ###ARIN documentation
 ARIN's website already features a [whois search form](https://www.arin.net/) (and an [advanced search](https://whois.arin.net/ui/advanced.jsp)), which offers some conveniences beyond the basic API (e.g. searching multiple record types at once). Unfortunately the search form uses an internal, undocumented API. 
@@ -38,4 +38,4 @@ ARIN's website already features a [whois search form](https://www.arin.net/) (an
 ARIN's whois REST API features can be found at: https://www.arin.net/resources/whoisrws/index.html
 
 ##Caveats
-This project has no relationship to ARIN. This is a personal learning project to sketch out some features.
+This project has no relationship to ARIN, It is a personal learning project to sketch out some features.
