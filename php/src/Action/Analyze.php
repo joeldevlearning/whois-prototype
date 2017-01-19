@@ -93,7 +93,7 @@ class Analyze {
             if(!$query->hintFlag){
                 echo "Proceeding with hinting DISABLED.../n";
                 //proceed without hints
-                foreach($query->qRecordList as &$record){
+                foreach($query->qTargetRecordList as &$record){
                 $record = TRUE;    
                 }
                 //var_dump($query->qRecordList);exit; 
