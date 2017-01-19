@@ -19,6 +19,7 @@ analyze::IsQueryValid($q);
 analyze::WhatQueryType($q);
 print_r($q->qType);
 print_r($q->qElements);
+analyze::WhatRecordsToQuery($q);
 
 //this logic should go inside the 
 
