@@ -21,7 +21,6 @@ print_r($q->qType);
 print_r($q->qElements);
 analyze::WhatRecordsToQuery($q);
 
-//this logic should go inside the 
 
 //step 3, build query, right now just pass a value along
 $query = 'orgs;name=' . "Apple" . '*';

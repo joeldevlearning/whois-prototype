@@ -2,7 +2,7 @@
 namespace RestQuery\Action;
 use RestQuery\Query;
 use RestQuery\Action\Respond as respond;
-use RestQuery\Arin\ArinModel as model;
+use RestQuery\Arin\Model as model;
 
 /*
 TODO add IsCharacterType() and IsNumericType() for hinting 
@@ -98,8 +98,11 @@ class Analyze {
                 We want to search each record type, using one string
                 
                 Step 1, what record types?
-                So we need to copy the list of all record types from SOURCE to TARGET
-                
+                So we need to copy the list of all record types from REFERENCE to TARGET
+                */
+                $query->qTargetList['uri-target'][] = array('name','handle');   
+
+                /*
                 Step 2, what fields in the records?
                 We wany *any* identifying <fieldset>
                 So we copy the pr-all list of each record type from SOURCE to TARGET

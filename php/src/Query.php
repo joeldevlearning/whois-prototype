@@ -23,15 +23,13 @@ class Query {
         */
         public $qType = "";
         
-        /* @var array Contains list of api calls, both in URI fragments and full strings
-        * uri-targets is set by the Analyze class
-        * uri-fragments and uri-full are set by the Build class
+        /* @var array Contains list of records to query
         */
         public $qTargetList = array(
+        );
+
+        public $qTargetUri = array(
             0 => array(
-                'uri-target' => array(
-                    //do we need this to direct Build?    
-                ),
                 'uri-fragments' => array(
                     'pr-string' => NULL,
                     'pr-record' => NULL,

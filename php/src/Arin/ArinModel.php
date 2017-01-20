@@ -3,14 +3,14 @@ namespace RestQuery\Arin;
 
 //holds the list of records and fields 
 
-class ArinModel {
+class Model {
 
     /* @var array Contains field names for each record type
         * used to direct searches on specific fields
         * same order as whois.arin.net search results
         * set by Analyze class
         */
-        public static $SourceRecordFieldList = array(
+        public static $referenceList = array(
             'asn' => array(
                     'asn-all' => array(
                         'number'        => FALSE, //a range, but you can search by a single value within the range, e.g. "12345" returns "12288 - 13311"
@@ -62,12 +62,17 @@ class ArinModel {
             ),
             'org' => array(
                     'org-all' => array(),
+                    'org-pr-all' => array(
+                        'name',
+                        'handle'
+                    ),
                     'org-pr-hint-name' => array(
                         'name', //real name
                         'handle', //e.g. ARIN-123
                     ),
                     'org-pr-hint-number' => array(    
                     ),
+                    'org-se-all' => array(),
                     'org-se-hint-name' => array(   
                         'name', //real name
                         'handle', //e.g. ARIN-123
