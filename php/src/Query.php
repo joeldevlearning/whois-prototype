@@ -23,18 +23,29 @@ class Query {
         */
         public $qType = "";
         
-        /* @var array Contains bool flags for records targeted by query
-        * set by Analyze class
+        /* @var array Contains list of api calls, both in URI fragments and full strings
+        * uri-targets is set by the Analyze class
+        * uri-fragments and uri-full are set by the Build class
         */
-        public $qTargetRecordList = [
-            'asn' => FALSE,
-            'cus' => FALSE,
-            'net' => FALSE,
-            'poc' => FALSE,
-            'org' => FALSE,            
-        ];
+        public $qTargetList = array(
+            0 => array(
+                'uri-target' => array(
+                    //do we need this to direct Build?    
+                ),
+                'uri-fragments' => array(
+                    'pr-string' => NULL,
+                    'pr-record' => NULL,
+                    'se-string' => NULL,
+                    'se-record' => NULL
+                    ),    
+                'uri-full' => NULL //complete and conformant call the ARIN's API, ready to go       
+            ),
+        );
 
-        public $qBatch;
+        /* @var string Contains URI fragment that is constant for all queries
+        * TODO separate this into a configuration file somewhere
+        */
+        public $qBaseUri = 'http://whois.arin.net/rest/';
 
         function __construct() {
             $this->qElements = [

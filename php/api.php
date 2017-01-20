@@ -27,7 +27,7 @@ analyze::WhatRecordsToQuery($q);
 $query = 'orgs;name=' . "Apple" . '*';
 
 //step 4, call ARIN API
-$client = new restClient(['base_uri' => 'http://whois.arin.net/rest/']);
+$client = new restClient(['base_uri' => $query->qBaseUri]);
 $response = $client->request('GET', $query, [
     'headers' => [ 'Accept'     => 'application/json' ]
 ]);
