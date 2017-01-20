@@ -33,6 +33,9 @@ class Build {
     What is the bottom line?
     We should try matrix URI any time we can, because it lets us explicitly set the field
 
+    So how do we use the matrix URI syntax in a practical way?
+    We should pull a predefined matrix URI string 
+    To this we can add
 */
 
 }
