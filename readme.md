@@ -16,10 +16,9 @@ Prototype the features of a friendlier wrapper to ARIN's whois API.
 An **HTML/bootstrap3** frontend, **JQuery** for UI tasks, and a **PHP/Guzzle** backend generating, running, and returning collection results. The API wrapper takes priority, so the UI is thin for now.  
 
 ##Planned Features
-- Search multiple record categories at once
+- A minimal search form for all queries, supporting variable amounts of input  
+- Search multiple record types and fields simultaneously
 - Handle ambiguous input (spacing, wildcards, etc.)
-- Support wildcards in complex queries
-- One minimal search form for all possible queries 
 - Return only active links to related records
 
 ###Wishlist Features
@@ -28,7 +27,7 @@ An **HTML/bootstrap3** frontend, **JQuery** for UI tasks, and a **PHP/Guzzle** b
 - As-you-type searches to check for any results
 - Search suggest features
 - Graphical tree of entities by IP address blocks
-- Wildcards for IP addresses
+- Support wildcards for all queries (including IP addresses)
 - Support for domain names (mixing results from another API with ARIN's)
 - Overcome query limits (255 records per query) and offer pagination
 

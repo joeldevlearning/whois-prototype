@@ -2,6 +2,7 @@
 namespace RestQuery\Action;
 use RestQuery\Query;
 use RestQuery\Action\Respond as respond;
+use RestQuery\Arin\ArinModel as model;
 
 /*
 TODO add IsCharacterType() and IsNumericType() for hinting 
@@ -92,10 +93,7 @@ class Analyze {
             echo "\n Generating Q1.../n";
             if(!$query->hintFlag){
                 echo "Proceeding with hinting DISABLED.../n";
-                //proceed without hints
-                foreach($query->qTargetRecordList as &$record){
-                $record = TRUE;    
-                }
+                    
                 //var_dump($query->qRecordList);exit; 
             }
             else{

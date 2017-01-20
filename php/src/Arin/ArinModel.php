@@ -10,7 +10,7 @@ class ArinModel {
         * same order as whois.arin.net search results
         * set by Analyze class
         */
-        public $qSourceRecordList = array(
+        public static $SourceRecordFieldList = array(
             'asn' => array(
                     'asn-all' => array(
                         'number'        => FALSE, //a range, but you can search by a single value within the range, e.g. "12345" returns "12288 - 13311"
@@ -61,14 +61,24 @@ class ArinModel {
                 'net-block'     => FALSE, //IP address range of linked net record
             ),
             'org' => array(
-                    'org-all' => array(
-
+                    'org-all' => array(),
+                    'org-pr-hint-name' => array(
+                        'name', //real name
+                        'handle', //e.g. ARIN-123
                     ),
-                'name'          => FALSE, //real name
-                'handle'        => FALSE, //e.g. ARIN-123
-                'city'          => FALSE, //MIGHT be abbreviated
-                'state'         => FALSE, //abbreviated
-                'country'       => FALSE, //abbreviated
+                    'org-pr-hint-number' => array(    
+                    ),
+                    'org-se-hint-name' => array(   
+                        'name', //real name
+                        'handle', //e.g. ARIN-123
+                        'city',
+                        'state',
+                        'country'
+                    ),
+                    'org-se-hint-number' => array(    
+                        'postal-code'
+                    ),
+
             ),
             'poc' => array(
                 'name'          => FALSE, //last, first, e.g. "Doe, Jane", unclear how it works but searching "Jane" only may not find "Doe"
