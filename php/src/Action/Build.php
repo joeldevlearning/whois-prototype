@@ -7,8 +7,26 @@ use RestQuery\Query;
 */
 
 class Build {
-    public static function hello() {echo "Hello Build!";}
 
+    public static function CreateUri(Query $query){
+        foreach($query->qBuildQueue as $queueItem){
+        //drill down one level to reach record=>field pairs    
+            foreach($queueItem as $record=>$field){
+                
+                $query->qRunQueue[] = 
+                    //$query->qUriFragments['base-uri'] . 
+                    $record . 
+                    $query->qUriFragments['matrix-record-suffix'] . 
+                    $field . 
+                    $query->qUriFragments['matrix-field-prefix'] .
+                    $query->qElements['pr'];    
+            }
+
+        }
+
+    }
+
+//  Scan through outer loop
 
 
 /*

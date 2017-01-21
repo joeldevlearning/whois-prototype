@@ -17,9 +17,9 @@ class Respond {
     }
 
     public static function Results($data){
-        $dataJson = json_encode($data);
+        //$dataJson = json_encode($data);
         header('Content-Type: application/json');
-        echo $dataJson;
+        echo $data;
     }
     
 }

@@ -90,39 +90,14 @@ class Analyze {
 
             // (pr) Q1
             case 1: 
-            echo "\n Generating Q1.../n";
+            echo "\nGenerating Q1... \n";
             if(!$query->hintFlag){
-                echo "Proceeding with hinting DISABLED.../n";
-                /*
-                What do we know?
-                We want to search each record type, using one string
+                echo "Proceeding with hinting DISABLED... \n";
                 
-                Step 1, what record types?
-                So we need to copy the list of all record types from REFERENCE to TARGET
-                */
-                $query->qTargetList['uri-target'][] = array('name','handle');   
-
-                /*
-                Step 2, what fields in the records?
-                We wany *any* identifying <fieldset>
-                So we copy the pr-all list of each record type from SOURCE to TARGET
-                    asn-pr-all AND 
-                    cus-pr-all
-                    net-pr-all
-                    org-pr-all
-                    poc-pr-all
-
-                So what have we done here?
-                We have identified 5 records and ~15 fields to search
-                So we have a todo list of ~15 api calls to make
-        
-                What's next?
-                We need to know what syntax to use to 
-                Then we    
-                */
-
-
-                //var_dump($query->qRecordList);exit; 
+                $query->qBuildQueue = array(
+                    0 => array('org'=>'name'),
+                    1 => array('org'=>'handle'),    
+                );
             }
             else{
                 echo "Proceeding with hinting ENABLED.../n";

@@ -25,25 +25,19 @@ class Query {
         
         /* @var array Contains list of records to query
         */
-        public $qTargetList = array(
-        );
+        public $qBuildQueue = array();
+        
+        public $qRunQueue = array();
 
-        public $qTargetUri = array(
-            0 => array(
-                'uri-fragments' => array(
-                    'pr-string' => NULL,
-                    'pr-record' => NULL,
-                    'se-string' => NULL,
-                    'se-record' => NULL
-                    ),    
-                'uri-full' => NULL //complete and conformant call the ARIN's API, ready to go       
-            ),
-        );
+        public $qUriFragments = array(
+                'base-uri'              => 'http://whois.arin.net/rest/',
+                'matrix-record-suffix'  => "s;",
+                'matrix-field-prefix'   => "="
+            );
 
         /* @var string Contains URI fragment that is constant for all queries
         * TODO separate this into a configuration file somewhere
         */
-        public $qBaseUri = 'http://whois.arin.net/rest/';
 
         function __construct() {
             $this->qElements = [
