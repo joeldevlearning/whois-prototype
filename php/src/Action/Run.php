@@ -23,16 +23,21 @@ class Run {
 
 
     public static function ProcessQueue(Query $query, restClient $client){
+        /*fixed query needs to changed
+
+        foreach($query->qRunQueue as $item){
+            //run the query and capture the response
+            //save the response body to an array
+            //return array
+            //client then prints array with individual json packets
+        }
+
+        */
+        
         $tempQuery = 'orgs;name=Apple*';
 
         $response = $client->request('GET', $tempQuery, ['headers' => ['Accept'     => 'application/json']]);
-        /*$promise = $client->getAsync($tempQuery);
         
-        $promise->then(function ($response) {
-            echo 'Got a response! ' . $response->getStatusCode(); 
-            return $response;
-            });
-        */
         $data = $response->getBody();
         return $data;
     }
