@@ -59,5 +59,16 @@ class Run {
         };
     }
 
+/*
+
+Two tricky cases:
+1) Chaining queries together, 
+e.g. call first query, parse results, run some logic, and then make a follow-up query
+
+2) After returning results, creating links to related records
+e.g. if we return orgs, create links to each org's related records
+and can we prevent these from being "no results" but without delaying search results?
+
+*/
 
 }

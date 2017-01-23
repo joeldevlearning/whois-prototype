@@ -103,7 +103,7 @@ class Analyze {
                 echo "Proceeding with hinting ENABLED.../n";
                 //proceed with hints
                 if($query->hintFlag === 1){
-                    //identity search string as name or number
+                    //identify search string as name or number
                     //foreach($query->qRecordList as $key => &$record){ }
                 }
             }
@@ -116,3 +116,15 @@ class Analyze {
         return;
     }
 }
+
+/*
+WhatRecordsToQuery() should not contain too much nesting
+consider making an enum-like structure to define endpoints
+then use a dictionary to map these to specific functions
+
+This removes configuration code from WhatRecordsToQuery() 
+The function will only find the endpoint, 
+lookup in the dict, 
+and executes the correct function
+
+*/
