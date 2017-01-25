@@ -29,7 +29,7 @@ class Query {
         
         public $qRunQueue = array();
 
-        public $qUriFragments = array(
+        public $qUriParts = array(
                 'base-uri'              => 'http://whois.arin.net/rest/',
                 'matrix-record-suffix'  => "s;",
                 'matrix-field-prefix'   => "="

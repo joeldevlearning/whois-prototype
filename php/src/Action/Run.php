@@ -15,7 +15,7 @@ class Run {
         $handlerStack->push(self::add_header('Accept', 'application/json'));
         
         $client = new restClient(
-            ['base_uri' => $query->qUriFragments['base-uri']],
+            ['base_uri' => $query->qUriParts['base-uri']],
             ['handler' => $handlerStack]
         );
         return $client;        

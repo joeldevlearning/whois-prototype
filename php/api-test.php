@@ -1,47 +1,36 @@
-<?php 
+<?php
 error_reporting(E_ALL | E_STRICT);
-
 require('vendor/autoload.php');
-use GuzzleHttp\Client;
+use RestQuery\Query; 
+use RestQuery\Action\Run as run;
+use RestQuery\Action\Respond as respond;
+use GuzzleHttp\Client as client;
 
-//handle incoming requests
+//test sending and receiving queries
 
-$pr = filter_input(INPUT_GET, 'pr', FILTER_SANITIZE_STRING);
+//setup
+$q = new Query();
+$q->qType = 1;
+$tempQuery = 'orgs;name=Apple*';//manually define query
 
-$client = new GuzzleHttp\Client(['base_uri' => 'http://whois.arin.net/rest/']);
-$response = $client->request('GET', 'orgs;name=Apple*', [
-    'headers' => [ 'Accept'     => 'application/json' ]
-]);
+//check setup
+print_r($q->qElements);
+//print_r($q->qRunQueue);
 
-$statusCode = $response->getStatusCode(); // 200
-$reasonText = $response->getReasonPhrase(); // OK
-$body = $response->getBody();
-$data = json_decode($body, true);
-$dataJson = json_encode($data);
+//manually create client
+$client = new client(
+            ['base_uri' => $q->qUriParts['base-uri']]
+        );
 
-/*
-$testDidReturnJson = function ($body) {
-$dataJson = "<pre>" . print_r($body) . "</pre>";
-  return $dataJson;
-};
-$testDidReturnJson($body);
-*/
+$response = $client->request(
+    'GET', $tempQuery, 
+    ['headers' => ['Accept'     => 'application/json']]
+);
+        
+$data = $response->getBody();
 
-$testDidDecodeJson = function ($data) {
-  $dataArray = "<pre>" . print_r($data) . "</pre><br><br><br>";
-  return $dataArray;
-};
-
-$testDidEncodeJson = function ($data) {
-  $dataRawJson =  "<pre>" . print_r($data) . "</pre><br><br>"; 
-  return $dataRawJson;
-};
-
-$testDidEncodeJson($dataJson);
-$testDidDecodeJson($data);
-
-?>
+respond::Results($data);
 
 
-
-
+//1) fixed query, call API and print json DONE
+//
