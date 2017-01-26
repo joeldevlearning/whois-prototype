@@ -58,23 +58,6 @@ class Run {
             };
         };
     }
-/*
-What do we need to test here?
-1) Can we send a query and get the json back, using Guzzle along the way?
-Yes we can. We did this.
-
-2) Can we send TWO queries, get the json back, combine it, and send it along the way?
-
-3) Can we use a promise and do #1 asynchronously?
-
-4) Can we use multiple promises and do #2 async?
-
-5) Can we do #2 with variable numbers of promises, each generated dynamically?
-
-6) Can we combine the json payloads into one?
-
-*/
-
 
 /*
 

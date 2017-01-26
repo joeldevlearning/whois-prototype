@@ -26,8 +26,16 @@ class Query {
         /* @var array Contains list of records to query
         */
         public $qBuildQueue = array();
-        
+
+        /*
+         * Right now we are pulling directly from qRunQueue
+for abstraction we could use an iterator/generator
+this would wrap qRunQueue
+calls to the RunQueue would return one-by-one results from the array
+
+         */
         public $qRunQueue = array();
+
 
         public $qUriParts = array(
                 'base-uri'              => 'http://whois.arin.net/rest/',

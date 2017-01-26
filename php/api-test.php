@@ -16,8 +16,15 @@ $q->qElements['pr'] = "Apple";
 $q->qType = 1;
 $tempQueryOne = 'orgs;name=Apple*';//manually define query
 $tempQueryTwo = 'pocs;name=Smith*';
+$tempQueryThree = 'customers;name=Apple*';
 
-$tempRunQueue = [];
+$tempRunQueue = array(
+    'orgs;name=Apple*',
+    'pocs;name=Smith*',
+    'customers;name=Apple*',
+    'nets;name=Apple*',
+    'asns;name=Apple*'
+);
 
 //check setup
 //print_r($q->qElements);
@@ -26,11 +33,16 @@ $client = new client(
             ['base_uri' => $q->qUriParts['base-uri']], //hardcoded uri to rest interface
             ['headers' => ['Accept'     => 'application/json']] //set json to default for all api calls
         );
+$promisesArrayOf = array();
+foreach( $tempRunQueue as $queryString ) {
+    array_push( $promisesArrayOf, $client->getAsync($queryString) );
+}
+/*
 $promisesArrayOf = [
     'promiseOne' => $client->getAsync($tempQueryOne),
     'promiseTwo' => $client->getAsync($tempQueryTwo)
 ];
-
+*/
 /*
 $promise = $client->getAsync(
     $tempQueryOne
@@ -45,13 +57,19 @@ $promise = $client->getAsync(
         print_r($response->getStatusCode());
     }
 );*/
-$resultsArrayOf = Promise\unwrap($promisesArrayOf);//wait for all promises passed to unwrap to resolve
-$resultOne = $resultsArrayOf['promiseOne']->getBody()->getContents();
-$resultTwo = $resultsArrayOf['promiseTwo']->getBody()->getContents();
 
-$resultAll = $resultOne . $resultTwo;
 
-print_r($resultAll);
+$rawResultsArrayOf = Promise\unwrap($promisesArrayOf);//wait for all promises passed to unwrap to resolve
+$finalResultsArrayOf = array();
+
+foreach($rawResultsArrayOf as $key => $queryResult) {
+    array_push($finalResultsArrayOf, $rawResultsArrayOf[$key]->getBody()->getContents());
+}
+//$resultOne = $rawResultsArrayOf[0]->getBody()->getContents();
+//$resultTwo = $rawResultsArrayOf[1]->getBody()->getContents();
+
+
+print_r($finalResultsArrayOf);
 //$data = $response->getBody();
 
 
