@@ -9,7 +9,6 @@ use GuzzleHttp\Client as client;
 
 //test sending and receiving queries
 
-phpinfo();
 //setup
 $q = new Query();
 $q->qElements['pr'] = "Apple";
@@ -29,7 +28,7 @@ $promise = $client->getAsync(
     ['headers' => ['Accept'     => 'application/json']]
 )->then(
     function ($response) {
-        $data = json_decode($response->getBody()->getContents(), true);
+        $data = json_decode($response->getBody(), true);
         print_r($data);
         return $data;
     },
@@ -38,8 +37,7 @@ $promise = $client->getAsync(
         print_r($response->getStatusCode());
     }
 );
-
-
+$promise->wait();
 //$data = $response->getBody();
 
 
@@ -47,4 +45,6 @@ $promise = $client->getAsync(
 
 
 //1 - hardcoded query, sync call API and print json WORKS
-//2 - hardcoded query, async call and print json 
+//2 - hardcoded query, async call and print json WORKS
+//3 - hardcoded query, async call and pass json raw
+//4 - hardcoded query, two async calls
