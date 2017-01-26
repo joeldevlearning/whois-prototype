@@ -17,6 +17,8 @@ $q->qType = 1;
 $tempQueryOne = 'orgs;name=Apple*';//manually define query
 $tempQueryTwo = 'pocs;name=Smith*';
 
+$tempRunQueue = [];
+
 //check setup
 //print_r($q->qElements);
 //manually create client
@@ -61,3 +63,13 @@ print_r($resultAll);
 //3 - hardcoded query, async call and pass json raw WORKS
 //4 - hardcoded query, two async calls and pass back json WORKS
 //5 - hardcoded query, variable number of async calls, pass back everything
+/* step 1, foreach queue items into promises array
+ * step 2, foreach promises array and make async calls
+ * step 3, foreach promises array for results
+ * step 4, foreach print results
+ */
+
+
+//6 - hardcoded query, variable async calls, wrap json in new container
+
+//??? send back json with correct status code to client
