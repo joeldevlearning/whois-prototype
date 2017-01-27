@@ -27,22 +27,22 @@ class Analyze {
     */
     public static function IsQueryValid(Query $query){
         //catch (prflag) AND (seflag) AND (prflag,seflag)
-        if( $query->qElements['pr'] === NULL && 
-            $query->qElements['se'] === NULL ){
+        if( $query->qSelectors['pr'] === NULL &&
+            $query->qSelectors['se'] === NULL ){
             respond::QueryNotSupported();
             exit;
         }
         //catch (se) 
-        if( $query->qElements['pr'] === NULL && 
-            $query->qElements['prflag'] === NULL &&
-            $query->qElements['seflag'] === NULL ){
+        if( $query->qSelectors['pr'] === NULL &&
+            $query->qSelectors['prflag'] === NULL &&
+            $query->qSelectors['seflag'] === NULL ){
             respond::QueryNotSupported();
             exit;
         }
         //catch (prflag,se) 
-        if( $query->qElements['pr'] === NULL && 
-            $query->qElements['prflag'] !== NULL &&
-            $query->qElements['se'] !== NULL ){
+        if( $query->qSelectors['pr'] === NULL &&
+            $query->qSelectors['prflag'] !== NULL &&
+            $query->qSelectors['se'] !== NULL ){
             respond::QueryNotSupported();
             exit;
         }
@@ -71,10 +71,10 @@ class Analyze {
     */
     public static function WhatQueryType(Query $query){
         //match (pr), Q1
-        if( $query->qElements['pr'] !== NULL && 
-            $query->qElements['prflag'] === NULL && 
-            $query->qElements['se'] === NULL &&
-            $query->qElements['seflag'] === NULL ){
+        if( $query->qSelectors['pr'] !== NULL &&
+            $query->qSelectors['prflag'] === NULL &&
+            $query->qSelectors['se'] === NULL &&
+            $query->qSelectors['seflag'] === NULL ){
         //then    
         $query->qType = 1;
         }
@@ -91,7 +91,7 @@ class Analyze {
             // (pr) Q1
             case 1: 
             echo "\nGenerating Q1... \n";
-            if(!$query->hintFlag){
+            if(!$query->qParameters['enable_hinting']){
                 echo "Proceeding with hinting DISABLED... \n";
                 
                 $query->qBuildQueue = array(
@@ -102,7 +102,7 @@ class Analyze {
             else{
                 echo "Proceeding with hinting ENABLED.../n";
                 //proceed with hints
-                if($query->hintFlag === 1){
+                if($query->qParameters['enable_hinting'] === 1){
                     //identify search string as name or number
                     //foreach($query->qRecordList as $key => &$record){ }
                 }

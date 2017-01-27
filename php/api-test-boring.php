@@ -14,7 +14,7 @@ $q->qType = 1;
 $tempQuery = 'orgs;name=Apple*';//manually define query
 
 //check setup
-print_r($q->qElements);
+print_r($q->qSelectors);
 //print_r($q->qRunQueue);
 
 //manually create client

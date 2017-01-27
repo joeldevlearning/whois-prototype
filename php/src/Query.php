@@ -7,8 +7,11 @@ class Query {
         * "primary" refers to the *desired* record type;"secondary" to a where-like condition on the primary
         * set by Query constructor, written to by Clean class
         */
-        public $qElements = array();
-        
+        public $qSelectors = array();
+
+        public $qParameters = array(
+        'enable_hinting' => '1', //enable by default
+        );
         /* @var integer Indicates what type of hint is available
         * "0" = no hint, hinting disabled
         * "1" = hint available, hinting enabled
@@ -36,6 +39,9 @@ calls to the RunQueue would return one-by-one results from the array
          */
         public $qRunQueue = array();
 
+        public $qTransformQueue = array();
+
+        public $qRespondQueue = array();
 
         public $qUriParts = array(
                 'base-uri'              => 'http://whois.arin.net/rest/',
@@ -48,7 +54,7 @@ calls to the RunQueue would return one-by-one results from the array
         */
 
         function __construct() {
-            $this->qElements = [
+            $this->qSelectors = [
             "pr"        => filter_input(INPUT_GET, 'pr', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
             "prflag"    => filter_input(INPUT_GET, 'prFlag', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
             "se"        => filter_input(INPUT_GET, 'se', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
@@ -67,9 +73,15 @@ calls to the RunQueue would return one-by-one results from the array
                 $query->qElements['seflag'] = NULL;
             }
 
-            $this->hintFlag = filter_input(INPUT_GET, 'hint', FILTER_VALIDATE_INT);
-            if(!$this->hintFlag){
-              $hintFlag = 0;  
+            $hintFlag = filter_input(INPUT_GET, 'hint', FILTER_VALIDATE_INT);
+            if($hintFlag == FALSE || $hintFlag == NULL) {
+                //do nothing, default remains at 1
+            }
+            if($hintFlag == 0) {
+                $this->qParameters['enable_hinting'] = 0;
+            }
+            else {
+                //do nothing, default remains at 1
             }
         }
 	}

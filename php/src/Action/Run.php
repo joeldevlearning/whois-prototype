@@ -1,20 +1,69 @@
 <?php
 namespace RestQuery\Action;
 use RestQuery\Query;
-use GuzzleHttp\Client as restClient;
+use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Handler\CurlHandler;
 use Psr\Http\Message\RequestInterface;
 
 class Run {
-    
-    public static function CreateClient(Query $query){
+    /**
+     * @param $q
+     * @return $client
+     */
+    public static function CreateClient( Query $q)
+    {
+        $client = new Client(
+            ['base_uri' => $q->qUriParts['base-uri']], //hardcoded uri to rest interface
+            ['headers' => ['Accept' => 'application/json']] //for some reason this does NOT set the default, Why?
+        );
+        return $client;
+    }
+
+    /**
+     * @param $q
+     * @param $client
+     * @return array
+     */
+    public static function CreatePromises(Query $q, Client $client): array
+    {
+        $promisesArrayOf = array();
+        foreach ($q->qRunQueue as $queryString) {
+            array_push($promisesArrayOf, $client->getAsync($queryString, ['headers' => ['Accept' => 'application/json']]));//HACK default setting not working, so force it here
+        }
+        return $promisesArrayOf;
+    }
+
+    /**
+     * @param $promisesArrayOf
+     */
+    public static function StorePromiseResults(Query $q, array $promisesArrayOf)
+    {
+        $rawResultsArrayOf = Promise\unwrap($promisesArrayOf);//wait for all promises passed to unwrap to resolve
+
+        $finalResultsArrayOf = array();
+
+        foreach ($rawResultsArrayOf as $key => $queryResult) {
+            array_push($q->qTransformQueue, $rawResultsArrayOf[$key]->getBody()->getContents());
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+    public static function OldCreateClient(Query $query){
         $handlerStack = new HandlerStack();
         $handlerStack->setHandler(new CurlHandler());
         $handlerStack->push(self::add_header('Accept', 'application/json'));
         
-        $client = new restClient(
+        $client = new Client(
             ['base_uri' => $query->qUriParts['base-uri']],
             ['handler' => $handlerStack]
         );
@@ -22,7 +71,7 @@ class Run {
     }
 
 
-    public static function ProcessQueue(Query $query, restClient $client){
+    public static function ProcessQueue(Query $query, Client $client){
         /*fixed query needs to changed
 
         foreach($query->qRunQueue as $item){

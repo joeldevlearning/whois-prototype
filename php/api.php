@@ -18,7 +18,7 @@ clean::Validate($q);
 analyze::IsQueryValid($q);
 analyze::WhatQueryType($q);
 print_r($q->qType);
-print_r($q->qElements);
+print_r($q->qSelectors);
 
 analyze::WhatRecordsToQuery($q);
 

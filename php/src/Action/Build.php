@@ -19,7 +19,7 @@ class Build {
                     $query->qUriFragments['matrix-record-suffix'] . 
                     $field . 
                     $query->qUriFragments['matrix-field-prefix'] .
-                    $query->qElements['pr'];    
+                    $query->qSelectors['pr'];
             }
 
         }

@@ -16,8 +16,14 @@ class Respond {
         echo $message;
     }
 
-    public static function Results($data){
-        //$dataJson = json_encode($data);
+    /**
+     * @param $q
+     */
+    public static function SendResults($q)
+    {
+        $data = json_encode($q->qTransformQueue);
+
+//$tempJson = json_encode("hello:1");
         header('Content-Type: application/json');
         echo $data;
     }

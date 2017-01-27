@@ -11,15 +11,15 @@ class Clean
     * @param mixed[] $_GET The superglobal is implicitly passed
     * @param object $query Passed a new instance of Query
     *
-    * @return object $query Returned with $qElements populated
+    * @return object $query Returned with $qSelectors populated
     */
 
     public static function Validate(Query $query)
     {
-        $prTemp = $query->qElements['pr'];
-        $prFlagTemp = $query->qElements['prflag'];
-        $srTemp = $query->qElements['se'];
-        $srFlagTemp = $query->qElements['seflag'];
+        $prTemp = $query->qSelectors['pr'];
+        $prFlagTemp = $query->qSelectors['prflag'];
+        $srTemp = $query->qSelectors['se'];
+        $srFlagTemp = $query->qSelectors['seflag'];
 
         $searchStringValidator = validate::stringType()->length(1, 255);
         $recordFlagStringValidator = validate::stringType()->length(1, 12);
@@ -30,19 +30,19 @@ class Clean
         $isSecondaryFlagValid = $recordFlagStringValidator->validate($srFlagTemp);
     
         if ($isPrimarySearchValid == FALSE) {
-            $query->qElements['pr']  = NULL; //magic null value
+            $query->qSelectors['pr']  = NULL; //magic null value
         }
 
         if ($isPrimaryFlagValid == FALSE) {
-            $query->qElements['prflag']  = NULL; //magic null value
+            $query->qSelectors['prflag']  = NULL; //magic null value
         }
 
         if ($isSecondarySearchValid == FALSE) {
-            $query->qElements['se']  = NULL; //magic null value
+            $query->qSelectors['se']  = NULL; //magic null value
         }
 
         if ($isSecondaryFlagValid == FALSE) {
-            $query->qElements['seflag']  = NULL; //magic null value
+            $query->qSelectors['seflag']  = NULL; //magic null value
         }
     }
 }

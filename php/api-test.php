@@ -1,24 +1,24 @@
 <?php
 error_reporting(E_ALL | E_STRICT);
 require('vendor/autoload.php');
-use RestQuery\Query; 
+
+use RestQuery\Query;
 use RestQuery\Action\Run as run;
 use RestQuery\Action\Respond as respond;
-use Psr\Http\Message\ResponseInterface;
-use GuzzleHttp\Exception\RequestException;
+
 use GuzzleHttp\Promise;
 use GuzzleHttp\Client as client;
+use GuzzleHttp\Exception\RequestException;
+
+use Psr\Http\Message\ResponseInterface;
 
 
 //setup
 $q = new Query();
-$q->qElements['pr'] = "Apple";
+$q->qSelectors['pr'] = "Apple";
 $q->qType = 1;
-$tempQueryOne = 'orgs;name=Apple*';//manually define query
-$tempQueryTwo = 'pocs;name=Smith*';
-$tempQueryThree = 'customers;name=Apple*';
 
-$tempRunQueue = array(
+$q->qRunQueue = array(
     'orgs;name=Apple*',
     'pocs;name=Smith*',
     'customers;name=Apple*',
@@ -26,68 +26,11 @@ $tempRunQueue = array(
     'asns;name=Apple*'
 );
 
-//check setup
-//print_r($q->qElements);
-//manually create client
-$client = new client(
-            ['base_uri' => $q->qUriParts['base-uri']], //hardcoded uri to rest interface
-            ['headers' => ['Accept'     => 'application/json']] //set json to default for all api calls
-        );
-$promisesArrayOf = array();
-foreach( $tempRunQueue as $queryString ) {
-    array_push( $promisesArrayOf, $client->getAsync($queryString) );
-}
-/*
-$promisesArrayOf = [
-    'promiseOne' => $client->getAsync($tempQueryOne),
-    'promiseTwo' => $client->getAsync($tempQueryTwo)
-];
-*/
-/*
-$promise = $client->getAsync(
-    $tempQueryOne
-)->then(
-    function (ResponseInterface $response) {
-        $data = json_decode($response->getBody(), true);
-        print_r($data);
-        return $data;
-    },
-    function (RequestException $exception) {
-        $response = $exception->getResponse();
-        print_r($response->getStatusCode());
-    }
-);*/
+$client = run::CreateClient($q);
+$promisesArrayOf = run::CreatePromises($q, $client);
+run::StorePromiseResults($q, $promisesArrayOf);
+
+respond::SendResults($q);
 
 
-$rawResultsArrayOf = Promise\unwrap($promisesArrayOf);//wait for all promises passed to unwrap to resolve
-$finalResultsArrayOf = array();
-
-foreach($rawResultsArrayOf as $key => $queryResult) {
-    array_push($finalResultsArrayOf, $rawResultsArrayOf[$key]->getBody()->getContents());
-}
-//$resultOne = $rawResultsArrayOf[0]->getBody()->getContents();
-//$resultTwo = $rawResultsArrayOf[1]->getBody()->getContents();
-
-
-print_r($finalResultsArrayOf);
-//$data = $response->getBody();
-
-
-//respond::Results($data);
-
-
-//1 - hardcoded query, sync call API and print json WORKS
-//2 - hardcoded query, async call and print json WORKS
-//3 - hardcoded query, async call and pass json raw WORKS
-//4 - hardcoded query, two async calls and pass back json WORKS
-//5 - hardcoded query, variable number of async calls, pass back everything
-/* step 1, foreach queue items into promises array
- * step 2, foreach promises array and make async calls
- * step 3, foreach promises array for results
- * step 4, foreach print results
- */
-
-
-//6 - hardcoded query, variable async calls, wrap json in new container
-
-//??? send back json with correct status code to client
+//8 - hook up to analyzer and builder, then test sending results back to client
