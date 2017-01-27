@@ -5,6 +5,14 @@ namespace RestQuery\Arin;
 
 class Model {
 
+    private static $arinRecordFieldList = array(
+        'AllRecordsNoHint' => '',
+        0 => array('org'=>'name'),
+        1 => array('org'=>'handle'),
+    );
+
+//ArinModel:LookUpTarget($constant)
+
     /* @var array Contains field names for each record type
         * used to direct searches on specific fields
         * same order as whois.arin.net search results

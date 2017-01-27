@@ -126,5 +126,15 @@ This removes configuration code from WhatRecordsToQuery()
 The function will only find the endpoint, 
 lookup in the dict, 
 and executes the correct function
-
 */
+
+/*
+Analyzer validates qSelectors
+Analyzer selects qType
+Analyzer reads qParameters
+Analyzer selects qTarget
+	- calls to ArinModelReference:LookUpTarget($constant)
+		LookUpTarget() checks internal dictionary for $constant, returns array $targets
+	- Analyzer pushes $targets to qBuildQueue
+*/
+
