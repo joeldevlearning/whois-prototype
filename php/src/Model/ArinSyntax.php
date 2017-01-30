@@ -1,5 +1,5 @@
 <?php
-namespace RestQuery\Arin;
+namespace RestQuery\Model;
 
 //holds strings for ARIN's REST API syntax
 

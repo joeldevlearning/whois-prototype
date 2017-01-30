@@ -1,5 +1,4 @@
 <?php
-
 namespace RestQuery;
 
 class Query {
@@ -27,6 +26,7 @@ class Query {
         public $qType = "";
         
         /* @var array Contains list of records to query
+         * should be in the format of [0][recordType=>fieldType]
         */
         public $qBuildQueue = array();
 

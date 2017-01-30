@@ -2,7 +2,7 @@
 namespace RestQuery\Action;
 use RestQuery\Query;
 use RestQuery\Action\Respond as respond;
-use RestQuery\Arin\Model as model;
+use RestQuery\Model\ArinModel as model;
 
 /*
 TODO add IsCharacterType() and IsNumericType() for hinting 

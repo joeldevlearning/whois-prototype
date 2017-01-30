@@ -1,9 +1,19 @@
 <?php
-namespace RestQuery\Arin;
+namespace RestQuery\Model;
 
 //holds the list of records and fields 
 
-class Model {
+class ArinModel {
+
+    public static $fakeModel = array(
+                    'org' => array(//record type
+                        'org-pr-all' => array(//set of fields
+                        'name',
+                        'handle'
+                        )
+                    )
+    );
+
 
     private static $arinRecordFieldList = array(
         'AllRecordsNoHint' => '',
