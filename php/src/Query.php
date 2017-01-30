@@ -9,7 +9,8 @@ class Query {
         public $qSelectors = array();
 
         public $qParameters = array(
-        'enable_hinting' => '1', //enable by default
+        'enable_hinting' => 1, //enable by default
+        'enable_auto_wildcard' => 1, //enabled by default
         );
         /* @var integer Indicates what type of hint is available
         * "0" = no hint, hinting disabled
@@ -46,7 +47,8 @@ calls to the RunQueue would return one-by-one results from the array
         public $qUriParts = array(
                 'base-uri'              => 'http://whois.arin.net/rest/',
                 'matrix-record-suffix'  => "s;",
-                'matrix-field-prefix'   => "="
+                'matrix-field-prefix'   => "=",
+                'wildcard'              => "*"
             );
 
         /* @var string Contains URI fragment that is constant for all queries
@@ -83,5 +85,6 @@ calls to the RunQueue would return one-by-one results from the array
             else {
                 //do nothing, default remains at 1
             }
+            //TODO check for wildcard in pr and se, if present disable auto parameter
         }
 	}

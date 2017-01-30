@@ -2,6 +2,7 @@
 namespace RestQuery\Action;
 use RestQuery\Query;
 use RestQuery\Action\Respond as respond;
+use RestQuery\Action\AnalyzeLookUp as lookup;
 use RestQuery\Model\ArinModel as model;
 
 /*
@@ -90,14 +91,19 @@ class Analyze {
 
             // (pr) Q1
             case 1: 
-            echo "\nGenerating Q1... \n";
+            //echo "\nGenerating Q1... \n";
             if(!$query->qParameters['enable_hinting']){
-                echo "Proceeding with hinting DISABLED... \n";
-                
-                $query->qBuildQueue = array(
+                //echo "Proceeding with hinting DISABLED... \n";
+
+                $lookup = new lookup(); //call AnalyzeLookUp class
+                $targetSet = $lookup->LookUpRecordField('ALL_RECORDS_HINT_NAME');
+
+                $query->qBuildQueue = $targetSet;
+
+                /*$query->qBuildQueue = array(
                     0 => array('org'=>'name'),
                     1 => array('org'=>'handle'),    
-                );
+                );*/
             }
             else{
                 echo "Proceeding with hinting ENABLED.../n";

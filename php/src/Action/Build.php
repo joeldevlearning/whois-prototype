@@ -2,31 +2,32 @@
 namespace RestQuery\Action;
 use RestQuery\Query;
 
-/*
-
-*/
 
 class Build {
 
+    //only supports Q1 right now
     public static function CreateUri(Query $query){
+        if($query->qParameters['enable_auto_wildcard'] === 1)
+        {
+            $query->qSelectors['pr'] .= '*';
+        }
         foreach($query->qBuildQueue as $queueItem){
-        //drill down one level to reach record=>field pairs    
-            foreach($queueItem as $record=>$field){
+        //drill down one level to reach record=>field pairs
+            foreach($queueItem as $record=>$field)
+            {
                 
-                $query->qRunQueue[] = 
-                    //$query->qUriFragments['base-uri'] . 
+                $query->qRunQueue[] =
                     $record . 
-                    $query->qUriFragments['matrix-record-suffix'] . 
+                    $query->qUriParts['matrix-record-suffix'] .
                     $field . 
-                    $query->qUriFragments['matrix-field-prefix'] .
+                    $query->qUriParts['matrix-field-prefix'] .
                     $query->qSelectors['pr'];
+
             }
 
         }
 
     }
-
-//  Scan through outer loop
 
 
 /*
