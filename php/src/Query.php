@@ -82,9 +82,15 @@ calls to the RunQueue would return one-by-one results from the array
             if($hintFlag == 0) {
                 $this->qParameters['enable_hinting'] = 0;
             }
-            else {
+            else {/*do nothing, default remains at 1*/}
+
+            $wildCardFlag = filter_input(INPUT_GET, 'wildcard', FILTER_VALIDATE_INT);
+            if($wildCardFlag == FALSE || $wildCardFlag == NULL) {
                 //do nothing, default remains at 1
             }
-            //TODO check for wildcard in pr and se, if present disable auto parameter
+            if($wildCardFlag == 0) {
+                $this->qParameters['enable_auto_wildcard'] = 0;
+            }
+            else {/*do nothing, default remains at 1*/}
         }
 	}

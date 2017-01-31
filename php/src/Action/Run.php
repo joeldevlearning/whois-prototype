@@ -1,10 +1,10 @@
 <?php
 namespace RestQuery\Action;
 use RestQuery\Query;
-use GuzzleHttp\Client;
-use GuzzleHttp\Promise;
-use GuzzleHttp\HandlerStack;
+
+use GuzzleHttp\{Client,Promise,HandlerStack,Psr7};
 use GuzzleHttp\Handler\CurlHandler;
+use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\RequestInterface;
 
 class Run {
@@ -19,6 +19,7 @@ class Run {
             ['headers' => ['Accept' => 'application/json']] //for some reason this does NOT set the default, Why?
         );
         return $client;
+
     }
 
     /**
@@ -30,7 +31,11 @@ class Run {
     {
         $promisesArrayOf = array();
         foreach ($q->qRunQueue as $queryString) {
-            array_push($promisesArrayOf, $client->getAsync($queryString, ['headers' => ['Accept' => 'application/json']]));//HACK default setting not working, so force it here
+            $promise = $client->getAsync($queryString,
+                ['headers' => ['Accept' => 'application/json']]//HACK default json not working, repeat here
+            );
+
+            array_push($promisesArrayOf, $promise);
         }
         return $promisesArrayOf;
     }
@@ -41,7 +46,6 @@ class Run {
     public static function StorePromiseResults(Query $q, array $promisesArrayOf)
     {
         $rawResultsArrayOf = Promise\unwrap($promisesArrayOf);//wait for all promises passed to unwrap to resolve
-
         $finalResultsArrayOf = array();
 
         foreach ($rawResultsArrayOf as $key => $queryResult) {

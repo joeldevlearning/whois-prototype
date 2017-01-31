@@ -1,34 +1,31 @@
 <?php
 error_reporting(E_ALL | E_STRICT);
+require __DIR__.'/vendor/autoload.php';
 
-require('vendor/autoload.php');
-use RestQuery\Query; 
-use RestQuery\Action\Clean as clean;
-use RestQuery\Action\Analyze as analyze;
-use RestQuery\Action\Build as build;
-use RestQuery\Action\Run as run;
-use RestQuery\Action\Respond as respond;
-use GuzzleHttp\Client as restClient;
+use RestQuery\Query;
+use RestQuery\Action\{Analyze as analyze,Build as build,Run as run, Respond as respond};
 
-
-
+//setup
 $q = new Query();
-clean::Validate($q);
+//$q->qSelectors['pr'] = "Apple"; //wildcards enabled by default
+$q->qType = 1;
 
 analyze::IsQueryValid($q);
-analyze::WhatQueryType($q);
-
 analyze::WhatRecordsToQuery($q);
-
 build::CreateUri($q);
 
-$client = run::CreateClient($q);
-$data = run::ProcessQueue($q, $client);
-
-
 /*
+$q->qRunQueue = array(
+    'orgs;name=Apple*',
+    'pocs;name=Smith*',
+    'customers;name=Apple*',
+    'nets;name=Apple*',
+    'asns;name=Apple*'
+);*/
 
-$body = $response->getBody();
+$client = run::CreateClient($q);
+$promisesArrayOf = run::CreatePromises($q, $client);
+run::StorePromiseResults($q, $promisesArrayOf);
 
-*/
-respond::Results($data);
+respond::SendResults($q);
+

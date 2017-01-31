@@ -1,8 +1,9 @@
 <?php
 namespace RestQuery\Action;
 
-use Respect\Validation\Validator as validate;
 use RestQuery\Query;
+use Respect\Validation\Validator as v;
+
 class Clean
 {
     /**
@@ -13,6 +14,50 @@ class Clean
     *
     * @return object $query Returned with $qSelectors populated
     */
+
+    public static function FilterJunk(Query $query)
+    {
+        //do simple validation check
+        //if not alnum (including - and *), then fail
+        $stringFilter = v::alnum('*-')->length(1, 150);
+        $flagFilter =v::alnum()->length(1, 40);
+
+        //else, check for wildcards
+        //if only ONE wildcard at end, no problem
+        //else remove wildcard
+
+        //
+
+        //$recordFieldFilter
+
+        //@param key name, validator to apply
+        v::key('pr', $stringFilter)->validate($query->qSelectors['pr']);
+        v::key('se', $stringFilter)->validate($query->qSelectors['se']);
+
+        //if not alnum, remove all non-alnum characters
+        //if more than 150 characters, truncate
+
+        //if validator passes, handle wildcards
+        //if validator fails, remove special
+    }
+
+
+    public static function HandleWildCard(Query $query) {
+
+        /*Bad condition is if there is */
+        if ( isset($query->qSelectors['pr']) ) {
+            if ( strpos($query->qSelectors['pr'], '*') !== FALSE) {
+                //if exists, check if it is at end
+                if ( substr($query->qSelectors['pr'], -1) === '*') {
+                    //last character is *, do nothing
+                }
+                else {
+                    //another character must be *, needs to be cleaned
+                }
+            }
+        }
+    }
+
 
     public static function Validate(Query $query)
     {

@@ -2,7 +2,7 @@
 
 var fixedUrl = 'http://whois.arin.net/rest/orgs;name=Apple*';
 var localPhpApiUrl = 'http://127.0.0.1/whois/php/api.php';
-var remotePhpApiUrl = 'http://who.nfshost.com/api.php';
+var remotePhpApiUrl = 'http://who.nfshost.com/php/api.php';
 
 $("#q1_form").submit(function(){
         var query = $('#q1_form').serialize();
