@@ -4,7 +4,8 @@ use RestQuery\Query;
 
 use GuzzleHttp\{Client,Promise,HandlerStack,Psr7};
 use GuzzleHttp\Handler\CurlHandler;
-use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\{ClientException, RequestException, TransferException};
+
 use Psr\Http\Message\RequestInterface;
 
 class Run {
@@ -18,7 +19,7 @@ class Run {
             ['base_uri' => $q->qUriParts['base-uri']], //hardcoded uri to rest interface
             ['headers' => ['Accept' => 'application/json']] //for some reason this does NOT set the default, Why?
         );
-        return $client;
+            return $client;
 
     }
 
@@ -45,15 +46,28 @@ class Run {
      */
     public static function StorePromiseResults(Query $q, array $promisesArrayOf)
     {
-        $rawResultsArrayOf = Promise\unwrap($promisesArrayOf);//wait for all promises passed to unwrap to resolve
-        $finalResultsArrayOf = array();
+        try {
 
-        foreach ($rawResultsArrayOf as $key => $queryResult) {
-            array_push($q->qTransformQueue, $rawResultsArrayOf[$key]->getBody()->getContents());
+            $rawResultsArrayOf = Promise\unwrap($promisesArrayOf);//wait for all promises passed to unwrap to resolve
+            $finalResultsArrayOf = array();
+
+            foreach ($rawResultsArrayOf as $key => $queryResult) {
+                array_push($q->qTransformQueue, $rawResultsArrayOf[$key]->getBody()->getContents());
+            }
+        }
+        catch (ClientException $e) {
+            $exceptionCode = $e->getCode();
+            $exceptionMessage = $e->getMessage();
+        }
+        catch (RequestException $e) {
+            $exceptionCode = $e->getCode();
+            $exceptionMessage = $e->getMessage();
+        }
+        catch (\Exception $e) {
+            $exceptionCode = $e->getCode();
+            $exceptionMessage = $e->getMessage();
         }
     }
-
-
 
 
 
