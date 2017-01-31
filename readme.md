@@ -1,6 +1,6 @@
 # whois-prototype
 
-###Experimental client and api for ARIN's RESTful whois service
+###Experimental client and api for ARIN's RESTful whois service (RWS)
 
 ##Purpose
 Prototype the features of a search-friendly interface to ARIN's whois REST service. 
@@ -12,7 +12,7 @@ Prototype the features of a search-friendly interface to ARIN's whois REST servi
 
 3. Support **exploration** of the API (Query results should show explicit relationships between records; the UI should allow the user to browse these related records)
 
-##Features
+##Feature set
 ###Client Features
 ||
 |:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -40,7 +40,7 @@ Prototype the features of a search-friendly interface to ARIN's whois REST servi
 Currently an **HTML/bootstrap3** frontend, **JQuery** for UI tasks, and a **PHP/Guzzle** backend generating, running, and returning collection results. The API wrapper takes priority, so the UI is thin for now.  
 
 ###ARIN documentation
-ARIN's website already features a [whois search form](https://www.arin.net/) (and an [advanced search](https://whois.arin.net/ui/advanced.jsp)), which offers some conveniences beyond the basic API (e.g. searching multiple record types at once). Unfortunately the search form uses internal, unreleased code. Many of the prototype's features are inspired by the web interface, and this project's goals are to overcome some of its limitations.
+ARIN's website already features a [whois search form](https://www.arin.net/) (and an [advanced search](https://whois.arin.net/ui/advanced.jsp)), which offers some conveniences beyond the basic API (e.g. searching multiple record types with one a single query). Unfortunately the search form uses internal, unreleased code. Many of the prototype's features are inspired by the web interface, and this project's goals are to overcome some of its limitations.
 
 ARIN's whois REST API features can be found at: https://www.arin.net/resources/whoisrws/index.html
 

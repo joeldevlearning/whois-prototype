@@ -14,6 +14,15 @@ class Respond {
         json_encode($message);
         header('Content-Type: application/json');
         echo $message;
+        exit;
+    }
+
+    public static function InvalidInput(){
+        $message = "The query contained invalid input.";
+        json_encode($message);
+        header('Content-Type: application/json');
+        echo $message;
+        exit;
     }
 
     /**

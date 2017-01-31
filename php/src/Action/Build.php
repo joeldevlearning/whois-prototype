@@ -21,7 +21,7 @@ class Build {
                     $query->qUriParts['matrix-record-suffix'] .
                     $field . 
                     $query->qUriParts['matrix-field-prefix'] .
-                    $query->qSelectors['pr'];
+                    $query->qSelectors['pr'] . '*';//HACK need to check flag before adding this
 
             }
 

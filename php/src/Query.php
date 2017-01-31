@@ -55,24 +55,24 @@ calls to the RunQueue would return one-by-one results from the array
         * TODO separate this into a configuration file somewhere
         */
 
-        function __construct() {
+        public function __construct() {
             $this->qSelectors = [
             "pr"        => filter_input(INPUT_GET, 'pr', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            "prflag"    => filter_input(INPUT_GET, 'prFlag', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            "prflag"    => filter_input(INPUT_GET, 'prflag', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
             "se"        => filter_input(INPUT_GET, 'se', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            "seflag"    => filter_input(INPUT_GET, 'seFlag', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            "seflag"    => filter_input(INPUT_GET, 'seflag', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
             ];
-            if(empty($query->qElements['pr'])) {
-            $query->qElements['pr'] = NULL;
+            if(empty($this->qSelectors['pr'])) {
+                $this->qSelectors['pr'] = NULL;
             }
-            if(empty($query->qElements['prflag'])) {
-                $query->qElements['prflag'] = NULL;
+            if(empty($this->qSelectors['prflag'])) {
+                $this->qSelectors['prflag'] = NULL;
             }
-            if(empty($query->qElements['se'])) {
-                $query->qElements['se'] = NULL;
+            if(empty($this->qSelectors['se'])) {
+                $this->qSelectors['se'] = NULL;
             }
-            if(empty($query->qElements['seflag'])) {
-                $query->qElements['seflag'] = NULL;
+            if(empty($this->qSelectors['seflag'])) {
+                $this->qSelectors['seflag'] = NULL;
             }
 
             $hintFlag = filter_input(INPUT_GET, 'hint', FILTER_VALIDATE_INT);
