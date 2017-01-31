@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>WHOIS REST Client</title>
+  <title>whois RWS client + API</title>
   <link href="./css/bootstrap.min.css" rel="stylesheet">
   <link href="./css/cover.css" rel="stylesheet">
   <link rel="stylesheet" href="./css/railscasts.css">
@@ -22,7 +22,7 @@
           <div class="inner">
             <h3 class="masthead-brand">
               <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>
-              <em class="whois-brand">WHOIS</em> REST Client</h3>
+              <em class="whois-brand">whois</em> RWS Client + API</h3>
             <nav class="nav nav-masthead">
               <!--
                 <a class="nav-link active" href="#">Home</a>
@@ -54,38 +54,18 @@
                 </form>      
         
 <pre><code>//input is one string, no flags
+/* Q1 queries all record types (asn, cus, net, org, poc)*/
 
-//Q1 produces the following URLs:
-/orgs;name=Apple* AND /customers;name=Apple* AND /pocs;name=Apple* 
-AND /asns;name=Apple* AND /nets;name=Apple*
-
-//TODO
-//end-boundary wildcards are optional; 
-//if no-wildcard gives no results in a record type, try adding a wildcard
-
-//what about wildcards between string char? and multiple wildcards?
-//what about spaces (e.g. "Apple Computer" and "AppleComputer")?
-
-//API caps results at 255; how can we call to get more? 
-//  (search box on arin.net seems to have no or different caps?)
-
-//should be counting returned records
-//should be collecting records for the same entity, e.g. customers APPLE-1, APPLE-2
-//should be returning links to related records, if they exist
-//can we link and display records together, e.g. POC and org-of-poc?
-
+//if wildcard is omitted, one is added (unless wildcard=0 is passed)
 </code></pre>
-
-
-                
               </div>
             </div>
             <!--END section-->
 
             <!--BEGIN section-->
             <div class="jumbotron el-box">
-              <h2 class="border-box icon-size pull-left">Q2</h2>
-              <p>Find "org" records matching <span id="q2_pr_target">"Apple"</span></p>
+              <h2 class="border-box icon-size pull-left" style="background-color:grey;color:rgb(175,175,175);">Q2</h2>
+              <p style="color:rgb(175,175,175);">Find "org" records matching <span id="q2_pr_target">"Apple"</span></p>
               <div class="search-form">
                 <form class="form-inline" id="q2_form" method="get">
                   <div class="form-group">
@@ -107,13 +87,7 @@ AND /asns;name=Apple* AND /nets;name=Apple*
                 </form>
 <pre><code>//input is one string, one flag
 
-//Q2 produces the following URLs:
-/orgs;name=Apple OR /org/apple-203 OR /orgs;name=Apple*
-
-//NOTES
-//a flag limits the search results to one record type, increasing risk of "no result"
-//"no result" is important, but some entities are both orgs and customers, for example
-//if no results, consider a second round of searches
+/* Q2 searches one record type (e.g. "org") */
 </code></pre>
 
               </div>
@@ -121,8 +95,8 @@ AND /asns;name=Apple* AND /nets;name=Apple*
           
             <!--BEGIN section-->
             <div class="jumbotron el-box">
-              <h2 class="border-box icon-size pull-left">Q3</h2>
-              <p>Find the IP addresses of any "org" record matching "Apple"</p>
+              <h2 class="border-box icon-size pull-left" style="background-color:grey;color:rgb(175,175,175);">Q3</h2>
+              <p style="color:rgb(175,175,175);">Find the IP addresses of any "org" record matching "Apple"</p>
               <div class="search-form">
                 <form class="form-inline" id="q3_form" method="get">
                   <div class="form-group">
@@ -152,15 +126,16 @@ AND /asns;name=Apple* AND /nets;name=Apple*
                   <br><br>
                   <button type="submit" class="btn btn-primary">Search</button>
                 </form>
-<pre><code>//input is one string, two *ordered* record flags
-//Q3 produces the following URLs in two steps:
-1: $ORG-HANDLE = CallApi(/orgs;name=Apple*) 
-2: /org/$ORG-HANDLE/ip
+<pre><code>//input is one string, two flags
+/* Q3 produces two rounds of queries:
+1st round: search for "org" records by string "Apple"
+2nd round: search for the ip address of each returned org record
+*/
 
 //NOTES
-//This allows us to grab records by association
-//The ideal query output would be "org/apple*/ip"...
-//...but the wildcard is not allowed between slashes	
+//RWS supports related records like this via syntax like "org/HANDLE/ip"...
+//...but the wildcard is not allowed between slashes, so HANDLE must be exact
+//e.g. "org/apple*/ip" is not allowed
 
 </code></pre>
 
@@ -169,8 +144,8 @@ AND /asns;name=Apple* AND /nets;name=Apple*
 
             <!--BEGIN section-->
             <div class="jumbotron el-box">
-              <h2 class="border-box icon-size pull-left">Q4</h2>
-              <p>Find the org "Apple" with any IP record matching "192.100.69.16"</p>
+              <h2 class="border-box icon-size pull-left" style="background-color:grey;color:rgb(175,175,175);">Q4</h2>
+              <p style="color:rgb(175,175,175);">Find the org "Apple" with any IP record matching "192.100.69.16"</p>
               <div class="search-form">
                 <form class="form-inline" id="q4_form" method="get">
                   <div class="form-group">
@@ -203,15 +178,12 @@ AND /asns;name=Apple* AND /nets;name=Apple*
                   <br><br>
                   <button type="submit" class="btn btn-primary">Search</button>
                 </form>
-<pre><code>//input is two strings, two *ordered* record flags
-//Q4 produces the following URLs in two steps:
-1: $ORG-HANDLE = CallApi(/orgs;name=Apple*) 
-2: $RESULT = FilterByIP
-  (url = /org/$ORG-HANDLE/pocs, 
-  ip = "192.100.69.16")
+<pre><code>//input is two strings, two flags
+/*Q4 produces one round of queries, plus one selection round:
+1st round: search by ip
+2nd round: Select records where name/org matches/includes Apple
 
-//NOTES
-//consider wildcards on the IP address
+*/
 </code></pre>
 
               </div>
@@ -220,13 +192,13 @@ AND /asns;name=Apple* AND /nets;name=Apple*
           </div>
           <!--END Search input section-->
           <div class="col-md-4">
-            <h1 class="results-title"><span class="glyphicon glyphicon-cloud-download shadow-text download-color" aria-hidden="true"></span> Results</h1>
+            <h1 id="results" class="results-title"><span class="glyphicon glyphicon-cloud-download shadow-text download-color" aria-hidden="true"></span> Results</h1>
           <div class="jumbotron el-box">
 
             <div>
               <span class="subsection-title">Status:</span><span id="ajax-status-box" class="message-box feedback-off"></span>
-              <span class="subsection-title">URL:</span><span id="ajax-url-box" class="message-box feedback-off"></span>
-                            <span class="subsection-title">Query:</span><span id="ajax-query-box" class="message-box feedback-off"></span>
+              <span class="subsection-title">Local API URL:</span><span id="ajax-url-box" class="message-box feedback-off"></span>
+                            <span class="subsection-title">Query Selectors:</span><span id="ajax-query-box" class="message-box feedback-off"></span>
               <span class="subsection-title">Raw JSON:</span><pre><code id="ajax-response-box" class="json"></code></pre></p>
             </div>            
           </div>
@@ -235,7 +207,7 @@ AND /asns;name=Apple* AND /nets;name=Apple*
         </div>
         <div class="mastfoot">
           <div class="inner">
-            <p>Last Updated 2017-01-10</p>
+            <p>Last Updated 2017-01-31</p>
           </div>
         </div>
       </div>

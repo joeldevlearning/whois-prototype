@@ -29,10 +29,12 @@ $("#q1_form").submit(function(){
                         $( "#ajax-response-box" ).each(function(i, block) {
                             hljs.highlightBlock(block);
                         });
+                        ScrollToResults();
                         },
             error       : function() {
                         $( "#ajax-status-box" ).removeClass("feedback-off").addClass("feedback-on error").html("error");
-                        }  ///                      
+                        ScrollToResults();
+                        }
         });
 return false;
 });
@@ -41,3 +43,9 @@ $("#pr").on('keyup', function(event) {
        var data=$(this).val();
        $("#q1_pr_target").text(data);
 });
+
+function ScrollToResults() {
+    $('body').animate({scrollTop:$('#results').offset().top -30 },'fast');
+}
+
+
