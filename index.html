@@ -35,63 +35,64 @@
         <div class="row">
           <div class="col-md-8">
             <!--BEGIN Search input section-->
+              <h1>
+                  <span class="glyphicon glyphicon-cloud-upload shadow-text upload-color" aria-hidden="true"></span> Call API
+              </h1>
+
+              <!--BEGIN section-->
+              <div class="jumbotron el-box">
+                  <h2 class="border-box icon-size pull-left">Q1</h2>
+                  <p>Find "org" records matching <span id="q1_pr_target">"Apple"</span></p>
+                  <div class="search-form">
+                      <form class="form-inline" id="q1_form" method="get">
+                          <div class="form-group">
+                              <label class="label-big" for="q1_primary_search"></label>
+                              <input type="text" class="form-control" name="pr"  placeholder="Search String" value="Apple">
+                          </div>
+                          <select class="form-control" id="q1_primary_record_flag" name="prflag" placeholder="record type">
+                              <!--<option value="" disabled selected>Record Type...</option>-->
+                              <option value="asn" disabled>AS Number</option>
+                              <option value="cus" disabled>Customer</option>
+                              <option value="net" disabled>NET block</option>
+                              <option value="ip" disabled>IP or CIDR</option>
+                              <option value="org" selected>Organization</option>
+                              <option value="poc" disabled>Point of Contact</option>
+                              <option value="rdns" disabled>RDNS</option>
+                          </select>
+                          <br><br>
+                          <button type="submit" class="btn btn-primary" id="q1_submit">Search</button>
+                      </form>
+                      <pre><code>//input is one string, one flag
+
+/* Q1 searches one record type (e.g. "org") */
+</code></pre>
+
+                  </div>
+              </div><!--END section-->
+
             <!--BEGIN section-->
-            <h1>
-              <span class="glyphicon glyphicon-cloud-upload shadow-text upload-color" aria-hidden="true"></span> Call API
-            </h1>
             <div class="jumbotron el-box">
-              <h2 class="border-box icon-size pull-left">Q1</h2>
-              <p>Find anything matching <span id="q1_pr_target" class="as-you-type">"Apple"</span></p>
+              <h2 class="border-box icon-size pull-left" style="background-color:grey;color:rgb(175,175,175);">Q2</h2>
+              <p style="color:rgb(175,175,175);">Find anything matching <span id="q2_pr_target" class="as-you-type">"Apple"</span></p>
               <div class="search-form">
                 
-                <form class="form-inline" id="q1_form" method="get">
+                <form class="form-inline" id="q2_form" method="get">
                   <div class="form-group">
                     <label class="label-big" for="pr"></label>
-                    <input type="text" class="form-control" id="pr" name="pr" placeholder="Search String" value="Apple*">
+                    <input type="text" class="form-control" id="pr2" name="pr2" placeholder="Search String" value="Apple*">
                   </div>
                   <br><br>
-                  <button type="submit" class="btn btn-primary" id="q1_submit">Search</button>
+                  <button type="submit" class="btn btn-primary" id="q2_submit">Search</button>
                 </form>      
         
 <pre><code>//input is one string, no flags
-/* Q1 queries all record types (asn, cus, net, org, poc)*/
+/* Q2 queries all record types (asn, cus, net, org, poc)*/
 
 //if wildcard is omitted, one is added (unless wildcard=0 is passed)
 </code></pre>
               </div>
             </div>
             <!--END section-->
-
-            <!--BEGIN section-->
-            <div class="jumbotron el-box">
-              <h2 class="border-box icon-size pull-left" style="background-color:grey;color:rgb(175,175,175);">Q2</h2>
-              <p style="color:rgb(175,175,175);">Find "org" records matching <span id="q2_pr_target">"Apple"</span></p>
-              <div class="search-form">
-                <form class="form-inline" id="q2_form" method="get">
-                  <div class="form-group">
-                    <label class="label-big" for="q2_primary_search"></label>
-                    <input type="text" class="form-control" id="q2_primary_search" placeholder="Search String" value="Apple">
-                  </div>
-                  <select class="form-control" id="q2_primary_record_flag" placeholder="record type">
-                    <!--<option value="" disabled selected>Record Type...</option>-->
-                    <option value="asn" disabled>AS Number</option>
-                    <option value="cust" disabled>Customer</option>
-                    <option value="net" disabled>NET block</option>
-                    <option value="ip" disabled>IP or CIDR</option>
-                    <option value="org" selected>Organization</option>
-                    <option value="poc" disabled>Point of Contact</option>
-                    <option value="rdns" disabled>RDNS</option>
-                  </select>
-                  <br><br>
-                  <button type="submit" class="btn btn-primary">Search</button>
-                </form>
-<pre><code>//input is one string, one flag
-
-/* Q2 searches one record type (e.g. "org") */
-</code></pre>
-
-              </div>
-            </div><!--END section-->
           
             <!--BEGIN section-->
             <div class="jumbotron el-box">

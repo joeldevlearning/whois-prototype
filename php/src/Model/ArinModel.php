@@ -5,15 +5,76 @@ namespace RestQuery\Model;
 class ArinModel
 {
     private static $recordFieldList = array(
+        'asn' => array(//record type
+            'asn-pr-all' => array(//set of fields
+                'name',
+                'organization',
+                'number',
+                'handle'
+            ),
+            'asn-pr-name' => array(
+                'name',
+                'organization'
+            ),
+            'asn-pr-number' => array(
+                'number',
+                'handle'
+            ),
+        ),
+
+        'cus' => array(//record type
+            'cus-pr-all' => array(//set of fields
+                'name',
+                'handle'
+            ),
+            'cus-pr-name' => array(
+                'name'
+            ),
+            'cus-pr-number' => array(
+                'handle'
+            ),
+        ),
+
+        'net' => array(//record type
+            'net-pr-all' => array(//set of fields
+                'name',
+                'ip',
+                'handle'
+            ),
+            'net-pr-name' => array(
+                'name'
+            ),
+            'net-pr-number' => array(
+                'ip',
+                'handle'
+            ),
+        ),
+
         'org' => array(//record type
             'org-pr-all' => array(//set of fields
                 'name',
                 'handle'
             ),
             'org-pr-name' => array(
-                'name'
-            )
-        )
+                'name',
+                'handle'
+            ),
+            'org-pr-number' => NULL,// no viable number fields that identify record
+        ),
+
+        'poc' => array(//record type
+            'poc-pr-all' => array(//set of fields
+                'name',
+                'handle',
+                'domain'
+            ),
+            'poc-pr-name' => array(
+                'name',
+                'handle',
+                'domain'
+            ),
+            'poc-pr-number' => NULL,
+        ),
     );
 
     /**

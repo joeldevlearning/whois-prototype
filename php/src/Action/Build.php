@@ -15,14 +15,12 @@ class Build {
         //drill down one level to reach record=>field pairs
             foreach($queueItem as $record=>$field)
             {
-                
                 $query->qRunQueue[] =
                     $record . 
                     $query->qUriParts['matrix-record-suffix'] .
                     $field . 
                     $query->qUriParts['matrix-field-prefix'] .
                     $query->qSelectors['pr'] . '*';//HACK need to check flag before adding this
-
             }
 
         }

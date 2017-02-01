@@ -10,8 +10,7 @@ TODO add IsCharacterType() and IsNumericType() for hinting
 */
 
 class Analyze {
-    
-        //TODO return the proper headers here with an error message
+
     /*Invalid query combinations are:
         a) se (would have to assume that this is pr; bad assumption)
         b) prflag (no search string)
@@ -73,7 +72,7 @@ class Analyze {
     public static function WhatQueryType(Query $query){
         //match (pr), Q1
         if( $query->qSelectors['pr'] !== NULL &&
-            $query->qSelectors['prflag'] === NULL &&
+            $query->qSelectors['prflag'] !== NULL &&
             $query->qSelectors['se'] === NULL &&
             $query->qSelectors['seflag'] === NULL ){
         //then    
@@ -87,33 +86,24 @@ class Analyze {
     
     //TODO only works for Q1 right now
     public static function WhatRecordsToQuery(Query $query){
+        $lookup = new lookup(); //call AnalyzeLookUp class
+
         switch($query->qType){
 
-            // (pr) Q1
-            case 1: 
-            //echo "\nGenerating Q1... \n";
-            if(!$query->qParameters['enable_hinting']){
-                //echo "Proceeding with hinting DISABLED... \n";
-
-                $lookup = new lookup(); //call AnalyzeLookUp class
-                $targetSet = $lookup->LookUpRecordField('ALL_RECORDS_HINT_NAME');
-
-                $query->qBuildQueue = $targetSet;
-
-                /*$query->qBuildQueue = array(
-                    0 => array('org'=>'name'),
-                    1 => array('org'=>'handle'),    
-                );*/
-            }
-            else{
-                echo "Proceeding with hinting ENABLED.../n";
-                //proceed with hints
-                if($query->qParameters['enable_hinting'] === 1){
-                    //identify search string as name or number
-                    //foreach($query->qRecordList as $key => &$record){ }
+            case 1: // pr only
+                if(!$query->qParameters['enable_hinting']){
+                    $query->qBuildQueue = $lookup->LookUpRecordField('ORG_RECORDS_HINT_NAME');
                 }
-            }
-            break;//end case 1
+                else{
+                    //if($query->qParameters['enable_hinting'] === 1){
+                        //add custom validator for name/number type
+                        //should correspond to possible rules for all record types
+                        //foreach($query->qRecordList as $key => &$record){ }
+                    //}
+                }
+                break;//end case 1
+            default: //should never reach here
+
         }//end switch
     }
 

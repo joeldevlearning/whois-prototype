@@ -8,18 +8,30 @@ class AnalyzeLookUp
     private $lookUpTable;
 
     /**
-     * PHP does not allow the lambda expressions in default class variables/fields
-     * So we put it in this function, called by the constructor
+     * PHP does not allow predefined lambda expressions in default class variables/fields
+     * So we put them in this function and have the constructor call it
+     * By putting the lambdas into $lookUpTable, we persist them
+     * Analyze instantiates this class
      */
     public function LoadLookUpTable()
     {
         //Define lambda
         $pull_AllRecordsHintName = function() {
-            return model::PullRecordField( 'org', 'pr', 'all');
+            $array = array_merge(model::PullRecordField( 'asn', 'pr', 'all'),
+                                //model::PullRecordField( 'cus', 'pr', 'all'),
+                                model::PullRecordField( 'net', 'pr', 'all'),
+                                model::PullRecordField( 'org', 'pr', 'all'),
+                                model::PullRecordField( 'poc', 'pr', 'all')
+            );
+            return $array;
         };
-
         //push lambda to array
         $this->lookUpTable['ALL_RECORDS_HINT_NAME'] = $pull_AllRecordsHintName();
+
+        $pull_OrgRecordsHintName = function() {
+            return model::PullRecordField( 'org', 'pr', 'name');
+        };
+        $this->lookUpTable['ORG_RECORDS_HINT_NAME'] = $pull_OrgRecordsHintName();
 
     }
 

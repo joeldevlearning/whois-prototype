@@ -13,6 +13,8 @@ $q->qType = 1;
 clean::ValidateSelectors($q);
 analyze::IsQueryValid($q);
 analyze::WhatRecordsToQuery($q);
+
+
 build::CreateUri($q);
 
 /*

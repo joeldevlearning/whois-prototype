@@ -2,12 +2,8 @@
 namespace RestQuery\Action;
 use RestQuery\Query;
 
-/*
-This class sends headers back to the client
-*/
-
-
 class Respond {
+//TODO return the proper headers here with an error message
 
     public static function QueryNotSupported(){
         $message = "Query is not yet supported";
