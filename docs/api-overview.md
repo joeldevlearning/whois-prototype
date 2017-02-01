@@ -66,7 +66,7 @@ The client makes a GET request to api.php, which creates a Query object. This ob
 ####Build 
 - Create formatted query strings for ARIN RWS
 
-####Run 
+####Request
 - Asynchronously send REST queries (with **Guzzle**)
 - Receive and store responses
 - Handle errors

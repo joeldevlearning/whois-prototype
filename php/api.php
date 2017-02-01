@@ -3,7 +3,7 @@ error_reporting(E_ALL | E_STRICT);
 require __DIR__.'/vendor/autoload.php';
 
 use RestQuery\Query;
-use RestQuery\Action\{Clean as clean,Analyze as analyze,Build as build,Run as run, Respond as respond};
+use RestQuery\Action\{Clean as clean,Analyze as analyze,Build as build,Request as request, Respond as respond};
 use GuzzleHttp\Promise;
 
 //setup
@@ -27,9 +27,10 @@ build::CreateUri($q);
     'asns;name=AppleAppleAple*'
 );*/
 
-$client = run::CreateClient($q);
-$promisesArrayOf = run::CreatePromises($q, $client);
+$client = request::CreateClient($q);
+$promisesArrayOf = request::CreatePromises($q, $client);
 Promise\settle($promisesArrayOf)->wait();
 
 respond::SendResults($q);
+
 

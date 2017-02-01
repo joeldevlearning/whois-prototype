@@ -8,7 +8,7 @@ use GuzzleHttp\Exception\{ClientException, RequestException, TransferException};
 
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
 
-class Run {
+class Request {
     /**
      * @param $q
      * @return $client
@@ -36,7 +36,7 @@ class Run {
             $promise = $client->getAsync($queryString,
                 ['headers' => ['Accept' => 'application/json']]
             )->then(
-                function (ResponseInterface $res) use ($q) {
+                function (ResponseInterface $res) use ($q) {//$q is object, so passed by reference
                     $q->qTransformQueue[] = $res->getBody()->getContents();
                     $q->qReportQueue[] = $res->getStatusCode() . ',' . $res->getReasonPhrase();
                 },

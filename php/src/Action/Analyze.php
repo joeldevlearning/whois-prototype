@@ -33,7 +33,14 @@ class Analyze {
 
             case 1: // pr only
                 if(!$query->qParameters['enable_hinting']){
-                    $query->qBuildQueue = $lookup->LookUpRecordField('ORG_RECORDS_HINT_NAME');
+                    switch($query->qSelectors['prflag']) {
+
+                        case 'org':
+                            $query->qBuildQueue = $lookup->LookUpRecordField('ORG_RECORDS_HINT_NAME');
+                            break;//must break to avoid default
+                        default:
+                            $query->qBuildQueue = $lookup->LookUpRecordField('ALL_RECORDS_HINT_NAME');
+                    }
                 }
                 else{
                     if($query->qParameters['enable_hinting'] === 1){
