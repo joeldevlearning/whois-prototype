@@ -18,7 +18,7 @@ class AnalyzeLookUp
         //Define lambda
         $pull_AllRecordsHintName = function() {
             $array = array_merge(model::PullRecordField( 'asn', 'pr', 'all'),
-                                //model::PullRecordField( 'cus', 'pr', 'all'),
+                                model::PullRecordField( 'cus', 'pr', 'all'),
                                 model::PullRecordField( 'net', 'pr', 'all'),
                                 model::PullRecordField( 'org', 'pr', 'all'),
                                 model::PullRecordField( 'poc', 'pr', 'all')

@@ -7,7 +7,7 @@ use Respect\Validation\Validator as v;
 
 class Clean
 {
-    public static function ValidateSelectors(Query $query)
+    public static function ValidateInput(Query $query)
     {
         //create validators
         $stringFilter   = v::alnum('*-')->length(1, 101); //allow * and - characters

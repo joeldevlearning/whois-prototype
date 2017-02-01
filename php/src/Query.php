@@ -42,6 +42,8 @@ calls to the RunQueue would return one-by-one results from the array
 
         public $qTransformQueue = array();
 
+        public $qReportQueue = array();
+
         public $qRespondQueue = array();
 
         public $qUriParts = array(

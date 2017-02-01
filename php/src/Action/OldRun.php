@@ -6,7 +6,8 @@ use GuzzleHttp\{Client,Promise,HandlerStack,Psr7};
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\Exception\{ClientException, RequestException, TransferException};
 
-use Psr\Http\Message\{RequestInterface, ResponseInterface};
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class Run {
     /**
@@ -59,6 +60,74 @@ class Run {
 
     public static function SyncPromises( array $promisesArray ) {
         Promise\settle($promisesArray)->wait();
+    }
+
+
+    public static function SyncAndPullPromises(Query $q, array $promisesArray)
+    {
+        Promise\settle($promisesArray)->wait();//wait for all promises passed to resolve, then unwrap
+        //foreach( $rawResultsArrayOf as $key => $queryResult ) {
+        //    $q->qTransformQueue[] = $queryResult;
+
+
+        //}
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * @param $promisesArrayOf
+     */
+    public static function StorePromiseResults(Query $q, array $promisesArrayOf)
+    {
+        /*try {
+            $rawResultsArrayOf = Promise\settle($promisesArrayOf)->wait();//wait for all promises passed to resolve, then unwrap
+
+/*
+            foreach ($rawResultsArrayOf as $key => $queryResult) {
+                $temp = $queryResult;
+                if ($temp['state'] === 'fulfilled') {
+                    $q->qTransformQueue[] = $temp['state'];
+                }
+
+
+                //array_push($q->qTransformQueue, $rawResultsArrayOf[$key]->getBody()->getContents());
+        }
+        /*}
+        catch (ClientException $e) {
+            $exceptionCode = $e->getCode();
+            $exceptionMessage = $e->getMessage();
+            //echo $e->getResponse();
+        }
+        catch (RequestException $e) {
+            $exceptionCode = $e->getCode();
+            $exceptionMessage = $e->getMessage();
+            //echo $e->getResponse();
+        }
+        catch (\Exception $e) {
+            $exceptionCode = $e->getCode();
+            $exceptionMessage = $e->getMessage();
+        }
+        finally {
+
+        }*/
     }
 
 
