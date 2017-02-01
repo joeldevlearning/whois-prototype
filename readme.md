@@ -15,6 +15,9 @@ This is a learning project: Discover features, try to implement them, and experi
 
 3. Support **exploration** of the API (Query results should show explicit relationships between records; the UI should allow the user to browse these related records)
 
+#Demo
+Try the online demo: 
+http://who.nfshost.com
 #Documentation
 [API overview](docs/api-overview.md)
 
