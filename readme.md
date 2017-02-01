@@ -35,6 +35,8 @@ Prototype the features of a search-friendly interface to ARIN's whois REST servi
 |:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | - Support wildcards for all queries (including IP addresses) | - Support for domain names (combining DNS and ARIN results); Overcome RWS query limits (255 records per query) |
 
+###Documentation
+[API overview](docs/api-overview.md)
 
 ###Dependencies
 Currently an **HTML/bootstrap3** frontend, **JQuery** for UI tasks, and a **PHP/Guzzle** backend generating, running, and returning collection results. The API wrapper takes priority, so the UI is thin for now.  

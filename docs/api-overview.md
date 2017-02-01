@@ -38,11 +38,11 @@ For example, if _disabled_, a search for `Dog` will _not_ return `DogLovers`, on
 ###What input does the API accept? reject?
 - ACCEPT Any alphanumeric string 
 - ACCEPT any string of 100 characters or less
-- ACCEPT a single wildcard at the string's end (subject to change)
+- ACCEPT one or more wildcard `*` symbols in a string
+- ACCEPT one or more dash `-` symbols in a string
 
 ...
-- REJECT a wildcard that is not at the string's end (subject to change)
-- REJECT any non-alphanumeric characters
+- REJECT any non-alphanumeric characters (excluding `*` and `-`)
 - REJECT a string longer than 100 characters
 
 ##Implementation
