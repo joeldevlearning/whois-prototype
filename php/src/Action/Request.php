@@ -1,7 +1,8 @@
 <?php
 namespace RestQuery\Action;
-use RestQuery\Query;
 
+use RestQuery\Query;
+use RestQuery\Model\ArinConfig as config;
 use GuzzleHttp\{Client,Promise,HandlerStack,Psr7};
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\Exception\{ClientException, RequestException, TransferException};
@@ -16,7 +17,7 @@ class Request {
     public static function CreateClient( Query $q)
     {
         $client = new Client(
-            ['base_uri' => $q->qUriParts['base-uri']], //hardcoded uri to rest interface
+            ['base_uri' => config::$rwsRootUri], //hardcoded uri to rest interface
             ['headers' => ['Accept' => 'application/json']], //for some reason this does NOT set the default, Why?
             ['http_errors' => false]
         );

@@ -46,17 +46,6 @@ calls to the RunQueue would return one-by-one results from the array
 
         public $qRespondQueue = array();
 
-        public $qUriParts = array(
-                'base-uri'              => 'http://whois.arin.net/rest/',
-                'matrix-record-suffix'  => "s;",
-                'matrix-field-prefix'   => "=",
-                'wildcard'              => "*"
-            );
-
-        /* @var string Contains URI fragment that is constant for all queries
-        * TODO separate this into a configuration file somewhere
-        */
-
         public function __construct() {
             $this->qSelectors = [
             "pr"        => filter_input(INPUT_GET, 'pr', FILTER_SANITIZE_FULL_SPECIAL_CHARS),

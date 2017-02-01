@@ -8,7 +8,7 @@ var loadText = '<span id=\x22dots\x22>loading</span>';
 $("#q1_form").submit(function(){
     var query = $('#q1_form').serialize();
     $.ajax({
-        url         : local,
+        url         : remote,
         type        : $(this).attr('method'),
         dataType    : 'json',
         data        : $(this).serialize(),
