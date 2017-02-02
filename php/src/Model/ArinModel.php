@@ -59,7 +59,7 @@ class ArinModel
                 'name',
                 'handle'
             ),
-            'org-pr-number' => NULL,// no viable number fields that identify record
+            'org-pr-number' => null,// no viable number fields that identify record
         ),
 
         'poc' => array(//record type
@@ -73,7 +73,7 @@ class ArinModel
                 'handle',
                 'domain'
             ),
-            'poc-pr-number' => NULL,
+            'poc-pr-number' => null,
         ),
     );
 
@@ -93,7 +93,7 @@ class ArinModel
      * @return array
      * Used by AnalyzeLookUp class to identify specific records & fields for queries
      */
-    public static function PullRecordField( $recordType, $selectorType, $hintScope )
+    public static function PullRecordField($recordType, $selectorType, $hintScope)
     {
         //assume single array is source of data
         $model = self::LoadModel();
@@ -107,7 +107,7 @@ class ArinModel
          */
         $formattedSet = array();
         $inc = 0;
-        foreach( $rawSet as $fieldType ) {
+        foreach ($rawSet as $fieldType) {
             $formattedSet[ $inc ][ $recordType ] = $fieldType;
             $inc++;
         }

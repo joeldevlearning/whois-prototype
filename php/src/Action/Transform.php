@@ -1,11 +1,14 @@
 <?php
 namespace RestQuery\Action;
+
 use RestQuery\Query;
 
-class Transform {
+class Transform
+{
 
-    public static function Combine(){
-        
+    public static function Combine()
+    {
+
     }
 }
 

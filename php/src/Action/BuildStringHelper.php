@@ -1,6 +1,7 @@
 <?php
 
 namespace RestQuery\Action;
+
 use RestQuery\Query;
 
 class BuildStringHelper
@@ -19,16 +20,16 @@ class BuildStringHelper
      * Rule #4, wildcards are not allowed within the middle of the /RECORD/HANDLE/RECORD syntax
      * EXAMPLE "org/ari[*]/poc" is NOT allowed
      */
-    public static function HasEndingWildCard(Query $query) {
+    public static function HasEndingWildCard(Query $query)
+    {
 
         /*Bad condition is if there is */
-        if ( isset($query->qSelectors['pr']) ) {
-            if ( strpos($query->qSelectors['pr'], '*') !== FALSE) {
+        if (isset($query->qSelectors[ 'pr' ])) {
+            if (strpos($query->qSelectors[ 'pr' ], '*') !== false) {
                 //if exists, check if it is at end
-                if ( substr($query->qSelectors['pr'], -1) === '*') {
+                if (substr($query->qSelectors[ 'pr' ], -1) === '*') {
                     //last character is *, do nothing
-                }
-                else {
+                } else {
                     //another character must be *, needs to be cleaned
                 }
             }

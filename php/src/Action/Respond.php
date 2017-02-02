@@ -1,11 +1,14 @@
 <?php
 namespace RestQuery\Action;
+
 use RestQuery\Query;
 
-class Respond {
+class Respond
+{
 //TODO return the proper headers here with an error message
 
-    public static function QueryNotSupported(){
+    public static function QueryNotSupported()
+    {
         $message = "Query is not yet supported";
         json_encode($message);
         header('Content-Type: application/json');
@@ -13,7 +16,8 @@ class Respond {
         exit;
     }
 
-    public static function InvalidInput(){
+    public static function InvalidInput()
+    {
         $message = "The query contained invalid input.";
         json_encode($message);
         header('Content-Type: application/json');
@@ -32,5 +36,5 @@ class Respond {
         header('Content-Type: application/json');
         echo $data;
     }
-    
+
 }

@@ -3,12 +3,13 @@ namespace RestQuery\Model;
 
 //holds strings for ARIN's REST API syntax
 
-class ArinConfig {
+class ArinConfig
+{
 
     public static $rwsRootUri = 'http://whois.arin.net/rest/';
 
     public static $matrixUri = array(
-        'matrix-record-suffix'  => "s;",
-        'matrix-field-prefix'   => "="
+        'matrix-record-suffix' => "s;",
+        'matrix-field-prefix' => "="
     );
 }

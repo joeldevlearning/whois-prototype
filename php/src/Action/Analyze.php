@@ -2,18 +2,22 @@
 namespace RestQuery\Action;
 
 use RestQuery\Query;
-use RestQuery\Action\{AnalyzeLookUp as lookup,AnalyzeParse as parse};
+use RestQuery\Action\{
+    AnalyzeLookUp as lookup, AnalyzeParse as parse
+};
 
 /*
 TODO add IsCharacterType() and IsNumericType() for hinting 
 */
 
-class Analyze {
+class Analyze
+{
     /**
      * Convenience method, sends rejection to client if query format cannot be used
      * @param Query $query
      */
-    public static function ParseQuery( Query $query){
+    public static function ParseQuery(Query $query)
+    {
         parse::IsQueryValid($query);
     }
 
@@ -21,19 +25,21 @@ class Analyze {
      * Convenience method, gives number to $q->qType, later used to generate calls to RWS
      * @param Query $query
      */
-    public static function SelectQueryType( Query $query){
+    public static function SelectQueryType(Query $query)
+    {
         parse::WhatQueryType($query);
     }
-    
+
     //TODO only works for Q1 right now
-    public static function WhatRecordsToQuery(Query $query){
+    public static function WhatRecordsToQuery(Query $query)
+    {
         $lookup = new lookup(); //call AnalyzeLookUp class
 
-        switch($query->qType){
+        switch ($query->qType) {
 
             case 1: // pr only
-                if(!$query->qParameters['enable_hinting']){
-                    switch($query->qSelectors['prflag']) {
+                if (!$query->qParameters[ 'enable_hinting' ]) {
+                    switch ($query->qSelectors[ 'prflag' ]) {
 
                         case 'org':
                             $query->qBuildQueue = $lookup->LookUpRecordField('ORG_RECORDS_HINT_NAME');
@@ -41,9 +47,8 @@ class Analyze {
                         default:
                             $query->qBuildQueue = $lookup->LookUpRecordField('ALL_RECORDS_HINT_NAME');
                     }
-                }
-                else{
-                    if($query->qParameters['enable_hinting'] === 1){
+                } else {
+                    if ($query->qParameters[ 'enable_hinting' ] === 1) {
                         //add custom validator for name/number type
                         //should correspond to possible rules for all record types
                         //foreach($query->qRecordList as $key => &$record){ }

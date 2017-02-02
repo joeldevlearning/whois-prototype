@@ -5,6 +5,11 @@ namespace RestQuery\Action;
 use RestQuery\Query;
 use RestQuery\Action\Respond as respond;
 
+/*
+ * Checks if user input is valid for querying
+ * Assigns a type the query
+ */
+
 class AnalyzeParse
 {
     /*Invalid query combinations are:
@@ -21,24 +26,28 @@ class AnalyzeParse
         - if seflag is set BUT se is null (catches e)
         - if prflag is set BUT pr is null AND se is set (catches f)
     */
-    public static function IsQueryValid(Query $query){
+    public static function IsQueryValid(Query $query)
+    {
         //catch (prflag) AND (seflag) AND (prflag,seflag)
-        if( $query->qSelectors['pr'] === NULL &&
-            $query->qSelectors['se'] === NULL ){
+        if ($query->qSelectors[ 'pr' ] === null &&
+            $query->qSelectors[ 'se' ] === null
+        ) {
             respond::QueryNotSupported();
             exit;
         }
         //catch (se)
-        if( $query->qSelectors['pr'] === NULL &&
-            $query->qSelectors['prflag'] === NULL &&
-            $query->qSelectors['seflag'] === NULL ){
+        if ($query->qSelectors[ 'pr' ] === null &&
+            $query->qSelectors[ 'prflag' ] === null &&
+            $query->qSelectors[ 'seflag' ] === null
+        ) {
             respond::QueryNotSupported();
             exit;
         }
         //catch (prflag,se)
-        if( $query->qSelectors['pr'] === NULL &&
-            $query->qSelectors['prflag'] !== NULL &&
-            $query->qSelectors['se'] !== NULL ){
+        if ($query->qSelectors[ 'pr' ] === null &&
+            $query->qSelectors[ 'prflag' ] !== null &&
+            $query->qSelectors[ 'se' ] !== null
+        ) {
             respond::QueryNotSupported();
             exit;
         }
@@ -65,16 +74,17 @@ class AnalyzeParse
     8) if se,seflag are set AND pr,prflag = null
 
 */
-    public static function WhatQueryType(Query $query){
+    public static function WhatQueryType(Query $query)
+    {
         //match (pr), Q1
-        if( $query->qSelectors['pr'] !== NULL &&
-            $query->qSelectors['prflag'] !== NULL &&
-            $query->qSelectors['se'] === NULL &&
-            $query->qSelectors['seflag'] === NULL ){
+        if ($query->qSelectors[ 'pr' ] !== null &&
+            $query->qSelectors[ 'prflag' ] !== null &&
+            $query->qSelectors[ 'se' ] === null &&
+            $query->qSelectors[ 'seflag' ] === null
+        ) {
             //then
             $query->qType = 1;
-        }
-        else{
+        } else {
             respond::QueryNotSupported();
             exit;
         }
