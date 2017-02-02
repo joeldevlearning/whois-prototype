@@ -1,19 +1,19 @@
 # whois-prototype
 
-###Experimental client and API for ARIN's RESTful whois service (RWS)
+###Experimental client and API for ARIN's RESTful whois service
 
 #Purpose
-To prototype the features of a search-friendly interface to ARIN's whois REST service (known as **RWS**). 
+To prototype the features of a search-friendly interface to ARIN's whois REST service (known as **Whois RWS**). 
 
 ####Why a prototype?
 This is a learning project: Discover features, try to implement them, and experiment. The choice of languages, libraries, etc. are part of this effort.  
 
 ###**Goals**:
-1. **Fully support** ARIN's public REST API (the user should be able to make any query, or its equivalent, that the API supports)
+1. **Fully support** ARIN's RWS API (the user should be able to make any query, or its equivalent, that the API supports)
 
-2. **Simplify calling** the API (The user should not need to know the details of the API or dataset to make their query)
+2. **Simplify calling** the RWS API (The user should not need to know the details of the API or dataset to make their query)
 
-3. Support **exploration** of the API (Query results should show explicit relationships between records; the UI should allow the user to browse these related records)
+3. Support **exploration** of ARIN's data (Query results should show explicit relationships between records; the UI should allow the user to browse these related records)
 
 #Demo
 Try the online demo: 

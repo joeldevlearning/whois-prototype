@@ -11,7 +11,7 @@ User input consists of four variables (called "selectors") sent via GET:
 - "se", alphanumeric string to create where-style conditions
 - "seFlag", variable character code for specifying desired type of __field__ for "se" (depends on record type)
 
-The order of selectors is ignored, but their **combination** is meaningful. Certain combinations are rejected (for ambiguity), but most are mapped to a REST queries.
+The order of selectors is ignored, but their **combination** is meaningful. Certain combinations are rejected (because of ambiguity), but most are mapped to whois-RWS queries.
 
 ###Parameters
 Alongside selectors are two optional parameters: 
@@ -20,7 +20,7 @@ Alongside selectors are two optional parameters:
 
 > `hint=0`, disabled
 
-Toggles the hinting feature. When enabled, the Analyzer determines if the search input is "number" (IP address, customer ID number, etc.) or "name" type.  Once determined, certain RWS fields are _not_ queried (e.g. when query is of type "name", "number" fields are not queried).
+Toggles the hinting feature. When enabled, the Analyzer determines if the search input is "number" (IP address, customer ID number, etc.) or "name" type.  Once determined, certain whois-RWS fields are _not_ queried (e.g. when query is of type "name", "number" fields are not queried).
 
 Hinting reduces unnecessary calls to RWS.
 
@@ -33,7 +33,9 @@ Toggles the auto wildcard feature. When enabled, the Analyzer inspects whether o
 
 Auto wildcards are a trade off. The benefit is they lower the chance of _all_ results returning 404 "not found" (i.e. where every RWS call returns 404). The cost is that they increase the chance of false positives. 
 
-For example, if _disabled_, a search for `Dog` will _not_ return `DogLovers`, only `Dog Homes`. However, when _enabled_, the search `Dog` is transformed into `Dog*`, which will return both `DogLovers` and `Dog Homes`.
+For example, consider the set of two records `{DogLovers, Dog Homes}`. If auto wildcards are _disabled_, a search for `Dog` will _not_ return `DogLovers` (no space), only `Dog Homes` (with a space). However, when _enabled_, the search `Dog` is transformed into `Dog*`, which will return both `DogLovers` and `Dog Homes`.
+
+Exactly phrased queries may want to disable auto wildcards.
 
 ###What input does the API accept? reject?
 - ACCEPT Any alphanumeric string 
@@ -58,25 +60,28 @@ The client makes a GET request to api.php, which creates a Query object. This ob
 - Handle spaces
 
 ####Analyze 
-- Reject on ambivalent selector combinations
+- Reject on "bad" queries (with ambiguous combinations of selector)
 - Identify type of query (based on selector combination)
 - Identify ARIN record/field targets for query (via AnalyzeLookUp class)
 
  
 ####Build 
-- Create formatted query strings for ARIN RWS
+- Choose correct syntax for each query
+- Create formatted query strings for whois-RWS
+
 
 ####Request
-- Asynchronously send REST queries (with **Guzzle**)
+- Asynchronously send REST queries (with **Guzzle's** Promise API)
 - Receive and store responses
 - Handle errors
 
 ####Transform 
+- Strip unneeded JSON values
 - Aggregate responses into single JSON object
 - Add header information
 
 ####Respond 
-- On success, send JSON object back to client
+- On success, send JSON string and message back to client
 - On failure, send headers and message back to client
 
 
