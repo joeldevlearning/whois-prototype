@@ -13,7 +13,7 @@ TODO add IsCharacterType() and IsNumericType() for hinting
 class Analyze
 {
     /**
-     * Convenience method, sends rejection to client if query format cannot be used
+     * Wrapper method, sends rejection to client if query format cannot be used
      * @param Query $query
      */
     public static function ParseQuery(Query $query)
@@ -22,7 +22,7 @@ class Analyze
     }
 
     /**
-     * Convenience method, gives number to $q->qType, later used to generate calls to RWS
+     * Wrapper method, gives number to $q->qType, later used to generate calls to RWS
      * @param Query $query
      */
     public static function SelectQueryType(Query $query)
