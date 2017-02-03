@@ -1,22 +1,41 @@
 <?php
-
+namespace RestQuery;
 /**
  * Encapsulates a single whois-RWS exchange (request and response)
- * QueryTargets are created by QueryTargetFactory
+ * Queryable are created by QueryTargetFactory
  * They are stored in Query->qTargetList[]
  * They are manipulated by the Analyze, Build, and Request classes
  * And they are read by the Transform class
  */
 
-class QueryTarget
+class Queryable implements IQueryable
 {
     private $record;
     private $field;
-    private $format;  //e.g. url matrix
     private $queryString; //full "/orgs;name=Apple*"
     private $httpCode;
     private $httpMessage;
     private $jsonBody;
+
+    private $expression;
+    private $type;
+    private $format;
+
+    /**
+     * @return mixed
+     */
+    public function getExpression() : array
+    {
+        return $this->expression;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType() : string
+    {
+        return $this->type;
+    }  //e.g. url matrix
 
     public function getRecord()
     {
@@ -26,7 +45,7 @@ class QueryTarget
     {
         return $this->field;
     }
-    public function getFormat()
+    public function getFormat() : string
     {
         return $this->format;
     }
@@ -92,6 +111,12 @@ class QueryTarget
     public function setJsonBody($jsonBody)
     {
         $this->jsonBody = $jsonBody;
+    }
+
+
+    public function getResult() : \Generator
+    {
+        yield;
     }
 
     /**
