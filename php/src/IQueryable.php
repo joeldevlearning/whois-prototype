@@ -2,7 +2,7 @@
 
 /*
  * Defines how Queryable objects can be read
- * Queryables can only be created by a factory method
+ * Queryables are created by QueryableFactory
  *
  */
 

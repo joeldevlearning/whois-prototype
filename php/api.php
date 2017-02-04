@@ -11,8 +11,9 @@ $q = new Query();
 //$q->qSelectors['pr'] = "Apple"; //wildcards enabled by default
 $q->qType = 1;
 
-clean::ValidateInput($q);
-analyze::ParseQuery($q);
+clean::Sanitize($q);
+clean::Validate($q);
+
 analyze::WhatRecordsToQuery($q);
 
 

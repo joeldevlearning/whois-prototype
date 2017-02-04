@@ -1,12 +1,15 @@
 <?php
 namespace RestQuery\Action;
 
+/*
+ * TODO maybe change this to Format class
+ * TODO CreateUri($query) would read better as Serialize($query)
+ */
 use RestQuery\Query;
 use RestQuery\Model\ArinConfig as config;
 
 class Build
 {
-
     //only supports Q1 right now
     public static function CreateUri(Query $query)
     {

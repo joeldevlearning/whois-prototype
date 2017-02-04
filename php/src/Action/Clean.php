@@ -1,75 +1,38 @@
 <?php
 namespace RestQuery\Action;
 
+/*
+ * Sanitize input and validate query selectors
+ * Delegates to other classes prefixed with the name "Clean"
+ */
+
 use RestQuery\Query;
-use RestQuery\Action\Respond as respond;
-use Respect\Validation\Validator as v;
+use RestQuery\Action\CleanSanitize as CleanSanitize;
+use RestQuery\Action\CleanValidate as CleanValidate;
 
 class Clean
 {
-    public static function ValidateInput(Query $query)
+    /**
+     * Check length, character encoding, etc. of user input
+     * Delegates to CleanSanitize class
+     * @param Query $query
+     */
+    public static function Sanitize(Query $query)
     {
-        //create validators
-        $stringFilter = v::alnum('*-')->length(1, 101); //allow * and - characters
-        $flagFilter = v::alnum()->length(1, 40);
-
-        if ($query->qSelectors[ 'pr' ] !== null) {
-            //v::key accepts @param key name AND validator
-            if (v::key('pr', $stringFilter)->validate($query->qSelectors) === false) {
-                //error, bad input
-                respond::InvalidInput();
-            }
-        }
-        if ($query->qSelectors[ 'se' ] !== null) {
-            if (!v::key('se', $stringFilter)->validate($query->qSelectors)) {
-                //error, bad input
-                respond::InvalidInput();
-            }
-        }
-        if ($query->qSelectors[ 'prflag' ] !== null) {
-            if (!v::key('prflag', $flagFilter)->validate($query->qSelectors)) {
-                //error, bad input
-                respond::InvalidInput();
-            }
-        }
-        if ($query->qSelectors[ 'seflag' ] !== null) {
-            if (!v::key('seflag', $flagFilter)->validate($query->qSelectors)) {
-                //error, bad input
-                respond::InvalidInput();
-            }
-        }
+        $sanitize = new CleanSanitize();
+        $sanitize($query);
     }
 
 
-    public static function OldValidate(Query $query)
+    /**
+     * Check for ambiguous combinations of query selectors
+     * Delegates to CleanValidate class
+     * @param Query $query
+     */
+    public static function Validate(Query $query)
     {
-        $prTemp = $query->qSelectors[ 'pr' ];
-        $prFlagTemp = $query->qSelectors[ 'prflag' ];
-        $srTemp = $query->qSelectors[ 'se' ];
-        $srFlagTemp = $query->qSelectors[ 'seflag' ];
-
-        $searchStringValidator = v::stringType()->length(1, 255);
-        $recordFlagStringValidator = v::stringType()->length(1, 12);
-
-        $isPrimarySearchValid = $searchStringValidator->validate($prTemp);
-        $isPrimaryFlagValid = $recordFlagStringValidator->validate($prFlagTemp);
-        $isSecondarySearchValid = $searchStringValidator->validate($srTemp);
-        $isSecondaryFlagValid = $recordFlagStringValidator->validate($srFlagTemp);
-
-        if ($isPrimarySearchValid == false) {
-            $query->qSelectors[ 'pr' ] = null; //magic null value
-        }
-
-        if ($isPrimaryFlagValid == false) {
-            $query->qSelectors[ 'prflag' ] = null; //magic null value
-        }
-
-        if ($isSecondarySearchValid == false) {
-            $query->qSelectors[ 'se' ] = null; //magic null value
-        }
-
-        if ($isSecondaryFlagValid == false) {
-            $query->qSelectors[ 'seflag' ] = null; //magic null value
-        }
+        $validate = new CleanValidate();
+        $validate($query);
     }
+
 }

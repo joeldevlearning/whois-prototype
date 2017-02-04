@@ -7,7 +7,10 @@ use RestQuery\Action\{
 };
 
 /*
-TODO add IsCharacterType() and IsNumericType() for hinting 
+ *TODO add IsCharacterType() and IsNumericType() for hinting
+ * New function names:
+ *  - AnalyzeQueryType
+ *  - AnalyzeQueryTarget
 */
 
 class Analyze
