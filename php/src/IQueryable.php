@@ -1,12 +1,11 @@
 <?php
 
 /*
- * Defines how Queryable objects can be read
+ * Defines contract for reading from Queryable objects
  * Queryables are created by QueryableFactory
  *
  */
 
-namespace RestQuery;
 
 
 interface IQueryable
@@ -17,6 +16,6 @@ public function getExpression() : array; //returns an array (record=>$record,fie
 
 public function getType() : string; //returns "name" or "number" type
 
-public function getFormat() : string; //returns name of whois-rws syntax, maps to Formatter (e.g. url matrix)
+public function getFormat() : string; //returns name of whois-rws uri syntax, maps to Formatter (e.g. url matrix)
 
 }

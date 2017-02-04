@@ -1,5 +1,8 @@
 <?php
 namespace RestQuery;
+
+use IQueryable;
+
 /**
  * Encapsulates a single whois-RWS exchange (request and response)
  * Queryable are created by QueryTargetFactory

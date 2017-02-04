@@ -2,27 +2,17 @@
 namespace RestQuery\Action;
 
 use RestQuery\Query;
-use RestQuery\Action\{
-    AnalyzeLookUp as lookup, AnalyzeParse as parse
-};
+use RestQuery\Action\{AnalyzeLookUp as lookup, AnalyzeParse as parse};
 
 /*
- *TODO add IsCharacterType() and IsNumericType() for hinting
  * New function names:
- *  - AnalyzeQueryType
- *  - AnalyzeQueryTarget
+ *  - AnalyzeResolveType
+ *  - AnalyzeCreateExpression
+ *
 */
 
 class Analyze
 {
-    /**
-     * Wrapper method, sends rejection to client if query format cannot be used
-     * @param Query $query
-     */
-    public static function ParseQuery(Query $query)
-    {
-        parse::IsQueryValid($query);
-    }
 
     /**
      * Wrapper method, gives number to $q->qType, later used to generate calls to RWS

@@ -14,7 +14,6 @@ $q->qType = 1;
 clean::Sanitize($q);
 clean::Validate($q);
 
-analyze::ParseQuery($q);
 analyze::WhatRecordsToQuery($q);
 
 
