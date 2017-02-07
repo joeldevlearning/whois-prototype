@@ -1,6 +1,11 @@
 <?php
 namespace RestQuery;
 
+/*
+ * Implicit Singleton that holds the state of a query
+ * Is mutated by various "Action" objects
+ */
+
 class Query
 {
     /* @var array Contains mutable state of GET variables

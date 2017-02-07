@@ -1,4 +1,6 @@
 <?php
+namespace RestQuery;
+
 /**
  * Encapsulates the response to a client
  * QueryResult is created by the Transform class TODO who should instantiate this class?
@@ -6,7 +8,6 @@
  * It is stored in the Query->qResponse field
  */
 
-namespace RestQuery;
 
 
 class QueryResponse

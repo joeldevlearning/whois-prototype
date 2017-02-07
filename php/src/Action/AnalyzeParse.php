@@ -1,14 +1,15 @@
 <?php
-
 namespace RestQuery\Action;
-
-use RestQuery\Query;
-use RestQuery\Action\Respond as respond;
 
 /*
  * Checks if user input is valid for querying
  * Assigns a type the query
  */
+
+use RestQuery\Query;
+use RestQuery\Action\Respond as respond;
+
+
 
 class AnalyzeParse
 {
@@ -26,7 +27,7 @@ class AnalyzeParse
         - if seflag is set BUT se is null (catches e)
         - if prflag is set BUT pr is null AND se is set (catches f)
     */
-    public static function IsQueryValid(Query $query)
+    public static function IsQueryValid(Query $query) //TODO remove, moved to CleanValidate
     {
         //catch (prflag) AND (seflag) AND (prflag,seflag)
         if ($query->qSelectors[ 'pr' ] === null &&

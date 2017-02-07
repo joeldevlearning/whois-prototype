@@ -1,26 +1,68 @@
 <?php
 namespace RestQuery;
 
-use IQueryable;
-
 /**
- * Encapsulates a single whois-RWS exchange (request and response)
+ * Encapsulates a single whois-RWS exchange (request and result)
  * Queryable are created by QueryTargetFactory
  * They are stored in Query->qTargetList[]
  * They are manipulated by the Analyze, Build, and Request classes
  * And they are read by the Transform class
  */
 
+use IQueryable;
+
+
+
 class Queryable implements IQueryable
 {
-    private $record;
-    private $field;
-    private $queryString; //full "/orgs;name=Apple*"
-    private $httpCode;
-    private $httpMessage;
-    private $jsonBody;
+    private $record; //our label for the record type
+    private $field; //our label for field type
 
-    private $expression;
+    private $recordLabel; //e.g. 'cust' is sometimes 'customers'
+    private $fieldLabel; //TODO not sure if we need this
+
+    private $expression; //ready to be processed string fragments, e.g. "orgs" and "Apple*"
+    private $queryString; //full "/orgs;name=Apple*"
+
+    //these should fall under a QueryableResult object
+    //we can embed this object into eac Queryable
+    private $resultHttpCode; 
+    private $resultHttpMessage;
+    private $resultJsonBody;
+
+    /**
+     * @return mixed
+     */
+    public function getRecordLabel()
+    {
+        return $this->recordLabel;
+    }
+
+    /**
+     * @param mixed $recordLabel
+     */
+    public function setRecordLabel($recordLabel)
+    {
+        $this->recordLabel = $recordLabel;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFieldLabel()
+    {
+        return $this->fieldLabel;
+    }
+
+    /**
+     * @param mixed $fieldLabel
+     */
+    public function setFieldLabel($fieldLabel)
+    {
+        $this->fieldLabel = $fieldLabel;
+    }
+
+
     private $type;
     private $format;
 
@@ -29,7 +71,7 @@ class Queryable implements IQueryable
      */
     public function getExpression() : array
     {
-        return $this->expression;
+        return [$this->record => $this->field];
     }
 
     /**
@@ -40,11 +82,11 @@ class Queryable implements IQueryable
         return $this->type;
     }  //e.g. url matrix
 
-    public function getRecord()
+    public function getRecord() : string
     {
         return $this->record;
     }
-    public function getField()
+    public function getField() : string
     {
         return $this->field;
     }
@@ -53,12 +95,12 @@ class Queryable implements IQueryable
         return $this->format;
     }
 
-    public function getQuerySelectors()
+    public function getQuerySelectors() : array
     {
         return $array = [$this->record=>$this->field];
     }
 
-    public function getQueryString()
+    public function getQueryString()  : string
     {
         return $this->queryString;
     }
@@ -71,49 +113,50 @@ class Queryable implements IQueryable
     /**
      * @return mixed
      */
-    public function getHttpCode()
+    public function getResultHttpCode()
     {
-        return $this->httpCode;
+        return $this->resultHttpCode;
     }
 
-    /**
-     * @param mixed $httpCode
-     */
-    public function setHttpCode($httpCode)
-    {
-        $this->httpCode = $httpCode;
-    }
 
     /**
-     * @return mixed
+     * @param $resultHttpCode
      */
-    public function getHttpMessage()
+    public function setResultHttpCode($resultHttpCode)
     {
-        return $this->httpMessage;
-    }
-
-    /**
-     * @param mixed $httpMessage
-     */
-    public function setHttpMessage($httpMessage)
-    {
-        $this->httpMessage = $httpMessage;
+        $this->httpCode = $resultHttpCode;
     }
 
     /**
      * @return mixed
      */
-    public function getJsonBody()
+    public function getResultHttpMessage()
     {
-        return $this->jsonBody;
+        return $this->resultHttpMessage;
     }
 
     /**
-     * @param mixed $jsonBody
+     * @param mixed $resultHttpMessage
      */
-    public function setJsonBody($jsonBody)
+    public function setHttpMessage($resultHttpMessage)
     {
-        $this->jsonBody = $jsonBody;
+        $this->resultHttpMessage = $resultHttpMessage;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResultJsonBody()
+    {
+        return $this->resultJsonBody;
+    }
+
+    /**
+     * @param mixed $resultJsonBody
+     */
+    public function setJsonBody($resultJsonBody)
+    {
+        $this->resultJsonBody = $resultJsonBody;
     }
 
 

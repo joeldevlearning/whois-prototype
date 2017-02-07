@@ -1,18 +1,43 @@
 # API Overview
 
 ##Summary
-The API takes a set of user input _n_ (where 1 ≤ _n_ ≤ 4), maps it to a set of RWS calls _m_, calls _m_ asynchronously, buffers the results _z_, and returns _z_ as a JSON object.
+The API acts as a facade to [Whois-RWS](https://www.arin.net/resources/whoisrws/). 
+
+It accepts a set of user input _n_ (where 1 ≤ _n_ ≤ 4), maps it to a set of RWS calls _m_, calls _m_ asynchronously, buffers the results _z_, and returns _z_ as a JSON object.
 
 ##Interface
 ###Selectors
-User input consists of four variables (called "selectors") sent via GET:
-- "pr", alphanumeric string to search for a record
-- "prFlag" 3 character code for specifying desired type of __record__ for "pr" (asn,cus,net,org,poc)
-- "se", alphanumeric string to create where-style conditions
-- "seFlag", variable character code for specifying desired type of __field__ for "se" (depends on record type)
+User input consists of four variables (called **"selectors"**) sent via GET:
+- **"pr"**, primary search string (e.g. **"SomeCompany"**)
+- **"prFlag"**, code to specify the type of record "pr" should match (an **"org"** matching **"SomeCompany"** ) 
+- **"se"**, string that adds specificity to the primary search (an **"org"** matching **"SomeCompany"** WHERE )
+- **"seFlag"**, code to specify the type of field "se" should match
 
-The order of selectors is ignored, but their **combination** is meaningful. Certain combinations are rejected (because of ambiguity), but most are mapped to whois-RWS queries.
+| Selector | Allowed Values |
+|:----------:|:---------:|
+| **pr** | alphanumeric string with `*` and/or `-` |
+| **prflag** | three-letter ASCII code (predefined: asn,cus,net,org,poc) |
+| **se** | alphanumeric string with  `*` and/or `-` |
+| **seflag** | variable-length ASCII code (predefined) |
+Case is ignored by the API, just as with Whois-RWS.
 
+####Summary of Valid/Invalid Input
+- ACCEPT Any alphanumeric string 
+- ACCEPT any string of 100 characters or less
+- ACCEPT one or more wildcard `*` symbols in a string
+- ACCEPT one or more dash `-` symbols in a string
+
+
+- REJECT any non-alphanumeric characters (excluding `*` and `-`)
+- REJECT a string longer than 100 characters
+
+---
+###Combinations and Order 
+The order of selectors is ignored, but their **combination** is meaningful. Certain combinations are rejected (because of ambiguity). Acceptable combinations are mapped Whois-RWS queries.
+
+<!---TODO, table defining all combinations of queries and their outputs.--->
+
+---
 ###Parameters
 Alongside selectors are two optional parameters: 
 ####boolean `hint` 
@@ -20,7 +45,7 @@ Alongside selectors are two optional parameters:
 
 > `hint=0`, disabled
 
-Toggles the hinting feature. When enabled, the Analyzer determines if the search input is "number" (IP address, customer ID number, etc.) or "name" type.  Once determined, certain whois-RWS fields are _not_ queried (e.g. when query is of type "name", "number" fields are not queried).
+Toggles the hinting feature. When enabled, the Analyzer determines if the search input is "number" (IP address, customer ID number, etc.) or "name" type.  Once determined, certain Whois-RWS fields are _not_ queried (e.g. when query is of type "name", "number" fields are not queried).
 
 Hinting reduces unnecessary calls to RWS.
 
@@ -37,20 +62,15 @@ For example, consider the set of two records `{DogLovers, Dog Homes}`. If auto w
 
 Exactly phrased queries may want to disable auto wildcards.
 
-###What input does the API accept? reject?
-- ACCEPT Any alphanumeric string 
-- ACCEPT any string of 100 characters or less
-- ACCEPT one or more wildcard `*` symbols in a string
-- ACCEPT one or more dash `-` symbols in a string
 
-...
-- REJECT any non-alphanumeric characters (excluding `*` and `-`)
-- REJECT a string longer than 100 characters
 
 ##Implementation
 
 ###Component Overview
-The client makes a GET request to api.php, which creates a Query object. This object holds the query state. The query is passed down a pipeline of actions. Each action operates on the query's internal fields (mostly public arrays with no getters/setters). 
+The client makes a GET request to api.php, which creates a Query object. 
+This object holds the query state. 
+The query is passed down a pipeline of actions. 
+Each action operates on the query's internal fields (mostly public arrays with no getters/setters). 
 
 ###Pipeline actions:
 ####Clean 
@@ -67,7 +87,7 @@ The client makes a GET request to api.php, which creates a Query object. This ob
  
 ####Build 
 - Choose correct syntax for each query
-- Create formatted query strings for whois-RWS
+- Create formatted query strings for Whois-RWS
 
 
 ####Request
