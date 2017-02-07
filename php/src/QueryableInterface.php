@@ -2,13 +2,12 @@
 namespace RestQuery;
 /*
  * Defines contract for individual requests to arin-rws and responses
- *
  * Queryables are created by QueryableFactory
  *
  */
 
 
-interface IQueryable
+interface QueryableInterface
 {
     public function getResult(): \Generator;//generator that returns results array
 

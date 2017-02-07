@@ -9,11 +9,7 @@ namespace RestQuery;
  * And they are read by the Transform class
  */
 
-use IQueryable;
-
-
-
-class Queryable implements IQueryable
+class Queryable implements QueryableInterface
 {
     private $record; //our label for the record type
     private $field; //our label for field type
@@ -29,6 +25,10 @@ class Queryable implements IQueryable
     private $resultHttpCode; 
     private $resultHttpMessage;
     private $resultJsonBody;
+
+    //TODO serialize should return query string
+    public function serialize() : string {
+        return 'string';}
 
     /**
      * @return mixed
