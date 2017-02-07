@@ -2,7 +2,7 @@
 namespace RestQuery;
 
 /*
- * Holds data and basic commands for query processing
+ * Implicit Singleton that holds data and basic commands for query processing
  * Stored in Query object
  *
  */

@@ -5,23 +5,18 @@ The API acts as a facade to [Whois-RWS](https://www.arin.net/resources/whoisrws/
 
 It accepts a set of user input _n_ (where 1 ≤ _n_ ≤ 4), maps it to a set of RWS calls _m_, calls _m_ asynchronously, buffers the results _z_, and returns _z_ as a JSON object.
 
+Results are always records, never individual fields.
+
 ##Interface
 ###Selectors
 User input consists of four variables (called **"selectors"**) sent via GET:
-- **"pr"**, primary search string (e.g. **"SomeCompany"**)
-- **"prFlag"**, code to specify the type of record "pr" should match (an **"org"** matching **"SomeCompany"** ) 
-- **"se"**, string that adds specificity to the primary search (an **"org"** matching **"SomeCompany"** WHERE )
-- **"seFlag"**, code to specify the type of field "se" should match
-
-| Selector | Allowed Values |
-|:----------:|:---------:|
-| **pr** | alphanumeric string with `*` and/or `-` |
-| **prflag** | three-letter ASCII code (predefined: asn,cus,net,org,poc) |
-| **se** | alphanumeric string with  `*` and/or `-` |
-| **seflag** | variable-length ASCII code (predefined) |
-Case is ignored by the API, just as with Whois-RWS.
+- `pr`, primary search string (e.g. **"SomeCompany"**)
+- `prFlag`, code to specify the type of record "pr" should match (an **"org"** matching **"SomeCompany"** ) 
+- `se`, string that adds specificity to the primary search (an **"org"** matching **"SomeCompany"** WHERE )
+- `seFlag`, code to specify the type of field "se" should match
 
 ####Summary of Valid/Invalid Input
+The API respects the following rules for `pr` and `se` selectors:
 - ACCEPT Any alphanumeric string 
 - ACCEPT any string of 100 characters or less
 - ACCEPT one or more wildcard `*` symbols in a string
@@ -31,23 +26,11 @@ Case is ignored by the API, just as with Whois-RWS.
 - REJECT any non-alphanumeric characters (excluding `*` and `-`)
 - REJECT a string longer than 100 characters
 
----
-###Combinations and Order 
-The order of selectors is ignored, but their **combination** is meaningful. Certain combinations are rejected (because of ambiguity). Acceptable combinations are mapped Whois-RWS queries.
-
-<!---TODO, table defining all combinations of queries and their outputs.--->
+[More details about Selectors](/api-selectors.md/)
 
 ---
 ###Parameters
 Alongside selectors are two optional parameters: 
-####boolean `hint` 
-> `hint=1`, enabled, **default**
-
-> `hint=0`, disabled
-
-Toggles the hinting feature. When enabled, the Analyzer determines if the search input is "number" (IP address, customer ID number, etc.) or "name" type.  Once determined, certain Whois-RWS fields are _not_ queried (e.g. when query is of type "name", "number" fields are not queried).
-
-Hinting reduces unnecessary calls to RWS.
 
 ####boolean `wildcard` 
 > `wildcard=1`, enabled, **default**
@@ -62,13 +45,20 @@ For example, consider the set of two records `{DogLovers, Dog Homes}`. If auto w
 
 Exactly phrased queries may want to disable auto wildcards.
 
+####boolean `raw` 
+> `hint=1`, enabled
 
+> `hint=0`, disabled, **default**
+
+Toggles the raw-results feature. When enabled, the Transformer leaves Whois-RWS JSON unformatted. The client still receives a single JSON body with an API wrapper, but the nested contents are raw Whois-RWS JSON.
+
+Raw-results allows a client that understands Whois-RWS JSON to consume it normally (once the outer wrapper is removed).
 
 ##Implementation
 
 ###Component Overview
 The client makes a GET request to api.php, which creates a Query object. 
-This object holds the query state. 
+This object holds the query state.
 The query is passed down a pipeline of actions. 
 Each action operates on the query's internal fields (mostly public arrays with no getters/setters). 
 
@@ -88,7 +78,6 @@ Each action operates on the query's internal fields (mostly public arrays with n
 ####Build 
 - Choose correct syntax for each query
 - Create formatted query strings for Whois-RWS
-
 
 ####Request
 - Asynchronously send REST queries (with **Guzzle's** Promise API)

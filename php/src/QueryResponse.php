@@ -2,10 +2,8 @@
 namespace RestQuery;
 
 /**
- * Encapsulates the response to a client
- * QueryResult is created by the Transform class TODO who should instantiate this class?
- * It contains the aggregate responses of all whois-RWS requests (transformed from multiple QueryTargets)
- * It is stored in the Query->qResponse field
+ * Implicit Singleton that holds aggregated response data from Whois-RWS
+ * It is stored in the Query object
  */
 
 
