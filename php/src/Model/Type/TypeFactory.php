@@ -3,27 +3,23 @@ namespace RestQuery\Model\Type;
 
 /*
  * Implements TypeFactory contract
- * Delegates type object implementation to AbstractType
  *
  */
 
 class TypeFactory implements TypeFactoryInterface
 {
+    /*
+     * PHP allows a string variable after the "new" keyword
+     * effectively, we interpolate the class name into the object instantiation
+     * we use this instead a switch statement where each object type has its own case
+     */
     public static function build($type, $value)
     {
-            $typeObject = NULL;
-            switch ($type)
-            {
-                case "IpAddress":
-                    $typeObject = new IpAddress($value);
-                    break;
-                case "CustomerNumber":
-                    $typeObject = new CustomerNumber($value);
-                    break;
-                default://TODO this path is invalid for se values
-                    $typeObject = new GenericPrimaryName($value);
-                    break;
-            }//end switch
+        $typeObject = NULL;
+        $typeNamespace = "RestQuery\\Model\\Type\\"; //TODO can we avoid hardcoding this value?
+        $fullTypeName = $typeNamespace . $type;
+        $typeObject = new $fullTypeName($value);
+
         return $typeObject;
     }
 }

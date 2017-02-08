@@ -21,6 +21,7 @@ class AbtractType
         return $this->value;
     }
 
+
     /*
      * strip the namespace from the results of get_class()
      * borrowed from http://php.net/manual/en/function.get-class.php#114568
