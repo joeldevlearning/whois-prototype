@@ -13,6 +13,12 @@ class TypeFactory implements TypeFactoryInterface
      * effectively, we interpolate the class name into the object instantiation
      * we use this instead a switch statement where each object type has its own case
      */
+
+    /**
+     * @param $type
+     * @param $value
+     * @return object, instance of AbstractType
+     */
     public static function build($type, $value)
     {
         $typeObject = NULL;
