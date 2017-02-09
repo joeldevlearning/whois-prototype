@@ -21,7 +21,7 @@ class TypeFactory implements TypeFactoryInterface
      */
     public static function build($type, $value)
     {
-        $typeObject = NULL;
+        $typeObject = null;
         $typeNamespace = "RestQuery\\Model\\Type\\"; //TODO can we avoid hardcoding this value?
         $fullTypeName = $typeNamespace . $type;
         $typeObject = new $fullTypeName($value);
