@@ -11,5 +11,4 @@ use RestQuery\Model\Type\AbtractType as type;
 class Ip4 extends type
 {
 
-
 }
