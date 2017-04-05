@@ -2,6 +2,7 @@
 namespace RestQuery\Action\Analyze;
 
 use RestQuery\Query;
+use Respect\Validation\Validator as v;
 
 /*
  * Parses user input, trying to match to a type
@@ -10,30 +11,50 @@ use RestQuery\Query;
 
 class IdentifyType
 {
-    public function MatchToType(Query $query) : object
+    public static function Identify(string $value) : object
     {
 
         /*
-         * call all the functions in sets
-         * look for most common cases first
-         * then less obvious
-         *
-         * if( ConditionMethod(a) &&
-               ConditionMethod(b) &&
-           ConditionMethod(c))
-            {
-
-            }
-         *
+         * AlphaNumeric was confirmed true in Clean action
+         * now check for more specific types of AlphaNumeric
          */
+        if( IsNetHandle4() )
+        {}
+
+        if( IsNetHandle6() )
+        {}
+
+        if( IsContactHandle() )
+        {}
+
+        if( IsAsNumber() )
+        {}
+
+        if( IsCustomerNumber() )
+        {}
+
+        if( IsEmail() )
+        {}
+
+        //if( HasDomain() ) {}
+
+        if( IsIp() &&
+            !IsIp6()
+        )
+        {
+            //must be ip4
+        }
+            elseif( IsIp6() )
+            {
+                //must be ip6
+            }
+
+        if( IsCidr() )
+        {}
+
     }
 
-    private function IsAlphaNumeric()
-    {
-
-    }
-
-    private function IsIp(string $value)
+    private function IsIp(string $value) : bool
     {
         //true for valid IPV4 and IPV6
         if( filter_var($value, FILTER_VALIDATE_IP) )
@@ -45,7 +66,7 @@ class IdentifyType
     }
 
     //skip ip4 check; if it's an IP and NOT ip6, then it MUST be ip4
-    private function IsIp6($value)
+    private function IsIp6($value) : bool
     {
         if( filter_var($value, FILTER_VALIDATE_IP,FILTER_FLAG_IPV6) )
         {

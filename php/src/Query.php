@@ -2,12 +2,56 @@
 namespace RestQuery;
 
 /*
- * Implicit Singleton that holds the state of a query
+ * Singleton that holds the state of a query
  * Is mutated by various "Action" objects
  */
 
-class Query
+class Query implements QueryInterface
 {
+    public function getRawSelector($selector) : string
+    {
+        switch($selector)
+        {
+            case 'pr':
+                return $this->qSelectors['pr']['rawString'];
+                break;
+            case 'prflag';
+                return $this->qSelectors['prflag'];
+                break;
+            case 'se':
+                return $this->qSelectors['se']['rawString'];
+                break;
+            case 'seflag':
+                return $this->qSelectors['seflag'];
+                break;
+            default: return NULL;
+        }
+    }
+
+    //TODO where do we add the flag to the type? What if there is no flag?
+    public function setTypedSelector($selector, $typedObject)
+    {
+        switch($selector) {
+            case 'pr':
+                $this->qSelectors[ 'pr' ][ 'typedObject' ] = $typedObject;
+                break;
+            case 'se':
+                $this->qSelectors[ 'se' ][ 'typedObject' ] = $typedObject;
+                break;
+        }
+    }
+
+    public function getPr() : object
+    {
+        return $this->qSelectors['pr']['typedObject'];
+    }
+
+    public function getSe() : object
+    {
+        return $this->qSelectors['se']['typedObject'];
+    }
+
+
     /* @var array Contains mutable state of GET variables
      * "primary" refers to the *desired* record type;"secondary" to a where-like condition on the primary
      * set by Query constructor, written to by Clean class
@@ -55,10 +99,10 @@ calls to the RunQueue would return one-by-one results from the array
     public function __construct()
     {
         $this->qSelectors = [
-            "pr" => filter_input(INPUT_GET, 'pr', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            "prflag" => filter_input(INPUT_GET, 'prflag', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            "se" => filter_input(INPUT_GET, 'se', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            "seflag" => filter_input(INPUT_GET, 'seflag', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            "pr"      => array("rawString" => filter_input(INPUT_GET, 'pr', FILTER_SANITIZE_FULL_SPECIAL_CHARS)),
+            "prflag"  => array("rawString" => filter_input(INPUT_GET, 'prflag', FILTER_SANITIZE_FULL_SPECIAL_CHARS)),
+            "se"      => array("rawString" => filter_input(INPUT_GET, 'se', FILTER_SANITIZE_FULL_SPECIAL_CHARS)),
+            "seflag"  => array("rawString" => filter_input(INPUT_GET, 'seflag', FILTER_SANITIZE_FULL_SPECIAL_CHARS)),
         ];
         if (empty($this->qSelectors[ 'pr' ])) {
             $this->qSelectors[ 'pr' ] = null;

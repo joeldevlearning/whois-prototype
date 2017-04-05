@@ -2,9 +2,8 @@
 namespace RestQuery\Action\Analyze;
 
 use RestQuery\Query;
-use RestQuery\Model\Type\TypeFactory;
-use RestQuery\Model\ArinModel as model;
-use RestQuery\Action\Analyze\IdentifyType;
+use RestQuery\Model\Type\TypeFactory as type;
+use RestQuery\Action\Analyze\IdentifyType as id;
 
 /*
  * Parses user input and stores it in an object derived from AbstractType
@@ -13,23 +12,27 @@ use RestQuery\Action\Analyze\IdentifyType;
 
 class AssignType
 {
-
     public function __invoke(Query $query)
     {
-        /*
-         * Need to filter input through various checks until we find the most specific type
-         * call various helper methods here
-         *
-         *
-         * check if it has letters
-         */
+        $PrSelector = $query->getRawSelector('pr');
+        if ($PrSelector) {
+            $typedObject = type::build(
+                id::Identify($PrSelector),
+                $PrSelector
+            );
 
+            setTypedSelector('pr', $typedObject);
+        }
 
+        if ($SerSelector) {
+            $typedObject = type::build(
+                id::Identify($SeSelector),
+                $SeSelector
+            );
 
+            setTypedSelector('se', $typedObject);
+        }
     }
-
-
-
 }
 /*
  * step 1, review list of all types
