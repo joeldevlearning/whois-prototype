@@ -15,7 +15,7 @@ class IdentifyType
     {
 
         /*
-         * AlphaNumeric was confirmed true in Clean action
+         * AlphaNumeric was confirmed true in Sanitize action
          * now check for more specific types of AlphaNumeric
          */
         if( IsNetHandle4() )

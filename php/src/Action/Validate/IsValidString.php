@@ -1,19 +1,18 @@
 <?php
-namespace RestQuery\Action;
+namespace RestQuery\Action\Validate;
 
 use RestQuery\Query;
 use RestQuery\Action\Respond as respond;
 use Respect\Validation\Validator as v;
 
-class CleanSanitize
+class IsValidString
 {
     /**
      * Check length, character encoding, etc. of user input
-     * Delegated from Sanitize class
      * @param Query $query
      * @return Query
      */
-    public function __invoke(Query $query)
+    public static function IsValidStringInput(Query $query)
     {
         //create validators
         $stringFilter = v::alnum('*-')->length(1, 101); //allow * and - characters

@@ -11,7 +11,7 @@ interface QueryInterface
 {
     /*
      * pulls $query->qSelectors['pr|prflag|se|seflag']['rawString']
-     * called by Clean action
+     * called by Sanitize action
      */
     public function getRawSelector($selector) : string;
 

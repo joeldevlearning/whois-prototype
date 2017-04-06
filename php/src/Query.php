@@ -54,7 +54,7 @@ class Query implements QueryInterface
 
     /* @var array Contains mutable state of GET variables
      * "primary" refers to the *desired* record type;"secondary" to a where-like condition on the primary
-     * set by Query constructor, written to by Clean class
+     * set by Query constructor, written to by Sanitize class
      */
     public $qSelectors = array();
 
@@ -98,6 +98,9 @@ calls to the RunQueue would return one-by-one results from the array
 
     public function __construct()
     {
+
+        //Filter()
+        //$this->CreateSelectors
         $this->qSelectors = [
             "pr"      => array("rawString" => filter_input(INPUT_GET, 'pr', FILTER_SANITIZE_FULL_SPECIAL_CHARS)),
             "prflag"  => array("rawString" => filter_input(INPUT_GET, 'prflag', FILTER_SANITIZE_FULL_SPECIAL_CHARS)),

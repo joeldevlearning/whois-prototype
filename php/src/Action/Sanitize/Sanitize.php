@@ -1,16 +1,16 @@
 <?php
-namespace RestQuery\Action;
+namespace RestQuery\Action\Sanitize;
 
 /*
- * Sanitize input
- *
+ * Sanitize input and validate query selectors
+ * Delegates to other classes prefixed with the name "Sanitize"
  */
 
 use RestQuery\Query;
 use RestQuery\Action\CleanSanitize as CleanSanitize;
 use RestQuery\Action\CleanValidate as CleanValidate;
 
-class Clean
+class Sanitize
 {
     /**
      * Check length, character encoding, etc. of user input
