@@ -6,6 +6,11 @@ namespace RestQuery;
  * Is mutated by various "Action" objects
  */
 
+use RestQuery\Action\Sanitize\Filter as f;
+use RestQuery\Action\Sanitize\IfEmpty;
+use RestQuery\Action\Sanitize\ProcessOptions as options;
+use RestQuery\Action\Validate\Validate as v;
+
 class Query implements QueryInterface
 {
     public function getRawSelector($selector) : string
@@ -99,43 +104,18 @@ calls to the RunQueue would return one-by-one results from the array
     public function __construct()
     {
 
-        //Filter()
-        //$this->CreateSelectors
-        $this->qSelectors = [
-            "pr"      => array("rawString" => filter_input(INPUT_GET, 'pr', FILTER_SANITIZE_FULL_SPECIAL_CHARS)),
-            "prflag"  => array("rawString" => filter_input(INPUT_GET, 'prflag', FILTER_SANITIZE_FULL_SPECIAL_CHARS)),
-            "se"      => array("rawString" => filter_input(INPUT_GET, 'se', FILTER_SANITIZE_FULL_SPECIAL_CHARS)),
-            "seflag"  => array("rawString" => filter_input(INPUT_GET, 'seflag', FILTER_SANITIZE_FULL_SPECIAL_CHARS)),
-        ];
-        if (empty($this->qSelectors[ 'pr' ])) {
-            $this->qSelectors[ 'pr' ] = null;
-        }
-        if (empty($this->qSelectors[ 'prflag' ])) {
-            $this->qSelectors[ 'prflag' ] = null;
-        }
-        if (empty($this->qSelectors[ 'se' ])) {
-            $this->qSelectors[ 'se' ] = null;
-        }
-        if (empty($this->qSelectors[ 'seflag' ])) {
-            $this->qSelectors[ 'seflag' ] = null;
-        }
+        //Filter() returns qSelector array with [pr][rawString]
+        //CastEmptyToNull()
+        //$this->SetSelector('pr',$value, $prflag) instantiates selector objects
+        //selectors are stored in PrimarySelector and SecondarySelector variables
 
-        $hintFlag = filter_input(INPUT_GET, 'hint', FILTER_VALIDATE_INT);
-        if ($hintFlag == false || $hintFlag == null) {
-            //do nothing, default remains at 1
-        }
-        if ($hintFlag == 0) {
-            $this->qParameters[ 'enable_hinting' ] = 0;
-        } else {/*do nothing, default remains at 1*/
-        }
+        $qSelectors = f::FilterCharacters();
+        $this->qSelectors = IfEmpty::CastEmptyToNull($qSelectors);
+        $this->qParameters = options::AssignOptionFlags();
+        v::ValidateSelectors($this->qSelectors);
 
-        $wildCardFlag = filter_input(INPUT_GET, 'wildcard', FILTER_VALIDATE_INT);
-        if ($wildCardFlag == false || $wildCardFlag == null) {
-            //do nothing, default remains at 1
-        }
-        if ($wildCardFlag == 0) {
-            $this->qParameters[ 'enable_auto_wildcard' ] = 0;
-        } else {/*do nothing, default remains at 1*/
-        }
+        //TODO put selectors into their own objects; be done with array
+        //TODO check that QueryInterface supports these objects
+
     }
 }

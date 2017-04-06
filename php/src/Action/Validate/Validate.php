@@ -13,10 +13,10 @@ use RestQuery\Action\Respond as respond;
 
 class Validate
 {
-    public function __invoke(Query $query)
+    public static function ValidateSelectors(array $qSelectors)
     {
-        $isValidCombo = checkCombo::IsValidSelectorCombo($query);
-        $isValidString = checkInput::IsValidStringInput($query);
+        $isValidCombo = checkCombo::IsValidSelectorCombo($qSelectors);
+        $isValidString = checkInput::IsValidStringInput($qSelectors);
 
         if( !$isValidCombo )
         {

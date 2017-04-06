@@ -10,7 +10,7 @@ use RestQuery\Query;
 
 class IsValidCombination
 {
-    public static function IsValidSelectorCombo($query) : bool
+    public static function IsValidSelectorCombo(array $qSelectors) : bool
     {
         /**
          * Invalid query combinations are:
@@ -28,14 +28,14 @@ class IsValidCombination
         */
 
         //catch any query with undefined pr
-        if ($query->qSelectors[ 'pr' ] === null)
+        if ($qSelectors[ 'pr' ] === null)
         {
             return FALSE;
         }
 
         //catch any query where seflag is set, but NOT se
-        if ($query->qSelectors[ 'se' ] === null &&
-            $query->qSelectors[ 'seflag' ] !== null
+        if ($qSelectors[ 'se' ] === null &&
+            $qSelectors[ 'seflag' ] !== null
         )
         {
             return FALSE;

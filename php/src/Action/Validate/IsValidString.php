@@ -12,33 +12,33 @@ class IsValidString
      * @param Query $query
      * @return Query
      */
-    public static function IsValidStringInput(Query $query) : bool
+    public static function IsValidStringInput(array $qSelectors) : bool
     {
         //create validators
         $stringFilter = v::alnum('*-')->length(1, 101); //allow * and - characters
         $flagFilter = v::alnum()->length(1, 40);
 
         //v::key accepts @param key name AND validator
-        if ($query->qSelectors[ 'pr' ] !== null &&
+        if ($qSelectors[ 'pr' ] !== null &&
             v::key('pr', $stringFilter)->validate($query->qSelectors) === false)
         {
             return FALSE;
         }
-        if ($query->qSelectors[ 'se' ] !== null &&
+        if ($qSelectors[ 'se' ] !== null &&
             !v::key('se', $stringFilter)->validate($query->qSelectors)
         )
         {
             return FALSE;
         }
 
-        if ($query->qSelectors[ 'prflag' ] !== null &&
+        if ($qSelectors[ 'prflag' ] !== null &&
             !v::key('prflag', $flagFilter)->validate($query->qSelectors)
         )
         {
             return FALSE;
         }
 
-        if ($query->qSelectors[ 'seflag' ] !== null &&
+        if ($qSelectors[ 'seflag' ] !== null &&
             !v::key('seflag', $flagFilter)->validate($query->qSelectors)
         )
         {
