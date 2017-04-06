@@ -1,8 +1,10 @@
 <?php
-
-
 namespace RestQuery\Action\Sanitize;
 
+/*
+ * Casts empty selectors in array to null
+ *
+ */
 
 class IfEmpty
 {

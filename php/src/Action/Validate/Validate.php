@@ -2,11 +2,10 @@
 namespace RestQuery\Action\Validate;
 
 /*
- * Validates combination of selectors from user input
- * To give earlier user feedback, also implement these checks on the client
- *
+ * Validates selectors
+ * delegates to other classes in Validate namespace
  */
-use RestQuery\Query;
+
 use RestQuery\Action\Validate\IsValidCombination as checkCombo;
 use RestQuery\Action\Validate\IsValidString as checkInput;
 use RestQuery\Action\Respond as respond;

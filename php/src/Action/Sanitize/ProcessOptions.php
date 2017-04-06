@@ -1,6 +1,10 @@
 <?php
-
 namespace RestQuery\Action\Sanitize;
+
+/*
+ * Filters and stores optional parameters
+ * TODO parameters are experimental
+ */
 
 class ProcessOptions
 {

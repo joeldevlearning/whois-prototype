@@ -1,7 +1,7 @@
 <?php
 /*
- * Validates combination of selectors from user input
- * To give earlier user feedback, also implement these checks on the client
+ * Sanitize "special" characters
+ * Wrapper for PHP's built-in filter_input()
  *
  */
 namespace RestQuery\Action\Sanitize;

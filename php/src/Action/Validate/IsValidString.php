@@ -1,8 +1,11 @@
 <?php
 namespace RestQuery\Action\Validate;
 
+/*
+ * Validates combination of selectors from user input
+ *
+ */
 use RestQuery\Query;
-use RestQuery\Action\Respond as respond;
 use Respect\Validation\Validator as v;
 
 class IsValidString
@@ -19,30 +22,30 @@ class IsValidString
         $flagFilter = v::alnum()->length(1, 40);
 
         //v::key accepts @param key name AND validator
-        if ($qSelectors[ 'pr' ] !== null &&
-            v::key('pr', $stringFilter)->validate($query->qSelectors) === false)
+        if ($qSelectors[ 'pr' ][ 'rawString' ] !== null &&
+            //dot syntax indicates nested key
+            v::keyNested('pr.rawString', $stringFilter)->validate($qSelectors) === false)
         {
             return FALSE;
         }
-        if ($qSelectors[ 'se' ] !== null &&
-            !v::key('se', $stringFilter)->validate($query->qSelectors)
+        if ($qSelectors[ 'se' ][ 'rawString' ] !== null &&
+            !v::keyNested('se.rawString', $stringFilter)->validate($qSelectors)
         )
         {
             return FALSE;
         }
 
-        if ($qSelectors[ 'prflag' ] !== null &&
-            !v::key('prflag', $flagFilter)->validate($query->qSelectors)
+        if ($qSelectors[ 'prflag' ][ 'rawString' ] !== null &&
+            !v::keyNested('prflag.rawSting', $flagFilter)->validate($qSelectors)
         )
         {
             return FALSE;
         }
 
-        if ($qSelectors[ 'seflag' ] !== null &&
-            !v::key('seflag', $flagFilter)->validate($query->qSelectors)
+        if ($qSelectors[ 'seflag' ][ 'rawString' ] !== null &&
+            !v::keyNested('seflag.rawString', $flagFilter)->validate($qSelectors)
         )
         {
-            //error, bad input
             return FALSE;
         }
         return TRUE;

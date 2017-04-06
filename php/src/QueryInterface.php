@@ -10,23 +10,17 @@ namespace RestQuery;
 interface QueryInterface
 {
     /*
-     * pulls $query->qSelectors['pr|prflag|se|seflag']['rawString']
-     * called by Sanitize action
-     */
-    public function getRawSelector($selector) : string;
-
-    /*
-     * sets $query->qSelectors['pr']['typedObject']
+     * sets $query->qSelectors['pr']['typeToken']
      * called by Analyze action
      */
-    public function setTypedSelector($selector, $typedObject);
+    public function SetTypeToken($selector, $typeToken) : void;
 
     /*
      * pulls $query->qSelectors['pr|se']['typedObject']
      * typedObject is derived from AbstractType
      * typedObject's methods include getType(), getValue(), and getFlag()
     */
-    public function getPr() : object;
-    public function getSe() : object;
+    public function GetPr() : object;
+    public function GetSe() : object;
 
 }

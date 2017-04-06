@@ -13,35 +13,14 @@ use RestQuery\Action\Validate\Validate as v;
 
 class Query implements QueryInterface
 {
-    public function getRawSelector($selector) : string
-    {
-        switch($selector)
-        {
-            case 'pr':
-                return $this->qSelectors['pr']['rawString'];
-                break;
-            case 'prflag';
-                return $this->qSelectors['prflag'];
-                break;
-            case 'se':
-                return $this->qSelectors['se']['rawString'];
-                break;
-            case 'seflag':
-                return $this->qSelectors['seflag'];
-                break;
-            default: return NULL;
-        }
-    }
-
-    //TODO where do we add the flag to the type? What if there is no flag?
-    public function setTypedSelector($selector, $typedObject)
+    public function SetTypeToken($selector, $typeToken) : void
     {
         switch($selector) {
             case 'pr':
-                $this->qSelectors[ 'pr' ][ 'typedObject' ] = $typedObject;
+                $this->qSelectors[ 'pr' ][ 'typeToken' ] = $typeToken;
                 break;
             case 'se':
-                $this->qSelectors[ 'se' ][ 'typedObject' ] = $typedObject;
+                $this->qSelectors[ 'se' ][ 'typedToken' ] = $typeToken;
                 break;
         }
     }
@@ -56,6 +35,8 @@ class Query implements QueryInterface
         return $this->qSelectors['se']['typedObject'];
     }
 
+    public $primary;
+    public $secondary;
 
     /* @var array Contains mutable state of GET variables
      * "primary" refers to the *desired* record type;"secondary" to a where-like condition on the primary
@@ -104,18 +85,24 @@ calls to the RunQueue would return one-by-one results from the array
     public function __construct()
     {
 
-        //Filter() returns qSelector array with [pr][rawString]
-        //CastEmptyToNull()
-        //$this->SetSelector('pr',$value, $prflag) instantiates selector objects
-        //selectors are stored in PrimarySelector and SecondarySelector variables
+        /*
+         * 1) Filter returns qSelector array with format of [pr][rawString]
+         * 2) Cast empty values to null
+         * 3) Validate selectors (exit if invalid)
+         * 4) Filter and store parameters
+         * 5) call SetSelector to create selector objects
+         */
 
         $qSelectors = f::FilterCharacters();
         $this->qSelectors = IfEmpty::CastEmptyToNull($qSelectors);
-        $this->qParameters = options::AssignOptionFlags();
         v::ValidateSelectors($this->qSelectors);
 
-        //TODO put selectors into their own objects; be done with array
-        //TODO check that QueryInterface supports these objects
+        $this->qParameters = options::AssignOptionFlags();
 
+        $this->primary = new QuerySelector($this->qSelectors['pr']['rawString'],
+            $this->qSelectors['prflag']['rawString']);
+
+        $this->secondary = new QuerySelector($this->qSelectors['se']['rawString'],
+            $this->qSelectors['seflag']['rawString']);
     }
 }

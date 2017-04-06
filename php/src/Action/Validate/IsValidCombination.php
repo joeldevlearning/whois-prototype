@@ -3,10 +3,8 @@ namespace RestQuery\Action\Validate;
 
 /*
  * Validates combination of selectors from user input
- * To give earlier user feedback, also implement these checks on the client
  *
  */
-use RestQuery\Query;
 
 class IsValidCombination
 {
@@ -28,13 +26,13 @@ class IsValidCombination
         */
 
         //catch any query with undefined pr
-        if ($qSelectors[ 'pr' ] === null)
+        if ($qSelectors[ 'pr' ][ 'rawString' ] === null)
         {
             return FALSE;
         }
 
         //catch any query where seflag is set, but NOT se
-        if ($qSelectors[ 'se' ] === null &&
+        if ($qSelectors[ 'se' ][ 'rawString' ] === null &&
             $qSelectors[ 'seflag' ] !== null
         )
         {
