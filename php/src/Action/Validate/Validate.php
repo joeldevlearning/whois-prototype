@@ -24,7 +24,7 @@ class Validate
             exit;
         }
 
-        if( !isValidString )
+        if( !$isValidString )
         {
             respond::InvalidInput();
             exit;

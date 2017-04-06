@@ -18,30 +18,33 @@ class IsValidString
         $stringFilter = v::alnum('*-')->length(1, 101); //allow * and - characters
         $flagFilter = v::alnum()->length(1, 40);
 
-        if ($query->qSelectors[ 'pr' ] !== null) {
-            //v::key accepts @param key name AND validator
-            if (v::key('pr', $stringFilter)->validate($query->qSelectors) === false) {
-                //error, bad input
-                return FALSE;
-            }
+        //v::key accepts @param key name AND validator
+        if ($query->qSelectors[ 'pr' ] !== null &&
+            v::key('pr', $stringFilter)->validate($query->qSelectors) === false)
+        {
+            return FALSE;
         }
-        if ($query->qSelectors[ 'se' ] !== null) {
-            if (!v::key('se', $stringFilter)->validate($query->qSelectors)) {
-                //error, bad input
-                return FALSE;
-            }
+        if ($query->qSelectors[ 'se' ] !== null &&
+            !v::key('se', $stringFilter)->validate($query->qSelectors)
+        )
+        {
+            return FALSE;
         }
-        if ($query->qSelectors[ 'prflag' ] !== null) {
-            if (!v::key('prflag', $flagFilter)->validate($query->qSelectors)) {
-                //error, bad input
-                return FALSE;
-            }
+
+        if ($query->qSelectors[ 'prflag' ] !== null &&
+            !v::key('prflag', $flagFilter)->validate($query->qSelectors)
+        )
+        {
+            return FALSE;
         }
-        if ($query->qSelectors[ 'seflag' ] !== null) {
-            if (!v::key('seflag', $flagFilter)->validate($query->qSelectors)) {
-                //error, bad input
-                return FALSE;
-            }
+
+        if ($query->qSelectors[ 'seflag' ] !== null &&
+            !v::key('seflag', $flagFilter)->validate($query->qSelectors)
+        )
+        {
+            //error, bad input
+            return FALSE;
         }
+        return TRUE;
     }
 }
