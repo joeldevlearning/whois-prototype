@@ -13,7 +13,7 @@ use RestQuery\Action\Validate\Validate as v;
 
 class Query implements QueryInterface
 {
-    public function SetTypeToken($selector, $typeToken) : void
+    public function SetTypeToken(string $selector, object $typeToken) : void
     {
         switch($selector) {
             case 'pr':
@@ -25,26 +25,21 @@ class Query implements QueryInterface
         }
     }
 
-    public function getPr() : object
+    public function getPr() : QuerySelector
     {
         return $this->qSelectors['pr']['typedObject'];
     }
 
-    public function getSe() : object
+    public function getSe() : QuerySelector
     {
         return $this->qSelectors['se']['typedObject'];
     }
 
-    public $primary;
-    public $secondary;
+    private $qSelectors = array();
+    private $primary;
+    private $secondary;
 
-    /* @var array Contains mutable state of GET variables
-     * "primary" refers to the *desired* record type;"secondary" to a where-like condition on the primary
-     * set by Query constructor, written to by Sanitize class
-     */
-    public $qSelectors = array();
-
-    public $qParameters = array(
+    private $qParameters = array(
         'enable_hinting' => 1, //enable by default
         'enable_auto_wildcard' => 1, //enabled by default
     );
@@ -52,6 +47,7 @@ class Query implements QueryInterface
      * "0" = no hint, hinting disabled
      * "1" = hint available, hinting enabled
      */
+
     public $hintFlag = "";
     /* @var integer Defines constraints on query, based on user input
      * 1 = only primary search string, no specific record type
