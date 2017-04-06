@@ -7,13 +7,10 @@ namespace RestQuery\Action\Validate;
  *
  */
 use RestQuery\Query;
-use RestQuery\Action\Respond as respond;
 
 class IsValidCombination
 {
-//TODO make effect boolean; caller should deal with fallout from error
-
-    public static function IsValidSelectorCombo($query)
+    public static function IsValidSelectorCombo($query) : bool
     {
         /**
          * Invalid query combinations are:
@@ -33,8 +30,7 @@ class IsValidCombination
         //catch any query with undefined pr
         if ($query->qSelectors[ 'pr' ] === null)
         {
-            respond::QueryNotSupported();
-            exit;
+            return FALSE;
         }
 
         //catch any query where seflag is set, but NOT se
@@ -42,8 +38,7 @@ class IsValidCombination
             $query->qSelectors[ 'seflag' ] !== null
         )
         {
-            respond::QueryNotSupported();
-            exit;
+            return FALSE;
         }
 
     }
