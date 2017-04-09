@@ -10,18 +10,20 @@ class IfEmpty
 {
     public static function CastEmptyToNull(array $qSelectors) : array
     {
-        if (empty($qSelectors[ 'pr' ])) {
-            $qSelectors[ 'pr' ] = null;
+        if (empty($qSelectors[ 'pr' ][ 'rawString' ])) {
+            $qSelectors[ 'pr' ][ 'rawString' ] = null;
         }
-        if (empty($qSelectors[ 'prflag' ])) {
-            $qSelectors[ 'prflag' ] = null;
+        if (empty($qSelectors[ 'prflag' ][ 'rawString' ])) {
+            $qSelectors[ 'prflag' ][ 'rawString' ] = null;
         }
-        if (empty($qSelectors[ 'se' ])) {
-            $qSelectors[ 'se' ] = null;
+        if (empty($qSelectors[ 'se' ][ 'rawString' ])) {
+            $qSelectors[ 'se' ][ 'rawString' ] = null;
         }
-        if (empty($qSelectors[ 'seflag' ])) {
-            $qSelectors[ 'seflag' ] = null;
+        if (empty($qSelectors[ 'seflag' ][ 'rawString' ])) {
+            $qSelectors[ 'seflag' ][ 'rawString' ] = null;
         }
+
+        return $qSelectors;
 
     }
 }

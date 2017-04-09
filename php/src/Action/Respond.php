@@ -9,8 +9,7 @@ class Respond
 
     public static function QueryNotSupported()
     {
-        $message = "Query is not yet supported";
-        json_encode($message);
+        $message = "The combination of query parameters is unsupported.";
         header('Content-Type: application/json');
         echo $message;
         exit;
@@ -19,7 +18,6 @@ class Respond
     public static function InvalidInput()
     {
         $message = "The query contained invalid input.";
-        json_encode($message);
         header('Content-Type: application/json');
         echo $message;
         exit;

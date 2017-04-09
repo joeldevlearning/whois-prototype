@@ -3,13 +3,15 @@ namespace RestQuery\Model\Type;
 
 /*
  * Base definition of all types
- * User input is cast to a type which extends AbstractType
+ * User input (Primary and Secondary) is stored in a type that extends AbstractType
  *
  */
 
 class AbtractType
 {
+
     private $value;
+    private $flag;
 
     public function getType() : string
     {
@@ -19,6 +21,11 @@ class AbtractType
     public function getValue() : string
     {
         return $this->value;
+    }
+
+    public function getFlag() : string
+    {
+        return $this->flag;
     }
 
     /*
@@ -38,8 +45,10 @@ class AbtractType
 
     }
 
-    public function __construct(string $value)
+    public function __construct(string $value, $flag)
     {
         $this->value = $value;
+        $this->flag = $flag;
     }
+
 }

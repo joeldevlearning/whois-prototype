@@ -25,20 +25,20 @@ class IsValidCombination
          * - if seflag is set BUT se is null (catches e)
         */
 
-        //catch any query with undefined pr
+        //pr MUST be set
         if ($qSelectors[ 'pr' ][ 'rawString' ] === null)
         {
             return FALSE;
         }
 
-        //catch any query where seflag is set, but NOT se
-        if ($qSelectors[ 'se' ][ 'rawString' ] === null &&
-            $qSelectors[ 'seflag' ] !== null
+        //seflag requires se to be set
+        if ($qSelectors[ 'seflag' ][ 'rawString' ] !== null &&
+            $qSelectors[ 'se' ][ 'rawString' ] === null
         )
         {
             return FALSE;
         }
-
+        return TRUE;
     }
 
 

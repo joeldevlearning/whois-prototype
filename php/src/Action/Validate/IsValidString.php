@@ -7,6 +7,7 @@ namespace RestQuery\Action\Validate;
  */
 use RestQuery\Query;
 use Respect\Validation\Validator as v;
+use RestQuery\Exception\QueryInputWasInvalid;
 
 class IsValidString
 {
@@ -15,38 +16,49 @@ class IsValidString
      * @param Query $query
      * @return Query
      */
-    public static function IsValidStringInput(array $qSelectors) : bool
+    public static function IsValidSearchString(array $qSelectors) : bool
     {
-        //create validators
         $stringFilter = v::alnum('*-')->length(1, 101); //allow * and - characters
-        $flagFilter = v::alnum()->length(1, 40);
 
-        //v::key accepts @param key name AND validator
-        if ($qSelectors[ 'pr' ][ 'rawString' ] !== null &&
-            //dot syntax indicates nested key
+        if ($qSelectors[ 'pr' ][ 'rawString' ] === null &&
+
             v::keyNested('pr.rawString', $stringFilter)->validate($qSelectors) === false)
         {
-            return FALSE;
-        }
-        if ($qSelectors[ 'se' ][ 'rawString' ] !== null &&
-            !v::keyNested('se.rawString', $stringFilter)->validate($qSelectors)
-        )
-        {
-            return FALSE;
+            return FALSE; //return false
         }
 
-        if ($qSelectors[ 'prflag' ][ 'rawString' ] !== null &&
-            !v::keyNested('prflag.rawSting', $flagFilter)->validate($qSelectors)
-        )
+        if($qSelectors[ 'se' ][ 'rawString' ]) //if se exists
         {
-            return FALSE;
+            if ($qSelectors[ 'se' ][ 'rawString' ] === null ||
+                !v::keyNested('se.rawString', $stringFilter)->validate($qSelectors)
+            )
+            {
+                return FALSE; //return false
+            }
+        }
+        return TRUE;
+    }
+
+    public static function IsValidFlag(array $qSelectors)
+    {
+        $flagFilter = v::alnum()->length(1, 40);
+
+        if($qSelectors[ 'prflag' ][ 'rawString' ])
+        {
+            if ($qSelectors[ 'prflag' ][ 'rawString' ] === null ||
+                !v::keyNested('prflag.rawSting', $flagFilter)->validate($qSelectors)
+            ) {
+                return FALSE; //return false
+            }
         }
 
-        if ($qSelectors[ 'seflag' ][ 'rawString' ] !== null &&
-            !v::keyNested('seflag.rawString', $flagFilter)->validate($qSelectors)
-        )
+        if($qSelectors[ 'seflag' ][ 'rawString' ])
         {
-            return FALSE;
+            if ($qSelectors[ 'seflag' ][ 'rawString' ] === null ||
+                !v::keyNested('seflag.rawString', $flagFilter)->validate($qSelectors)
+            ) {
+                return FALSE; //return false
+            }
         }
         return TRUE;
     }

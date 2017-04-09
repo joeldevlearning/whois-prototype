@@ -7,7 +7,7 @@ namespace RestQuery\Action\Validate;
  */
 
 use RestQuery\Action\Validate\IsValidCombination as checkCombo;
-use RestQuery\Action\Validate\IsValidString as checkInput;
+use RestQuery\Action\Validate\IsValidString as checkString;
 use RestQuery\Action\Respond as respond;
 
 class Validate
@@ -15,7 +15,8 @@ class Validate
     public static function ValidateSelectors(array $qSelectors)
     {
         $isValidCombo = checkCombo::IsValidSelectorCombo($qSelectors);
-        $isValidString = checkInput::IsValidStringInput($qSelectors);
+        $isValidSearchString = checkString::IsValidSearchString($qSelectors);
+        $isValidFlag = checkString::IsValidFlag($qSelectors);
 
         if( !$isValidCombo )
         {
@@ -23,13 +24,12 @@ class Validate
             exit;
         }
 
-        if( !$isValidString )
+        if( !$isValidSearchString ||
+            !$isValidFlag)
         {
             respond::InvalidInput();
             exit;
         }
-
-        return $query;
     }
 
 }

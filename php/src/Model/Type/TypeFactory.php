@@ -6,6 +6,8 @@ namespace RestQuery\Model\Type;
  *
  */
 
+use RestQuery\Exception\TypeDoesNotExist;
+
 class TypeFactory implements TypeFactoryInterface
 {
     /*
@@ -19,14 +21,21 @@ class TypeFactory implements TypeFactoryInterface
      * @param $value
      * @return object, instance of AbstractType
      */
-    public static function build($type, $value)
+    public static function build(string $type, string $value, $flag)
     {
-        $typeObject = null;
-        $typeNamespace = "RestQuery\\Model\\Type\\"; //TODO can we avoid hardcoding this value?
+        $typeNamespace = "RestQuery\\Model\\Type\\"; //can we avoid hardcoding this value?
         $fullTypeName = $typeNamespace . $type;
-        $typeObject = new $fullTypeName($value);
 
-        return $typeObject;
+        try
+        {
+            return new $fullTypeName($value, $flag);
+        }
+        catch (\Exception $e)
+        {
+            throw TypeDoesNotExist::fromQuery();
+        }
+
+
     }
 }
 

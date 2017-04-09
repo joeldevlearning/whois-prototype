@@ -10,39 +10,29 @@ use RestQuery\Action\Sanitize\Filter as f;
 use RestQuery\Action\Sanitize\IfEmpty;
 use RestQuery\Action\Sanitize\ProcessOptions as options;
 use RestQuery\Action\Validate\Validate as v;
+use RestQuery\Model\Type\TypeFactory as type;
 
 class Query implements QueryInterface
 {
-    public function SetTypeToken(string $selector, object $typeToken) : void
-    {
-        switch($selector) {
-            case 'pr':
-                $this->qSelectors[ 'pr' ][ 'typeToken' ] = $typeToken;
-                break;
-            case 'se':
-                $this->qSelectors[ 'se' ][ 'typedToken' ] = $typeToken;
-                break;
-        }
-    }
-
-    public function getPr() : QuerySelector
-    {
-        return $this->qSelectors['pr']['typedObject'];
-    }
-
-    public function getSe() : QuerySelector
-    {
-        return $this->qSelectors['se']['typedObject'];
-    }
-
-    private $qSelectors = array();
+    public $qSelectors = array(); //TODO seal this as private
     private $primary;
     private $secondary;
-
     private $qParameters = array(
         'enable_hinting' => 1, //enable by default
         'enable_auto_wildcard' => 1, //enabled by default
     );
+
+    public function getPr() : object
+    {
+        return $this->primary;
+    }
+
+    public function getSe() : object
+    {
+        return $this->secondary;
+    }
+
+
     /* @var integer Indicates what type of hint is available
      * "0" = no hint, hinting disabled
      * "1" = hint available, hinting enabled
@@ -80,13 +70,18 @@ calls to the RunQueue would return one-by-one results from the array
 
     public function __construct()
     {
+        /*
+         * TODO: use exceptions here in the constructor
+         * pull the error logic out of the called functions
+         *
+         */
 
         /*
          * 1) Filter returns qSelector array with format of [pr][rawString]
          * 2) Cast empty values to null
          * 3) Validate selectors (exit if invalid)
          * 4) Filter and store parameters
-         * 5) call SetSelector to create selector objects
+         * 5) call typefactory for primary and secondary selectors
          */
 
         $qSelectors = f::FilterCharacters();
@@ -95,10 +90,20 @@ calls to the RunQueue would return one-by-one results from the array
 
         $this->qParameters = options::AssignOptionFlags();
 
-        $this->primary = new QuerySelector($this->qSelectors['pr']['rawString'],
-            $this->qSelectors['prflag']['rawString']);
+        //TODO parse input, assign type, create objects, then store them in Query
 
-        $this->secondary = new QuerySelector($this->qSelectors['se']['rawString'],
-            $this->qSelectors['seflag']['rawString']);
+        $type1 = 'AlphaNumeric'; //TODO temp variable
+        $this->primary = type::build(
+            $type1,
+            $this->qSelectors['pr']['rawString'],
+            $this->qSelectors['prflag']['rawString']
+        );
+
+        $type2 = 'AlphaNumeric'; //TODO temp variable
+        $this->primary = type::build(
+            $type2,
+            $this->qSelectors['se']['rawString'],
+            $this->qSelectors['seflag']['rawString']
+        );
     }
 }
