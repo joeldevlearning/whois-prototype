@@ -1,14 +1,14 @@
 <?php
-namespace RestQuery\Action\Sanitize;
+namespace RestQuery\Action\Setup;
 
 /*
  * Filters and stores optional parameters
  * TODO parameters are experimental
  */
 
-class ProcessOptions
+class Load
 {
-    public static function AssignOptionFlags() : array
+    public static function Parameters() : array
     {
         $qParameters = array();
 

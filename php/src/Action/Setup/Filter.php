@@ -4,13 +4,13 @@
  * Wrapper for PHP's built-in filter_input()
  *
  */
-namespace RestQuery\Action\Sanitize;
+namespace RestQuery\Action\Setup;
 
 
 class Filter
 {
     //Filter() returns qSelector array with [pr][rawString]
-    public static function FilterCharacters() : array
+    public static function GetParameters() : array
     {
         $qSelectors = [
             "pr"      => array("rawString" => filter_input(INPUT_GET, 'pr', FILTER_SANITIZE_FULL_SPECIAL_CHARS)),

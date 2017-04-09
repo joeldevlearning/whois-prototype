@@ -26,16 +26,7 @@ class TypeFactory implements TypeFactoryInterface
         $typeNamespace = "RestQuery\\Model\\Type\\"; //can we avoid hardcoding this value?
         $fullTypeName = $typeNamespace . $type;
 
-        try
-        {
-            return new $fullTypeName($value, $flag);
-        }
-        catch (\Exception $e)
-        {
-            throw TypeDoesNotExist::fromQuery();
-        }
-
-
+        return new $fullTypeName($value, $flag);
     }
 }
 
