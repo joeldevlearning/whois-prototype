@@ -6,7 +6,7 @@ namespace RestQuery\Model\Type;
  *
  */
 
-use RestQuery\Model\Type\AbtractType as type;
+use RestQuery\Model\Type\AbstractType as type;
 
 class Numeric extends type
 {

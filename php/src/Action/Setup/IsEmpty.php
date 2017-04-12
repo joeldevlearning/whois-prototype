@@ -5,7 +5,7 @@ namespace RestQuery\Action\Setup;
 
 class IsEmpty
 {
-    public static function String($value)
+    public static function string($value)
     {
         return empty($value) && !is_numeric($value);
     }

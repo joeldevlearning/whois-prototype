@@ -7,7 +7,7 @@ namespace RestQuery\Model\Type;
  * if so, then the type AlphaNumeric is assigned
  */
 
-use RestQuery\Model\Type\AbtractType as type;
+use RestQuery\Model\Type\AbstractType as type;
 
 class PocHandle extends type
 {

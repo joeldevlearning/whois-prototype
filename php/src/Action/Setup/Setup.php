@@ -1,49 +1,81 @@
 <?php
+
 namespace RestQuery\Action\Setup;
 
-use RestQuery\Query;
-use RestQuery\Action\Setup\{Filter, IsEmpty, IsValid, Load};
+use RestQuery\Action\Setup\{
+    Filter, IsEmpty, IsValid
+};
 use RestQuery\Exception\QueryInputWasInvalid;
-use RestQuery\Model\Type\TypeFactory as type;
 
 class Setup
 {
     //Step 1, filter input
-    public static function FilterInput() : array
+    public static function filterSelectors(): array
     {
-        return Filter::GetParameters();
+        return Filter::httpGetSelectors();
+    }
+
+    public static function filterParameters(): array
+    {
+        return Filter::httpGetParameters();
     }
 
     //Step 2, validate input
-    public static function ValidateInput($qSelectors)
+    public static function validateInput($qSelectors)
     {
-        if( IsValid::Content($qSelectors) === FALSE ||
-            IsValid::Flag($qSelectors) === FALSE ||
-            IsValid::Combination($qSelectors) === FALSE
-        )
-        {
-           throw new QueryInputWasInvalid();
+        if (IsValid::content($qSelectors) === false ||
+            IsValid::flag($qSelectors) === false ||
+            IsValid::combination($qSelectors) === false
+        ) {
+            throw new QueryInputWasInvalid();
         }
     }
 
-    //Step 3, inject selectors and parameters into new Query object
-    public static function CreateQuery()
-    {
-        $qParameters = Load::Parameters();
+    //Step 3, determine selector types and create selector objects
+    public static function castToTypes(array $qSelectors) : array
+    {//TODO remove all this logic, simplify
+        //state 0, pr only
+        if (isEmpty::string($qSelectors[ 'se' ][ 'rawString' ]) &&
+            isEmpty::string($qSelectors[ 'prflag' ][ 'rawString' ])
+        )
+        {
+        //define pr object WITHOUT flag
+        }
 
-        $type1 = 'AlphaNumeric'; //TODO temp variable
-        $primary = type::build(
-            $type1,
-            $qSelectors['pr']['rawString'],
-            $qSelectors['prflag']['rawString']
-        );
+        //state 1, pr+flag, WITHOUT se
+        if (isEmpty::string($qSelectors[ 'se' ][ 'rawString' ]) &&
+            !isEmpty::string($qSelectors[ 'prflag' ][ 'rawString' ])
+        )
+        {
+            //define pr object WITH flag
+        }
 
-        $type2 = 'AlphaNumeric'; //TODO temp variable
-        $primary = type::build(
-            $type2,
-            $qSelectors['se']['rawString'],
-            $qSelectors['seflag']['rawString']
-        );
+        //state 2, pr and se, WITHOUT flags
+        if (!isEmpty::string($qSelectors[ 'se' ][ 'rawString' ]) &&
+            isEmpty::string($qSelectors[ 'prflag' ][ 'rawString' ]) &&
+            isEmpty::string($qSelectors[ 'seflag' ][ 'rawString' ])
+        )
+        {
+            //define pr and se, WITHOUT flags
+        }
+
+        //state 3, pr+flag and se WITHOUT flag
+        if (!isEmpty::string($qSelectors[ 'se' ][ 'rawString' ]) &&
+            !isEmpty::string($qSelectors[ 'prflag' ][ 'rawString' ]) &&
+            isEmpty::string($qSelectors[ 'seflag' ][ 'rawString' ])
+        )
+        {
+            //define pr+flag and se WITHOUT flag
+        }
+
+        //state 4, pr+flag AND se+flag
+        if (!isEmpty::string($qSelectors[ 'se' ][ 'rawString' ]) &&
+            !isEmpty::string($qSelectors[ 'prflag' ][ 'rawString' ]) &&
+            !isEmpty::string($qSelectors[ 'seflag' ][ 'rawString' ])
+        )
+        {
+            //define pr+flag AND se+flag
+        }
     }
 
 

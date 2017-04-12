@@ -1,4 +1,5 @@
 <?php
+
 namespace RestQuery\Model\Type;
 
 /*
@@ -21,12 +22,13 @@ class TypeFactory implements TypeFactoryInterface
      * @param $value
      * @return object, instance of AbstractType
      */
-    public static function build(string $type, string $value, $flag)
+    public static function build(string $type, string $value)
     {
         $typeNamespace = "RestQuery\\Model\\Type\\"; //can we avoid hardcoding this value?
         $fullTypeName = $typeNamespace . $type;
 
-        return new $fullTypeName($value, $flag);
+        //return new object derived implicitly from AbstractType
+        return new $fullTypeName($type, $value);
     }
 }
 

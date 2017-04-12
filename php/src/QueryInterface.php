@@ -1,19 +1,22 @@
 <?php
+namespace RestQuery;
 
 /*
  * Defines contract for reading/writing to Query object
  *
  */
 
-namespace RestQuery;
-
 interface QueryInterface
 {
-    /*
-     * pulls $query->primary|secondary
-     * called by various actions
-    */
-    public function GetPr() : object;
-    public function GetSe() : object;
+
+    public function getPrimary(): object;
+
+    public function getSecondary(): object;
+
+    public function setPrimary(object $primary): object;
+
+    public function setSecondary(object $secondary): object;
+
+    public function setParameters(array $qParameters): object;
 
 }

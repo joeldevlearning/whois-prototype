@@ -1,4 +1,5 @@
 <?php
+
 namespace RestQuery\Action\Setup;
 
 /*
@@ -16,49 +17,44 @@ class IsValid
      * @param Query $query
      * @return Query
      */
-    public static function Content(array $qSelectors) : bool
+    public static function content(array $qSelectors): bool
     {
         $stringFilter = v::alnum('*-')->length(1, 101); //allow * and - characters
 
         if (IsEmpty::String($qSelectors[ 'pr' ][ 'rawString' ]) &&
-            v::keyNested('pr.rawString', $stringFilter)->validate($qSelectors) === FALSE)
-        {
-            return FALSE;
+            v::keyNested('pr.rawString', $stringFilter)->validate($qSelectors) === false
+        ) {
+            return false;
         }
 
-        if(!IsEmpty::String($qSelectors[ 'se' ][ 'rawString' ])) //if se exists
+        if (!IsEmpty::String($qSelectors[ 'se' ][ 'rawString' ])) //if se exists
         {
-            if (v::keyNested('se.rawString', $stringFilter)->validate($qSelectors) === FALSE)
-            {
-                return FALSE;
+            if (v::keyNested('se.rawString', $stringFilter)->validate($qSelectors) === false) {
+                return false;
             }
         }
-        return TRUE;
+        return true;
     }
 
-    public static function Flag(array $qSelectors)
+    public static function flag(array $qSelectors)
     {
         $flagFilter = v::alnum()->length(1, 40);
 
-        if(!IsEmpty::String($qSelectors[ 'prflag' ][ 'rawString' ]))
-        {
-            if (v::keyNested('prflag.rawSting', $flagFilter)->validate($qSelectors) === FALSE)
-            {
-                return FALSE;
+        if (!IsEmpty::String($qSelectors[ 'prflag' ][ 'rawString' ])) {
+            if (v::keyNested('prflag.rawSting', $flagFilter)->validate($qSelectors) === false) {
+                return false;
             }
         }
 
-        if(!IsEmpty::String($qSelectors[ 'seflag' ][ 'rawString' ]))
-        {
-            if (v::keyNested('seflag.rawString', $flagFilter)->validate($qSelectors) === FALSE)
-            {
-                return FALSE;
+        if (!IsEmpty::String($qSelectors[ 'seflag' ][ 'rawString' ])) {
+            if (v::keyNested('seflag.rawString', $flagFilter)->validate($qSelectors) === false) {
+                return false;
             }
         }
-        return TRUE;
+        return true;
     }
 
-    public static function Combination(array $qSelectors) : bool
+    public static function combination(array $qSelectors): bool
     {
         /**
          * Invalid query combinations are:
@@ -76,18 +72,16 @@ class IsValid
          */
 
         //pr MUST be set
-        if ($qSelectors[ 'pr' ][ 'rawString' ] === null)
-        {
-            return FALSE;
+        if ($qSelectors[ 'pr' ][ 'rawString' ] === null) {
+            return false;
         }
 
         //seflag requires se to be set
         if ($qSelectors[ 'seflag' ][ 'rawString' ] !== null &&
             $qSelectors[ 'se' ][ 'rawString' ] === null
-        )
-        {
-            return FALSE;
+        ) {
+            return false;
         }
-        return TRUE;
+        return true;
     }
 }
