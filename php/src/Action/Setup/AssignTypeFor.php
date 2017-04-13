@@ -2,29 +2,56 @@
 
 namespace RestQuery\Action\Setup;
 
-use RestQuery\Model\Type\AbstractType;
 use RestQuery\Model\Type\TypeFactory as type;
 
 class AssignTypeFor
 {
-//TODO put logic in here to check for flags and build object correctly
-    public static function Primary(array $qSelectors) //return object
+    public static function Selector(string $selector, array $qSelectors) //return object
     {
-        $type1 = 'AlphaNumeric'; //TODO temp variable
-        return type::build(
-            $type1,
-            $qSelectors[ 'pr' ][ 'rawString' ]
-        );
-        //TODO need logic to include flag
+        $typeObject = NULL;
+
+        //create primary object
+        if($selector === 'primary')
+        {
+            $type1 = 'AlphaNumeric'; //TODO temp variable
+            if ($qSelectors[ 'prflag' ][ 'rawString' ] !== null)
+            {
+                $typeObject = type::buildWithFlag(
+                    $type1,
+                    $qSelectors[ 'pr' ][ 'rawString' ],
+                    $qSelectors[ 'prflag' ][ 'rawString' ]
+                );
+            }
+            else
+            {
+                $typeObject = type::build(
+                    $type1,
+                    $qSelectors[ 'pr' ][ 'rawString' ]
+                );
+            }
+        }
+
+        //create secondary object
+        if($selector === 'secondary')
+        {
+            $type2 = 'AlphaNumeric'; //TODO temp variable
+            if ($qSelectors[ 'seflag' ][ 'rawString' ] !== null)
+            {
+                $typeObject = type::buildWithFlag(
+                    $type2,
+                    $qSelectors[ 'se' ][ 'rawString' ],
+                    $qSelectors[ 'seflag' ][ 'rawString' ]
+                );
+            }
+            else
+            {
+                $typeObject = type::build(
+                    $type2,
+                    $qSelectors[ 'se' ][ 'rawString' ]
+                );
+            }
+        }
+        return $typeObject;
     }
 
-    public static function Secondary(array $qSelectors) //return object
-    {
-        $type2 = 'AlphaNumeric'; //TODO temp variable
-        return type::build(
-            $type2,
-            $qSelectors[ 'se' ][ 'rawString' ]
-        );
-        //TODO need logic to include flag
-    }
 }
