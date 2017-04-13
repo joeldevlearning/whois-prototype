@@ -7,11 +7,9 @@ namespace RestQuery;
  * Is mutated by various "Action" objects
  */
 
-use RestQuery\Action\Setup;
-
 class Query implements QueryInterface
 {
-    public $qSelectors = array(); //TODO seal as private
+    //public $qSelectors = array(); REPLACED WITH OBJECTS
 
     private $primary;
     private $secondary;
@@ -68,20 +66,12 @@ class Query implements QueryInterface
      * "1" = hint available, hinting enabled
      */
 
-    public $hintFlag = "";
-    /* @var integer Defines constraints on query, based on user input
-     * 1 = only primary search string, no specific record type
-     * 2 = only primary search string, ONE specific record type desired
-     * 3 = only primary search string, ONE specific record type desired based on matching specific primary record type
-     * 4 = primary and secondary search strings, specific record AND field desired
-     * set and read by Analyze class
-     */
-    public $qType = "";
+    //public $qType = "";
 
     /* @var array Contains list of records to query
      * should be in the format of [0][recordType=>fieldType]
      */
-    public $qBuildQueue = array();
+    //public $qBuildQueue = array();
 
     /*
      * Right now we are pulling directly from qRunQueue
@@ -90,13 +80,13 @@ this would wrap qRunQueue
 calls to the RunQueue would return one-by-one results from the array
 
      */
-    public $qRunQueue = array();
+    //public $qRunQueue = array();
 
-    public $qTransformQueue = array();
+    //public $qTransformQueue = array();
 
-    public $qReportQueue = array();
+    //public $qReportQueue = array();
 
-    public $qRespondQueue = array();
+    //public $qRespondQueue = array();
 
     public function __construct()
     {
