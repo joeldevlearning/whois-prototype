@@ -15,9 +15,9 @@ class IsValid
 {
     public static function allInput($qSelectors)
     {
-        if (IsValid::content($qSelectors) === false ||
-            IsValid::flag($qSelectors) === false ||
-            IsValid::combination($qSelectors) === false
+        if (self::content($qSelectors) === FALSE ||
+            self::flag($qSelectors) === FALSE ||
+            self::combination($qSelectors) === FALSE
         ) {
             throw new QueryInputWasInvalid();
         }
@@ -83,13 +83,13 @@ class IsValid
          */
 
         //pr MUST be set
-        if ($qSelectors[ 'pr' ][ 'rawString' ] === null) {
+        if ($qSelectors[ 'pr' ][ 'rawString' ] === NULL) {
             return false;
         }
 
         //seflag requires se to be set
-        if ($qSelectors[ 'seflag' ][ 'rawString' ] !== null &&
-            $qSelectors[ 'se' ][ 'rawString' ] === null
+        if ($qSelectors[ 'seflag' ][ 'rawString' ] !== NULL &&
+            $qSelectors[ 'se' ][ 'rawString' ] === NULL
         ) {
             return false;
         }
