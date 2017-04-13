@@ -9,9 +9,20 @@ namespace RestQuery\Action\Setup;
 use RestQuery\Query;
 use Respect\Validation\Validator as v;
 use RestQuery\Action\Setup\IsEmpty;
+use RestQuery\Exception\QueryInputWasInvalid;
 
 class IsValid
 {
+    public static function allInput($qSelectors)
+    {
+        if (IsValid::content($qSelectors) === false ||
+            IsValid::flag($qSelectors) === false ||
+            IsValid::combination($qSelectors) === false
+        ) {
+            throw new QueryInputWasInvalid();
+        }
+    }
+
     /**
      * Check length, character encoding, etc. of user input
      * @param Query $query
