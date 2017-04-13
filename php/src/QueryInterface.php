@@ -13,10 +13,10 @@ interface QueryInterface
 
     public function getSecondary(): object;
 
-    public function setPrimary(object $primary): object;
+    public function setPrimary($primary); //return object
 
-    public function setSecondary(object $secondary): object;
+    public function setSecondary($secondary); //return object
 
-    public function setParameters(array $qParameters): object;
+    public function setParameters(array $qParameters); //return object
 
 }

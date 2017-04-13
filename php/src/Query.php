@@ -15,10 +15,7 @@ class Query implements QueryInterface
 
     private $primary;
     private $secondary;
-    private $qParameters = array(
-        'enable_hinting' => 1, //enable by default
-        'enable_auto_wildcard' => 1, //enabled by default
-    );
+    private $qParameters = array();
 
     public function getPrimary(): object
     {
@@ -31,24 +28,24 @@ class Query implements QueryInterface
     }
 
     /**
-     * Primary setter - fluent style
+     * Primary setter - fluent style, accept & return object
      */
-    public function setPrimary(object $primary): object
+    public function setPrimary($primary)
     {
         $this->primary = $primary;
         return $this;
     }
 
     /**
-     * Secondary setter - fluent style
+     * Secondary setter - fluent style, accept & return object
      */
-    public function setSecondary(object $secondary): object
+    public function setSecondary($secondary)
     {
         $this->secondary = $secondary;
         return $this;
     }
 
-    public function setParameters(array $qParameters): object
+    public function setParameters(array $qParameters)
     {
         $this->qParameters = $qParameters;
         return $this;
