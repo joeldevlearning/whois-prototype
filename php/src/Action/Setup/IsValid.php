@@ -15,11 +15,20 @@ class IsValid
 {
     public static function allInput($qSelectors)
     {
-        if (self::content($qSelectors) === FALSE ||
-            self::flag($qSelectors) === FALSE ||
-            self::combination($qSelectors) === FALSE
-        ) {
-            throw new QueryInputWasInvalid();
+        try
+        {
+            if (self::content($qSelectors) === FALSE ||
+                self::flag($qSelectors) === FALSE ||
+                self::combination($qSelectors) === FALSE
+            )
+            {
+                throw new QueryInputWasInvalid("Validation failed.");
+            }
+
+        }
+        catch (\Exception $e)
+        {
+            echo $e->getMessage();
         }
     }
 
@@ -32,15 +41,15 @@ class IsValid
     {
         $stringFilter = v::alnum('*-')->length(1, 101); //allow * and - characters
 
-        if (IsEmpty::String($qSelectors[ 'pr' ][ 'rawString' ]) &&
-            v::keyNested('pr.rawString', $stringFilter)->validate($qSelectors) === false
+        if (IsEmpty::String($qSelectors[ 'pr' ]) &&
+            v::key('pr', $stringFilter)->validate($qSelectors) === false
         ) {
             return false;
         }
 
-        if (!IsEmpty::String($qSelectors[ 'se' ][ 'rawString' ])) //if se exists
+        if (!IsEmpty::String($qSelectors[ 'se' ])) //if se exists
         {
-            if (v::keyNested('se.rawString', $stringFilter)->validate($qSelectors) === false) {
+            if (v::key('se', $stringFilter)->validate($qSelectors) === false) {
                 return false;
             }
         }
@@ -51,15 +60,19 @@ class IsValid
     {
         $flagFilter = v::alnum()->length(1, 40);
 
-        if (!IsEmpty::String($qSelectors[ 'prflag' ][ 'rawString' ])) {
-            if (v::keyNested('prflag.rawSting', $flagFilter)->validate($qSelectors) === false) {
-                return false;
+        if (!IsEmpty::String($qSelectors[ 'prflag' ]))
+        {
+            if (v::key('prflag', $flagFilter)->validate($qSelectors) === FALSE)
+            {
+                return FALSE;
             }
         }
 
-        if (!IsEmpty::String($qSelectors[ 'seflag' ][ 'rawString' ])) {
-            if (v::keyNested('seflag.rawString', $flagFilter)->validate($qSelectors) === false) {
-                return false;
+        if (!IsEmpty::String($qSelectors[ 'seflag' ]))
+        {
+            if (v::key('seflag', $flagFilter)->validate($qSelectors) === FALSE)
+            {
+                return FALSE;
             }
         }
         return true;
@@ -83,13 +96,13 @@ class IsValid
          */
 
         //pr MUST be set
-        if ($qSelectors[ 'pr' ][ 'rawString' ] === NULL) {
+        if ($qSelectors[ 'pr' ] === NULL) {
             return false;
         }
 
         //seflag requires se to be set
-        if ($qSelectors[ 'seflag' ][ 'rawString' ] !== NULL &&
-            $qSelectors[ 'se' ][ 'rawString' ] === NULL
+        if ($qSelectors[ 'seflag' ] !== NULL &&
+            $qSelectors[ 'se' ] === NULL
         ) {
             return false;
         }

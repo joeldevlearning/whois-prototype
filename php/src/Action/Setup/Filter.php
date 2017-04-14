@@ -10,16 +10,65 @@ namespace RestQuery\Action\Setup;
 
 class Filter
 {
-    //Filter() returns qSelector array with [pr][rawString]
     public static function httpGetSelectors(): array
     {
+        /*
+         * Remove programming-related tags
+         * Strip out ASCII characters <32
+         * Case empty to NULL
+         */
+        $filterGet = function($input)
+        {
+            return filter_input(INPUT_GET, $input, FILTER_SANITIZE_STRING, FILTER_FLAG_EMPTY_STRING_NULL | FILTER_FLAG_STRIP_LOW);
+        };
+
         $qSelectors = [
-            "pr"      => array("rawString" => filter_input(INPUT_GET, 'pr', FILTER_SANITIZE_FULL_SPECIAL_CHARS)),
-            "prflag" => array("rawString" => filter_input(INPUT_GET, 'prflag', FILTER_SANITIZE_FULL_SPECIAL_CHARS)),
-            "se" => array("rawString" => filter_input(INPUT_GET, 'se', FILTER_SANITIZE_FULL_SPECIAL_CHARS)),
-            "seflag" => array("rawString" => filter_input(INPUT_GET, 'seflag', FILTER_SANITIZE_FULL_SPECIAL_CHARS)),
+            "pr"      => $filterGet('pr'),
+            "prflag"  => $filterGet('prflag'),
+            "se"      => $filterGet('se'),
+            "seflag"  => $filterGet('seflag')
         ];
+
+        /*
+         * For pr and se, keep white space and asterisk/star, Dash
+         */
+        $allowAsteriskDash = function($input)
+        {
+            return preg_replace('/[^a-zA-Z0-9\s\p{Pd}\*]/', "", $input);
+        };
+
+        /*
+         * For flags, remove all punctuation, math symbols, and invisible characters
+         */
+        $stripPunctMathInvisible = function($input)
+        {
+            return preg_replace('/[\p{P}\p{S}\p{C}]/', "", $input);
+        };
+
+        /*
+         * If filtering empties the string, cast to null
+         */
+        $qSelectors['pr'] = self::CastEmptyToNull($allowAsteriskDash($qSelectors['pr']));
+        $qSelectors['se'] = self::CastEmptyToNull($allowAsteriskDash($qSelectors['se']));
+
+        $qSelectors['prflag'] = self::CastEmptyToNull($stripPunctMathInvisible($qSelectors['prflag']));
+        $qSelectors['seflag'] = self::CastEmptyToNull($stripPunctMathInvisible($qSelectors['seflag']));
+
         return $qSelectors;
+    }
+
+    /**
+     * @param string $selector
+     * @return string or NULL
+     * WARNING: Empty returns the string "0" as TRUE
+     */
+    private static function CastEmptyToNull(string $selector)
+    {
+        if(empty($selector))
+        {
+            $selector = NULL;
+        }
+        return $selector;
     }
 
     public static function httpGetParameters(): array

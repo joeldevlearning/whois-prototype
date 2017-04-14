@@ -61,10 +61,11 @@ class AbstractType implements AbstractTypeInterface
         return get_class($this);
     }
 
-    public function __construct(string $type, string $value)
+    public function __construct(string $type, string $value, $flag)
     {
         $this->type = $type;
         $this->value = $value;
+        $this->flag = $flag;
     }
 
 }

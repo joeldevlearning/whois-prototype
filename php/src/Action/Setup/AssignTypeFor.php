@@ -14,19 +14,20 @@ class AssignTypeFor
         if($selector === 'primary')
         {
             $type1 = 'AlphaNumeric'; //TODO temp variable
-            if ($qSelectors[ 'prflag' ][ 'rawString' ] !== null)
+            if ($qSelectors[ 'prflag' ] !== NULL)
             {
-                $typeObject = type::buildWithFlag(
+                $typeObject = type::build(
                     $type1,
-                    $qSelectors[ 'pr' ][ 'rawString' ],
-                    $qSelectors[ 'prflag' ][ 'rawString' ]
+                    $qSelectors[ 'pr' ],
+                    $qSelectors[ 'prflag' ]
                 );
             }
             else
             {
                 $typeObject = type::build(
                     $type1,
-                    $qSelectors[ 'pr' ][ 'rawString' ]
+                    $qSelectors[ 'pr' ],
+                    null
                 );
             }
         }
@@ -35,19 +36,20 @@ class AssignTypeFor
         if($selector === 'secondary')
         {
             $type2 = 'AlphaNumeric'; //TODO temp variable
-            if ($qSelectors[ 'seflag' ][ 'rawString' ] !== null)
+            if ($qSelectors[ 'seflag' ] !== NULL)
             {
-                $typeObject = type::buildWithFlag(
+                $typeObject = type::build(
                     $type2,
-                    $qSelectors[ 'se' ][ 'rawString' ],
-                    $qSelectors[ 'seflag' ][ 'rawString' ]
+                    $qSelectors[ 'se' ],
+                    $qSelectors[ 'seflag' ]
                 );
             }
             else
             {
                 $typeObject = type::build(
                     $type2,
-                    $qSelectors[ 'se' ][ 'rawString' ]
+                    $qSelectors[ 'se' ],
+                    null
                 );
             }
         }

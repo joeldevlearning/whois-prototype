@@ -11,5 +11,5 @@ interface AbstractTypeInterface
 
     public function getFlag() : string;
 
-    public function __construct(string $type, string $value);
+    public function __construct(string $type, string $value, $flag);
 }
