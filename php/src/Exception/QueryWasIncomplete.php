@@ -11,7 +11,7 @@ namespace RestQuery\Exception;
 
 class QueryWasIncomplete extends \InvalidArgumentException
 {
-    public static function fromView( $view, $code = null, \Exception $previous = null )
+    public static function fromSetup( $view, $code = null, \Exception $previous = null )
     {
         $message = "something";
 

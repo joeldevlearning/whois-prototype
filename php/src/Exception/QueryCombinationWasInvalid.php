@@ -1,11 +1,11 @@
 <?php
 namespace RestQuery\Exception;
 
-class QueryInputWasInvalid extends \InvalidArgumentException
+class QueryCombinationWasInvalid extends \InvalidArgumentException
 {
     public static function fromSetup( $code = null, \Exception $previous = null )
     {
-        $message = "The query contained invalid input.";
+        $message = "The combination of inputs is invalid.";
 
         return new static( $message, $code, $previous );
     }

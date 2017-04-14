@@ -6,6 +6,7 @@ namespace RestQuery\Action\Setup;
  * Validates combination of selectors from user input
  *
  */
+use RestQuery\Exception\QueryCombinationWasInvalid;
 use RestQuery\Query;
 use Respect\Validation\Validator as v;
 use RestQuery\Action\Setup\IsEmpty;
@@ -15,21 +16,17 @@ class IsValid
 {
     public static function allInput($qSelectors)
     {
-        try
-        {
             if (self::content($qSelectors) === FALSE ||
-                self::flag($qSelectors) === FALSE ||
-                self::combination($qSelectors) === FALSE
+                self::flag($qSelectors) === FALSE
             )
             {
-                throw new QueryInputWasInvalid("Validation failed.");
+                throw new QueryInputWasInvalid("Validation failed: Bad string input.");
             }
 
-        }
-        catch (\Exception $e)
-        {
-            echo $e->getMessage();
-        }
+            if(self::combination($qSelectors) === FALSE)
+            {
+                throw new QueryCombinationWasInvalid("Validation failed: Bad combination of input variables.");
+            }
     }
 
     /**
@@ -41,13 +38,13 @@ class IsValid
     {
         $stringFilter = v::alnum('*-')->length(1, 101); //allow * and - characters
 
-        if (IsEmpty::String($qSelectors[ 'pr' ]) &&
+        if (IsEmpty::string($qSelectors[ 'pr' ]) &&
             v::key('pr', $stringFilter)->validate($qSelectors) === false
         ) {
             return false;
         }
 
-        if (!IsEmpty::String($qSelectors[ 'se' ])) //if se exists
+        if (!IsEmpty::string($qSelectors[ 'se' ])) //if se exists
         {
             if (v::key('se', $stringFilter)->validate($qSelectors) === false) {
                 return false;
@@ -60,7 +57,7 @@ class IsValid
     {
         $flagFilter = v::alnum()->length(1, 40);
 
-        if (!IsEmpty::String($qSelectors[ 'prflag' ]))
+        if (!IsEmpty::string($qSelectors[ 'prflag' ]))
         {
             if (v::key('prflag', $flagFilter)->validate($qSelectors) === FALSE)
             {
@@ -68,7 +65,7 @@ class IsValid
             }
         }
 
-        if (!IsEmpty::String($qSelectors[ 'seflag' ]))
+        if (!IsEmpty::string($qSelectors[ 'seflag' ]))
         {
             if (v::key('seflag', $flagFilter)->validate($qSelectors) === FALSE)
             {

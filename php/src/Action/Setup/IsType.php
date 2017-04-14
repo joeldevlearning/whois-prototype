@@ -1,7 +1,6 @@
 <?php
-namespace RestQuery\Action\Analyze;
+namespace RestQuery\Action\Setup;
 
-use RestQuery\Query;
 use Respect\Validation\Validator as v;
 
 /*
@@ -9,7 +8,7 @@ use Respect\Validation\Validator as v;
  * Called by the Analyze class
  */
 
-class IdentifyType
+class IsType
 {
     public static function Identify(string $value) : object
     {

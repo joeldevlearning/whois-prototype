@@ -9,8 +9,6 @@ namespace RestQuery;
 
 class Query implements QueryInterface
 {
-    //public $qSelectors = array(); REPLACED WITH OBJECTS
-
     private $primary;
     private $secondary;
     private $qParameters = array();
@@ -43,7 +41,6 @@ class Query implements QueryInterface
         return $this;
     }
 
-    //
     public function something() {}
 
     public function setParameters(array $qParameters)
@@ -58,7 +55,6 @@ class Query implements QueryInterface
      * PHP only allows one constructor; this allows objects constructed with variable inputs
      * example: $q = Query::create()->setPrimary($var)->setSecondary($var);
      */
-
     public static function create()
     {
         return new self();
@@ -71,18 +67,8 @@ class Query implements QueryInterface
 
     //public $qType = "";
 
-    /* @var array Contains list of records to query
-     * should be in the format of [0][recordType=>fieldType]
-     */
     //public $qBuildQueue = array();
 
-    /*
-     * Right now we are pulling directly from qRunQueue
-for abstraction we could use an iterator/generator
-this would wrap qRunQueue
-calls to the RunQueue would return one-by-one results from the array
-
-     */
     //public $qRunQueue = array();
 
     //public $qTransformQueue = array();
