@@ -2,9 +2,10 @@
 
 namespace RestQuery\Action\Setup;
 
+use RestQuery\Query;
 use RestQuery\Model\Type\TypeFactory as type;
 
-class AssignTypeFor
+class Create
 {
     public static function Selector(string $selector, array $qSelectors) //return object
     {
@@ -13,6 +14,11 @@ class AssignTypeFor
         //create primary object
         if($selector === 'primary')
         {
+            if($qSelectors[ 'pr' ] === NULL)
+            {
+                return $primary = NULL;
+            }
+
             $type1 = 'AlphaNumeric'; //TODO temp variable
             if ($qSelectors[ 'prflag' ] !== NULL)
             {
@@ -35,6 +41,11 @@ class AssignTypeFor
         //create secondary object
         if($selector === 'secondary')
         {
+            if($qSelectors[ 'se' ] === NULL)
+            {
+                return $secondary = NULL;
+            }
+
             $type2 = 'AlphaNumeric'; //TODO temp variable
             if ($qSelectors[ 'seflag' ] !== NULL)
             {
@@ -56,4 +67,23 @@ class AssignTypeFor
         return $typeObject;
     }
 
+    public static function Query($primary, $secondary, array $qParameters) : \RestQuery\Query
+    {
+        $q = new Query();
+
+        if($secondary !== NULL)
+        {
+            $q = $q::create()
+                ->setPrimary($primary)
+                ->setSecondary($secondary)
+                ->setParameters($qParameters);
+        }
+        else
+        {
+            $q = $q::create()
+                ->setPrimary($primary)
+                ->setParameters($qParameters);
+        }
+        return $q;
+    }
 }

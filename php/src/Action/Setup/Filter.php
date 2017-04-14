@@ -13,13 +13,15 @@ class Filter
     public static function httpGetSelectors(): array
     {
         /*
-         * Remove programming-related tags
+         * Remove HTML/XML/PHP tags
          * Strip out ASCII characters <32
-         * Case empty to NULL
+         * Cast empty to NULL
          */
         $filterGet = function($input)
         {
-            return filter_input(INPUT_GET, $input, FILTER_SANITIZE_STRING, FILTER_FLAG_EMPTY_STRING_NULL | FILTER_FLAG_STRIP_LOW);
+            return filter_input(INPUT_GET, $input,
+                FILTER_SANITIZE_STRING,
+                FILTER_FLAG_EMPTY_STRING_NULL | FILTER_FLAG_STRIP_LOW);
         };
 
         $qSelectors = [
@@ -60,11 +62,10 @@ class Filter
     /**
      * @param string $selector
      * @return string or NULL
-     * WARNING: Empty returns the string "0" as TRUE
      */
     private static function CastEmptyToNull(string $selector)
     {
-        if(empty($selector))
+        if(isEmpty::string($selector))
         {
             $selector = NULL;
         }
