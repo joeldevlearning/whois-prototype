@@ -8,7 +8,7 @@ namespace RestQuery\Model\Type;
  *
  */
 
-class AbstractType implements AbstractTypeInterface
+abstract class AbstractType implements AbstractTypeInterface
 {
     protected $type;
     protected $value;
@@ -37,11 +37,6 @@ class AbstractType implements AbstractTypeInterface
     {
         $this->secondary = $flag;
         return $this;
-    }
-
-    public function create()
-    {
-        return new self($this->type, $this->value);
     }
 
     /*

@@ -10,62 +10,24 @@ use Respect\Validation\Validator as v;
 
 class IsType
 {
-    public static function Identify(string $value) : object
+
+
+    public static function AlphaNumeric(string $value) : bool
     {
-
-        /*
-         * AlphaNumeric was confirmed true in Sanitize action
-         * now check for more specific types of AlphaNumeric
-         */
-        if( IsNetHandle4() )
-        {}
-
-        if( IsNetHandle6() )
-        {}
-
-        if( IsContactHandle() )
-        {}
-
-        if( IsAsNumber() )
-        {}
-
-        if( IsCustomerNumber() )
-        {}
-
-        if( IsEmail() )
-        {}
-
-        //if( HasDomain() ) {}
-
-        if( IsIp() &&
-            !IsIp6()
-        )
-        {
-            //must be ip4
-        }
-            elseif( IsIp6() )
-            {
-                //must be ip6
-            }
-
-        if( IsCidr() )
-        {}
-
+        return FALSE;
     }
 
-    private function IsIp(string $value) : bool
+    public static function Ip4(string $value) : bool
     {
-        //true for valid IPV4 and IPV6
-        if( filter_var($value, FILTER_VALIDATE_IP) )
+        if( filter_var($value, FILTER_VALIDATE_IP,FILTER_FLAG_IPV4) )
         {
             return TRUE;
         }
         //else
-            return FALSE;
+        return FALSE;
     }
 
-    //skip ip4 check; if it's an IP and NOT ip6, then it MUST be ip4
-    private function IsIp6($value) : bool
+    public static function Ip6(string $value) : bool
     {
         if( filter_var($value, FILTER_VALIDATE_IP,FILTER_FLAG_IPV6) )
         {
@@ -73,6 +35,35 @@ class IsType
         }
         //else
         return FALSE;
+    }
+
+    public static function NetHandle4(string $value)
+    {
+
+    }
+    public static function NetHandle6(string $value)
+    {
+
+    }
+    public static function ContactHandle(string $value)
+    {
+
+    }
+    public static function AsNumber(string $value)
+    {
+
+    }
+    public static function CustomerNumber(string $value)
+    {
+
+    }
+    public static function Email(string $value)
+    {
+
+    }
+    public static function Domain(string $value)
+    {
+
     }
 
 }

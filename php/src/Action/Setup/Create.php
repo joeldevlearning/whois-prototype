@@ -19,6 +19,7 @@ class Create
                 return $primary = NULL;
             }
 
+            //assign type
             $type1 = 'AlphaNumeric'; //TODO temp variable
             if ($qSelectors[ 'prflag' ] !== NULL)
             {
@@ -46,6 +47,7 @@ class Create
                 return $secondary = NULL;
             }
 
+            //assign type
             $type2 = 'AlphaNumeric'; //TODO temp variable
             if ($qSelectors[ 'seflag' ] !== NULL)
             {

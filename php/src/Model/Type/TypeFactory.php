@@ -30,14 +30,5 @@ class TypeFactory implements TypeFactoryInterface
         //return new object derived implicitly from AbstractType
         return new $fullTypeName($type, $value, $flag);
     }
-
-    public static function buildWithFlag(string $type, string $value, string $flag)
-    {
-        $typeNamespace = "RestQuery\\Model\\Type\\"; //can we avoid hardcoding this value?
-        $fullTypeName = $typeNamespace . $type;
-
-        //return new object derived implicitly from AbstractType
-        return new $fullTypeName($type, $value, $flag);
-    }
 }
 
