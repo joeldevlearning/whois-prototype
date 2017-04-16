@@ -31,8 +31,8 @@ class Analyze
      * @param Query $query
      *
      * WHAT ARE TYPES FOR?
-     * types allow us to match user input against fields in ARIN's model
-     * ARIN has no formal types, just database fields exposed via json/xml
+     * types allow us to match user input against fields in ARIN-RWS's model
+     * ARIN-RWS has no formal types, just database fields exposed via json/xml
      * we assign types so that we can abstract our logic from arin's model
      */
 

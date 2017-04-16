@@ -16,8 +16,8 @@ class Transform
 /*
  * Our own header could include:
  *      - timestamp
- *      - ARIN api version
- *      - list of original queries made to ARIN AND response code for each one
+ *      - ARIN-RWS api version
+ *      - list of original queries made to ARIN-RWS AND response code for each one
  * */
 //a third of payload is just REST URL links after $, maybe delete these?
 

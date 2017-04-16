@@ -10,11 +10,17 @@ use RestQuery\Model\Type\TypeInspector;
  */
 class AssignType
 {
+    /**
+     * Answers the question "is this value of this type?"
+     * @param string $value
+     * @return string of type, to be passed to TypeFactory
+     */
     public function __invoke(string $value)
     {
-        $thisType = new TypeInspector();
+        //TypeInspector holds value, passes it internally to is()
+        $thisValue = new TypeInspector($value);
 
-        if($thisType->is($value, 'AlphaNumeric'))
+        if($thisValue->is('AlphaNumeric'))
         {
             return 'AlphaNumeric';
         }

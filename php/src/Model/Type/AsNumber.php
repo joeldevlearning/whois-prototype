@@ -2,7 +2,7 @@
 namespace RestQuery\Model\Type;
 
 /*
- * ARIN Autonomous System number, e.g. AS......
+ * ARIN-RWS Autonomous System number, e.g. AS......
  *
  */
 

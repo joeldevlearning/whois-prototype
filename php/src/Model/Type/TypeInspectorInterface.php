@@ -10,5 +10,5 @@ interface TypeInspectorInterface
      * @param string $type
      * @return bool
      */
-    public function is(string $value, string $type) : bool;
+    public function is(string $type) : bool;
 }

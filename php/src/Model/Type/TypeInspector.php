@@ -3,23 +3,29 @@
 namespace RestQuery\Model\Type;
 
 /*
- * Calls lambda to answer the question "is the value of this type?"
+ * Answers the question "is the value of this type?"
+ * Exposes is()
  * Uses a predefined list of lambdas
  */
 class TypeInspector implements TypeInspectorInterface
 {
+    private $value;
     private $TypeCheckList;
 
-    public function is(string $value, string $type) : bool
+    public function is(string $type) : bool
     {
-        //convert string to lower case for simpler calling
-        //strtolower() is NOT unicode/mb_string friendly
+        //NOTE: lamda variables are indexed in lowercase
+        //WARNING: strtolower() is NOT unicode/mb_string friendly
         $type = strtolower($type);
-        return $this->TypeCheckList[$type];
+
+        //
+        $typeChecker = $this->TypeCheckList[$type];
+        return $typeChecker($this->value);
     }
 
-    /*
-     * Define each lambda for checking a type and load it in the lookup list
+    /**
+     * Lookup array for type-checking lamdas
+     * Array keys are lowercase; lambda variables are camelCase
      */
     private function loadCheckList() : void
     {
@@ -39,8 +45,9 @@ class TypeInspector implements TypeInspectorInterface
     /*
      * Instantiate to load list of type check lambdas
      */
-    public function __construct()
+    public function __construct(string $value)
     {
+        $this->value = $value;
         $this->loadCheckList();
     }
 }

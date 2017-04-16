@@ -1,7 +1,7 @@
 <?php
 namespace RestQuery\Model;
 
-//holds strings for ARIN's REST API syntax
+//holds strings for ARIN-RWS's REST API syntax
 
 class ArinConfig
 {

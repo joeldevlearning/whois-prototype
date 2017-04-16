@@ -2,7 +2,7 @@
 namespace RestQuery\Model\Type;
 
 /*
- * ARIN NET handle for IPv6 address blocks, e.g. NET6-....
+ * ARIN-RWS NET handle for IPv6 address blocks, e.g. NET6-....
  *
  */
 
