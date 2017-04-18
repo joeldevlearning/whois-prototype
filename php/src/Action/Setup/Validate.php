@@ -12,7 +12,7 @@ use Respect\Validation\Validator as v;
 use RestQuery\Action\Setup\IsEmpty;
 use RestQuery\Exception\QueryInputWasInvalid;
 
-class IsValid
+class Validate
 {
     public static function allInput($qSelectors)
     {

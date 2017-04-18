@@ -2,52 +2,89 @@
 
 namespace RestQuery\Model\Type;
 
+use RestQuery\Exception\TypeCheckFunctionDoesNotExist;
+use Respect\Validation as v;
+
 /*
  * Answers the question "is the value of this type?"
- * Exposes is()
- * Uses a predefined list of lambdas
+ * Exposes method sniffType(), which delegates to private methods
  */
 class TypeInspector implements TypeInspectorInterface
 {
-    private $value;
-    private $TypeCheckList;
 
-    public function is(string $type) : bool
+    /**
+     * Answers the question "what type is this string?
+     * @return string
+     */
+    public function sniffType(string $value) : string
     {
-        //NOTE: lamda variables are indexed in lowercase
-        //WARNING: strtolower() is NOT unicode/mb_string friendly
-        $type = strtolower($type);
+        /*
+         * set 1, check for IP addresses
+         */
+        if($this->is($value, 'Ip4'))
+        {
+            return 'Ip4';
+        }
 
-        //
-        $typeChecker = $this->TypeCheckList[$type];
-        return $typeChecker($this->value);
+        /*
+         * set 2, check for various number id's
+         */
+
+        /*
+         * set 3, check for various names
+         */
+
+        /*
+         * if no other match, assign AlphaNumeric
+         */
+        return 'AlphaNumeric';
+
     }
 
     /**
-     * Lookup array for type-checking lamdas
-     * Array keys are lowercase; lambda variables are camelCase
+     * Answers the question "is this value of this type?"
+     * Delegate validation to private methods
+     * @param string $type
+     * @return bool
      */
-    private function loadCheckList() : void
+    private function is(string $value, string $type) : bool
     {
-        $TypeCheckerList['alphanumeric'] = $isAlphaNumeric = function($value) : bool
-            {
-                //checking logic
-                return FALSE;
-            };
+        /*
+         * use PHP's "variable function" feature
+         * map a string "function" to method isFunction()
+         * is_callable() guards against bad input
+         */
+        //if (is_callable($type))
+        $type = "is" . $type;
+            return $this->$type($value);
 
-        $TypeCheckerList['customernumber'] = $isCustomerNumber = function($value) : bool
-            {
-                //checking logic
-                return FALSE;
-            };
+        //else
+        //throw new TypeCheckFunctionDoesNotExist();
     }
 
-    /*
-     * Instantiate to load list of type check lambdas
-     */
-    public function __construct(string $value)
+    private function isAlphaNumeric(string $value) : bool
     {
-        $this->value = $value;
-        $this->loadCheckList();
+        //checking logic
+        return FALSE;
+    }
+
+    private function isIp4(string $value) : bool
+    {
+        if( filter_var($value, FILTER_VALIDATE_IP,FILTER_FLAG_IPV4) )
+        {
+            return TRUE;
+        }
+        //else
+        return FALSE;
+    }
+
+    private function isIp6(string $value) : bool
+    {
+        if( filter_var($value, FILTER_VALIDATE_IP,FILTER_FLAG_IPV6) )
+        {
+            return TRUE;
+        }
+        //else
+        return FALSE;
     }
 }

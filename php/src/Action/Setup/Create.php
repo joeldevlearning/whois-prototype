@@ -4,12 +4,14 @@ namespace RestQuery\Action\Setup;
 
 use RestQuery\Query;
 use RestQuery\Model\Type\TypeFactory as type;
+use RestQuery\Model\Type\TypeInspector;
 
 class Create
 {
     public static function Selector(string $selector, array $qSelectors) //return object
     {
         $typeObject = NULL;
+        $inspector = new TypeInspector();
 
         //create primary object
         if($selector === 'primary')
@@ -20,11 +22,14 @@ class Create
             }
 
             //assign type
-            $type1 = 'AlphaNumeric'; //TODO temp variable
+
+            $type = $inspector->sniffType($qSelectors['pr']);
+
+            //$type1 = 'AlphaNumeric'; //TODO temp variable
             if ($qSelectors[ 'prflag' ] !== NULL)
             {
                 $typeObject = type::build(
-                    $type1,
+                    $type,
                     $qSelectors[ 'pr' ],
                     $qSelectors[ 'prflag' ]
                 );
@@ -32,7 +37,7 @@ class Create
             else
             {
                 $typeObject = type::build(
-                    $type1,
+                    $type,
                     $qSelectors[ 'pr' ],
                     null
                 );
@@ -48,11 +53,11 @@ class Create
             }
 
             //assign type
-            $type2 = 'AlphaNumeric'; //TODO temp variable
+            $type = 'AlphaNumeric'; //TODO temp variable
             if ($qSelectors[ 'seflag' ] !== NULL)
             {
                 $typeObject = type::build(
-                    $type2,
+                    $type,
                     $qSelectors[ 'se' ],
                     $qSelectors[ 'seflag' ]
                 );
@@ -60,7 +65,7 @@ class Create
             else
             {
                 $typeObject = type::build(
-                    $type2,
+                    $type,
                     $qSelectors[ 'se' ],
                     null
                 );

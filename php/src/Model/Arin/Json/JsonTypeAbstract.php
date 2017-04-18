@@ -1,6 +1,6 @@
 <?php
 
-namespace RestQuery\Model\ARIN\Json;
+namespace RestQuery\Model\Arin\Json;
 
 /*
  * PLACEHOLDER

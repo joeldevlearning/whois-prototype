@@ -5,10 +5,7 @@ namespace RestQuery\Model\Type;
 interface TypeInspectorInterface
 {
     /**
-     * Answers the question "is myString of this type?"
-     * @param string $value
-     * @param string $type
-     * @return bool
+     * @return string
      */
-    public function is(string $type) : bool;
+    public function sniffType(string $value) : string;
 }

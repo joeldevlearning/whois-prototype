@@ -1,6 +1,6 @@
 <?php
 
-namespace RestQuery\Model\ARIN\Xml;
+namespace RestQuery\Model\Arin\Xml;
 
 /*
  * PLACEHOLDER

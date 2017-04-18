@@ -34,15 +34,15 @@ class Filter
         /*
          * For pr and se, keep white space and asterisk/star, Dash
          */
-        $allowAsteriskDash = function($input)
+        $allowAsteriskDashPeriodColon = function($input)
         {
-            return preg_replace('/[^a-zA-Z0-9\s\p{Pd}\*]/', "", $input);
+            return preg_replace('/[^a-zA-Z0-9\s\p{Pd}\*\.:]/', "", $input);
         };
 
         /*
          * For flags, remove all punctuation, math symbols, and invisible characters
          */
-        $stripPunctMathInvisible = function($input)
+        $stripPunctuationMathInvisible = function($input)
         {
             return preg_replace('/[\p{P}\p{S}\p{C}]/', "", $input);
         };
@@ -50,11 +50,11 @@ class Filter
         /*
          * If filtering empties the string, cast to null
          */
-        $qSelectors['pr'] = self::CastEmptyToNull($allowAsteriskDash($qSelectors['pr']));
-        $qSelectors['se'] = self::CastEmptyToNull($allowAsteriskDash($qSelectors['se']));
+        $qSelectors['pr'] = self::CastEmptyToNull($allowAsteriskDashPeriodColon($qSelectors['pr']));
+        $qSelectors['se'] = self::CastEmptyToNull($allowAsteriskDashPeriodColon($qSelectors['se']));
 
-        $qSelectors['prflag'] = self::CastEmptyToNull($stripPunctMathInvisible($qSelectors['prflag']));
-        $qSelectors['seflag'] = self::CastEmptyToNull($stripPunctMathInvisible($qSelectors['seflag']));
+        $qSelectors['prflag'] = self::CastEmptyToNull($stripPunctuationMathInvisible($qSelectors['prflag']));
+        $qSelectors['seflag'] = self::CastEmptyToNull($stripPunctuationMathInvisible($qSelectors['seflag']));
 
         return $qSelectors;
     }
