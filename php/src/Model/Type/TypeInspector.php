@@ -21,11 +21,15 @@ class TypeInspector implements TypeInspectorInterface
         /*
          * set 1, check for IP addresses
          */
-        if($this->is($value, 'Ip4'))
+        if($this->matches($value, 'Ip4'))
         {
             return 'Ip4';
         }
 
+        if($this->matches($value, 'Ip6'))
+        {
+            return 'Ip6';
+        }
         /*
          * set 2, check for various number id's
          */
@@ -47,19 +51,21 @@ class TypeInspector implements TypeInspectorInterface
      * @param string $type
      * @return bool
      */
-    private function is(string $value, string $type) : bool
+    private function matches(string $value, string $type) : bool
     {
         /*
-         * use PHP's "variable function" feature
-         * map a string "function" to method isFunction()
+         * uses PHP's "variable function" feature
+         * maps string "function" to method $this->isFunction()
          * is_callable() guards against bad input
          */
-        //if (is_callable($type))
         $type = "is" . $type;
+        $testCallable = array($this, $type);
+        if (is_callable($testCallable))
+        {
             return $this->$type($value);
-
+        }
         //else
-        //throw new TypeCheckFunctionDoesNotExist();
+        throw new TypeCheckFunctionDoesNotExist();
     }
 
     private function isAlphaNumeric(string $value) : bool
