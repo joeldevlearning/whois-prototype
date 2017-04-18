@@ -22,10 +22,8 @@ class Create
             }
 
             //assign type
-
             $type = $inspector->sniffType($qSelectors['pr']);
 
-            //$type1 = 'AlphaNumeric'; //TODO temp variable
             if ($qSelectors[ 'prflag' ] !== NULL)
             {
                 $typeObject = type::build(
@@ -53,7 +51,7 @@ class Create
             }
 
             //assign type
-            $type = 'AlphaNumeric'; //TODO temp variable
+            $type = $inspector->sniffType($qSelectors['se']);
             if ($qSelectors[ 'seflag' ] !== NULL)
             {
                 $typeObject = type::build(

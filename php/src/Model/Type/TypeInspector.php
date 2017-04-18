@@ -11,7 +11,7 @@ use Respect\Validation as v;
  */
 class TypeInspector implements TypeInspectorInterface
 {
-
+    private $matcher;
     /**
      * Answers the question "what type is this string?
      * @return string
@@ -30,17 +30,18 @@ class TypeInspector implements TypeInspectorInterface
         {
             return 'Ip6';
         }
-        /*
-         * set 2, check for various number id's
-         */
 
-        /*
-         * set 3, check for various names
-         */
+        if($this->matches($value, 'Net4Handle'))
+        {
+            return 'Net4Handle';
+        }
 
-        /*
-         * if no other match, assign AlphaNumeric
-         */
+        if($this->matches($value, 'Net6Handle'))
+        {
+            return 'Net6Handle';
+        }
+
+        // if no other match, assign AlphaNumeric
         return 'AlphaNumeric';
 
     }
@@ -55,42 +56,24 @@ class TypeInspector implements TypeInspectorInterface
     {
         /*
          * uses PHP's "variable function" feature
-         * maps string "function" to method $this->isFunction()
+         * maps string "function" to method TypeMatchLogic::isFunction()
          * is_callable() guards against bad input
          */
         $type = "is" . $type;
-        $testCallable = array($this, $type);
+        $testCallable = array($this->matcher, $type);
         if (is_callable($testCallable))
         {
-            return $this->$type($value);
+            return $this->matcher->$type($value);
         }
         //else
         throw new TypeCheckFunctionDoesNotExist();
     }
 
-    private function isAlphaNumeric(string $value) : bool
+    public function __construct()
     {
-        //checking logic
-        return FALSE;
+        $this->matcher = new TypeMatchLogic();
     }
 
-    private function isIp4(string $value) : bool
-    {
-        if( filter_var($value, FILTER_VALIDATE_IP,FILTER_FLAG_IPV4) )
-        {
-            return TRUE;
-        }
-        //else
-        return FALSE;
-    }
 
-    private function isIp6(string $value) : bool
-    {
-        if( filter_var($value, FILTER_VALIDATE_IP,FILTER_FLAG_IPV6) )
-        {
-            return TRUE;
-        }
-        //else
-        return FALSE;
-    }
+    //
 }
