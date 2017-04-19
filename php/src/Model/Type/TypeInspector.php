@@ -61,6 +61,16 @@ class TypeInspector implements TypeInspectorInterface
             return 'CustomerNumber';
         }
 
+        if($this->matches($value, 'EmailDomain'))
+        {
+            return 'EmailDomain';
+        }
+
+        if($this->matches($value, 'NumericDate'))
+        {
+            return 'NumericDate';
+        }
+
         if($this->matches($value, 'Numeric'))
         {
             return 'Numeric';

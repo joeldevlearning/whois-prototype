@@ -32,11 +32,12 @@ class Filter
         ];
 
         /*
-         * For pr and se, keep white space and asterisk/star, Dash
+         * For pr and se
+         * Asterisk, Dash, Period, Colon, Forward Slash, At sign
          */
-        $allowAsteriskDashPeriodColonFSlash = function($input)
+        $allowedChars = function($input)
         {
-            return preg_replace('/[^a-zA-Z0-9\s\p{Pd}\*\.:\/]/', "", $input);
+            return preg_replace('/[^a-zA-Z0-9\s\p{Pd}\*\.:\/@]/', "", $input);
         };
 
         /*
@@ -50,8 +51,8 @@ class Filter
         /*
          * If filtering empties the string, cast to null
          */
-        $qSelectors['pr'] = self::CastEmptyToNull($allowAsteriskDashPeriodColonFSlash($qSelectors['pr']));
-        $qSelectors['se'] = self::CastEmptyToNull($allowAsteriskDashPeriodColonFSlash($qSelectors['se']));
+        $qSelectors['pr'] = self::CastEmptyToNull($allowedChars($qSelectors['pr']));
+        $qSelectors['se'] = self::CastEmptyToNull($allowedChars($qSelectors['se']));
 
         $qSelectors['prflag'] = self::CastEmptyToNull($stripPunctuationMathInvisible($qSelectors['prflag']));
         $qSelectors['seflag'] = self::CastEmptyToNull($stripPunctuationMathInvisible($qSelectors['seflag']));

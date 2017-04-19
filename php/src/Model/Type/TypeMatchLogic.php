@@ -3,6 +3,7 @@
 namespace RestQuery\Model\Type;
 
 use RestQuery\Action\Setup\IsEmpty;
+use Respect\Validation\Validator;
 
 class TypeMatchLogic
 {
@@ -131,13 +132,29 @@ class TypeMatchLogic
 
     public static function isEmailDomain(string $value) : bool
     {
-        //TODO
+        if(Validator::email()->validate($value) ||
+            Validator::domain()->validate($value)
+        )
+        {
+            return TRUE;
+        }
+        //else
         return FALSE;
     }
 
     public static function isPocHandle(string $value) : bool
     {
         //TODO
+
+        return FALSE;
+    }
+
+    public static function isNumericDate(string $value) : bool
+    {
+        if(Validator::date('Y-m-d')->validate($value))
+        {
+            return TRUE;
+        }
         return FALSE;
     }
 

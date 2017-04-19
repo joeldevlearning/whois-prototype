@@ -36,7 +36,7 @@ class Validate
      */
     public static function content(array $qSelectors): bool
     {
-        $stringFilter = v::alnum('*-.:/')->length(1, 101); //allow * and - characters
+        $stringFilter = v::alnum('*-.:/@')->length(1, 101); //allow * and - characters
 
         if (IsEmpty::string($qSelectors[ 'pr' ]) &&
             v::key('pr', $stringFilter)->validate($qSelectors) === false
