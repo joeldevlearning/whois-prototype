@@ -61,6 +61,11 @@ class TypeInspector implements TypeInspectorInterface
             return 'CustomerNumber';
         }
 
+        if($this->matches($value, 'PocHandle'))
+        {
+            return 'PocHandle';
+        }
+
         if($this->matches($value, 'EmailDomain'))
         {
             return 'EmailDomain';

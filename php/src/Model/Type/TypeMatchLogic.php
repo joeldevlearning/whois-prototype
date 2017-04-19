@@ -144,8 +144,17 @@ class TypeMatchLogic
 
     public static function isPocHandle(string $value) : bool
     {
-        //TODO
-
+        /*
+         * try to extract "-arin" from string
+         */
+        $value = strtolower($value);
+        preg_match('/(\-arin)$/', $value, $arinLabel);
+        var_dump($arinLabel);
+        if($arinLabel[1] === "-arin")
+        {
+                return TRUE;
+        }
+        //else
         return FALSE;
     }
 
