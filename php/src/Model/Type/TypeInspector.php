@@ -31,6 +31,16 @@ class TypeInspector implements TypeInspectorInterface
             return 'Ip6';
         }
 
+        if($this->matches($value, 'Cidr4'))
+        {
+            return 'Cidr4';
+        }
+
+        if($this->matches($value, 'Cidr6'))
+        {
+            return 'Cidr6';
+        }
+
         if($this->matches($value, 'Net4Handle'))
         {
             return 'Net4Handle';

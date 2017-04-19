@@ -2,12 +2,6 @@
 
 namespace RestQuery\Model\Type;
 
-/*
- * Consider putting type matching functions in this class
- * TypeInspector is getting too big
- *
- */
-
 use RestQuery\Action\Setup\IsEmpty;
 
 class TypeMatchLogic
@@ -75,12 +69,12 @@ class TypeMatchLogic
     public static function isCidr4(string $value) : bool
     {
         //check for /?? ending
-        $cidr = preg_replace('/(\/([0-9]|[1-2][0-9]|3[0-2]))$/', "",$value);
-        if(\isEmpty($cidr))
+        $ipOnly = preg_replace('/(\/([0-9]|[1-2][0-9]|3[0-2]))$/', "",$value);
+        $cidr = str_replace($ipOnly, "", $value);
+        if(!isEmpty::string($cidr))
         {
             //remove cidr portion and check if valid IP
-            $value = str_replace($cidr, "", $value);
-            if( filter_var($value, FILTER_VALIDATE_IP,FILTER_FLAG_IPV4) )
+            if( filter_var($ipOnly, FILTER_VALIDATE_IP,FILTER_FLAG_IPV4) )
             {
                 return TRUE;
             }
@@ -92,13 +86,12 @@ class TypeMatchLogic
     public static function isCidr6(string $value) : bool
     {
         //check for /?? ending
-        $cidr = preg_replace('/(\/([0-9]|[1-2][0-9]|3[0-2]))$/', "",$value);
-        if(!\isEmpty($cidr))
+        $ipOnly = preg_replace('/(\/([0-9]|[1-2][0-9]|3[0-2]))$/', "", $value);
+        $cidr = str_replace($ipOnly, "", $value);
+        if (!isEmpty::string($cidr))
         {
             //remove cidr portion and check if valid IP
-            $value = str_replace($cidr, "", $value);
-            if( filter_var($value, FILTER_VALIDATE_IP,FILTER_FLAG_IPV6) )
-            {
+            if (filter_var($ipOnly, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
                 return TRUE;
             }
         }
