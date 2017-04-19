@@ -99,4 +99,56 @@ class TypeMatchLogic
         return FALSE;
     }
 
+    public static function isAsNumber(string $value) : bool
+    {
+        $value = strtolower($value);
+        if(substr( $value, 0, 2 ) === "as")
+        {
+            $noAs = str_replace('as', "", $value);
+            if(preg_replace('/[^0-9]/', "", $noAs))
+            {
+                return TRUE;
+            }
+        }
+        //else
+        return FALSE;
+    }
+
+    public static function isCustomerNumber(string $value) : bool
+    {
+        $value = strtolower($value);
+        if(substr( $value, 0, 1 ) === "c")
+        {
+            $noC = str_replace('as', "", $value);
+            if(preg_replace('/[^0-9]/', "", $noC))
+            {
+                return TRUE;
+            }
+        }
+        //else
+        return FALSE;
+    }
+
+    public static function isEmailDomain(string $value) : bool
+    {
+        //TODO
+        return FALSE;
+    }
+
+    public static function isPocHandle(string $value) : bool
+    {
+        //TODO
+        return FALSE;
+    }
+
+    public static function isNumeric(string $value) : bool
+    {
+        if(preg_replace('/[0-9]/', "", $value) === '')
+        {
+            return TRUE;
+        }
+        //else
+        return FALSE;
+    }
+
 }

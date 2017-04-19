@@ -36,21 +36,23 @@ class Validate
      */
     public static function content(array $qSelectors): bool
     {
-        $stringFilter = v::alnum('*-.:')->length(1, 101); //allow * and - characters
+        $stringFilter = v::alnum('*-.:/')->length(1, 101); //allow * and - characters
 
         if (IsEmpty::string($qSelectors[ 'pr' ]) &&
             v::key('pr', $stringFilter)->validate($qSelectors) === false
-        ) {
-            return false;
+        )
+        {
+            return FALSE;
         }
 
         if (!IsEmpty::string($qSelectors[ 'se' ])) //if se exists
         {
-            if (v::key('se', $stringFilter)->validate($qSelectors) === false) {
-                return false;
+            if (v::key('se', $stringFilter)->validate($qSelectors) === false)
+            {
+                return FALSE;
             }
         }
-        return true;
+        return TRUE;
     }
 
     public static function flag(array $qSelectors)
@@ -94,15 +96,15 @@ class Validate
 
         //pr MUST be set
         if ($qSelectors[ 'pr' ] === NULL) {
-            return false;
+            return FALSE;
         }
 
         //seflag requires se to be set
         if ($qSelectors[ 'seflag' ] !== NULL &&
             $qSelectors[ 'se' ] === NULL
         ) {
-            return false;
+            return FALSE;
         }
-        return true;
+        return TRUE;
     }
 }

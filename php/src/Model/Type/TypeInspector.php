@@ -51,6 +51,21 @@ class TypeInspector implements TypeInspectorInterface
             return 'Net6Handle';
         }
 
+        if($this->matches($value, 'AsNumber'))
+        {
+            return 'AsNumber';
+        }
+
+        if($this->matches($value, 'CustomerNumber'))
+        {
+            return 'CustomerNumber';
+        }
+
+        if($this->matches($value, 'Numeric'))
+        {
+            return 'Numeric';
+        }
+
         // if no other match, assign AlphaNumeric
         return 'AlphaNumeric';
     }
