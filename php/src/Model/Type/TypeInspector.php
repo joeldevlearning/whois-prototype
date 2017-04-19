@@ -43,7 +43,6 @@ class TypeInspector implements TypeInspectorInterface
 
         // if no other match, assign AlphaNumeric
         return 'AlphaNumeric';
-
     }
 
     /**

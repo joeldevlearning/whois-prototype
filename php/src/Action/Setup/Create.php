@@ -2,13 +2,15 @@
 
 namespace RestQuery\Action\Setup;
 
+use RestQuery\Model\Type\NullAndEmpty;
 use RestQuery\Query;
+use RestQuery\Model\Type\AbstractTypeInterface;
 use RestQuery\Model\Type\TypeFactory as type;
 use RestQuery\Model\Type\TypeInspector;
 
 class Create
 {
-    public static function Selector(string $selector, array $qSelectors) //return object
+    public static function Selector(string $selector, array $qSelectors) : AbstractTypeInterface
     {
         $typeObject = NULL;
         $inspector = new TypeInspector();
@@ -18,7 +20,7 @@ class Create
         {
             if($qSelectors[ 'pr' ] === NULL)
             {
-                return $primary = NULL;
+                return $primary = type::buildNullAndEmpty();
             }
 
             //assign type
@@ -47,7 +49,7 @@ class Create
         {
             if($qSelectors[ 'se' ] === NULL)
             {
-                return $secondary = NULL;
+                return $secondary = type::buildNullAndEmpty();
             }
 
             //assign type

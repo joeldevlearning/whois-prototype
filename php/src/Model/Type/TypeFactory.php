@@ -22,13 +22,25 @@ class TypeFactory implements TypeFactoryInterface
      * @param $value
      * @return object, instance of AbstractType
      */
-    public static function build(string $type, string $value, $flag)
+    public static function build(string $type, string $value, $flag) : AbstractTypeInterface
     {
         $typeNamespace = "RestQuery\\Model\\Type\\"; //can we avoid hardcoding this value?
         $fullTypeName = $typeNamespace . $type;
 
         //return new object derived implicitly from AbstractType
         return new $fullTypeName($type, $value, $flag);
+    }
+
+    /**
+     * Used when a selector is NULL
+     * @return AbstractTypeInterface
+     */
+    public static function buildNullAndEmpty() : AbstractTypeInterface
+    {
+        $type = '';
+        $value = '';
+        $flag = '';
+        return new NullAndEmpty($type, $value, $flag);
     }
 }
 

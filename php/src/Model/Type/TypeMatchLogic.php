@@ -8,6 +8,8 @@ namespace RestQuery\Model\Type;
  *
  */
 
+use RestQuery\Action\Setup\IsEmpty;
+
 class TypeMatchLogic
 {
     public static function isIp4(string $value) : bool
@@ -65,6 +67,40 @@ class TypeMatchLogic
         )
         {
             return TRUE;
+        }
+        //else
+        return FALSE;
+    }
+
+    public static function isCidr4(string $value) : bool
+    {
+        //check for /?? ending
+        $cidr = preg_replace('/(\/([0-9]|[1-2][0-9]|3[0-2]))$/', "",$value);
+        if(\isEmpty($cidr))
+        {
+            //remove cidr portion and check if valid IP
+            $value = str_replace($cidr, "", $value);
+            if( filter_var($value, FILTER_VALIDATE_IP,FILTER_FLAG_IPV4) )
+            {
+                return TRUE;
+            }
+        }
+        //else
+        return FALSE;
+    }
+
+    public static function isCidr6(string $value) : bool
+    {
+        //check for /?? ending
+        $cidr = preg_replace('/(\/([0-9]|[1-2][0-9]|3[0-2]))$/', "",$value);
+        if(!\isEmpty($cidr))
+        {
+            //remove cidr portion and check if valid IP
+            $value = str_replace($cidr, "", $value);
+            if( filter_var($value, FILTER_VALIDATE_IP,FILTER_FLAG_IPV6) )
+            {
+                return TRUE;
+            }
         }
         //else
         return FALSE;

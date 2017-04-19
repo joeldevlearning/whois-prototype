@@ -2,6 +2,10 @@
 
 namespace RestQuery\Model\Type;
 
+/*
+ * Defines contract for all Selector objects
+ * Used by TypeFactory::build() and called by Create::Selector()
+ */
 
 interface AbstractTypeInterface
 {

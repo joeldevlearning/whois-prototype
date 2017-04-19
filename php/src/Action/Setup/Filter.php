@@ -34,9 +34,9 @@ class Filter
         /*
          * For pr and se, keep white space and asterisk/star, Dash
          */
-        $allowAsteriskDashPeriodColon = function($input)
+        $allowAsteriskDashPeriodColonFSlash = function($input)
         {
-            return preg_replace('/[^a-zA-Z0-9\s\p{Pd}\*\.:]/', "", $input);
+            return preg_replace('/[^a-zA-Z0-9\s\p{Pd}\*\.:\/]/', "", $input);
         };
 
         /*
@@ -50,8 +50,8 @@ class Filter
         /*
          * If filtering empties the string, cast to null
          */
-        $qSelectors['pr'] = self::CastEmptyToNull($allowAsteriskDashPeriodColon($qSelectors['pr']));
-        $qSelectors['se'] = self::CastEmptyToNull($allowAsteriskDashPeriodColon($qSelectors['se']));
+        $qSelectors['pr'] = self::CastEmptyToNull($allowAsteriskDashPeriodColonFSlash($qSelectors['pr']));
+        $qSelectors['se'] = self::CastEmptyToNull($allowAsteriskDashPeriodColonFSlash($qSelectors['se']));
 
         $qSelectors['prflag'] = self::CastEmptyToNull($stripPunctuationMathInvisible($qSelectors['prflag']));
         $qSelectors['seflag'] = self::CastEmptyToNull($stripPunctuationMathInvisible($qSelectors['seflag']));
