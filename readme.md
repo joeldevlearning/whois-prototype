@@ -1,29 +1,29 @@
 # whois-prototype
 
-###Experimental client and API for ARIN's RESTful whois service
+### Experimental client and API for ARIN's RESTful whois service
 
-#Purpose
+# Purpose
 To prototype the features of a search-friendly interface to ARIN's whois REST service (known as **Whois RWS**). 
 
-####Why a prototype?
+#### Why a prototype?
 This is a learning project: Discover features, try to implement them, and experiment. The choice of languages, libraries, etc. are part of this effort.  
 
-###**Goals**:
+### **Goals**:
 1. **Fully support** ARIN's Whois-RWS API (the user should be able to make any query, or its equivalent, that the API supports)
 
 2. **Simplify calling** the Whois-RWS API (The user should not need to know the details of the API or dataset to make their query)
 
 3. **Support exploration** of ARIN's data (Query results should show explicit relationships between records; the UI should allow the user to browse these related records)
 
-#Demo
+# Demo
 Try the online demo: 
 http://who.nfshost.com
-#Documentation
+# Documentation
 [API overview](docs/api-overview.md)
 
-##Feature set
+## Feature set
 
-####Client Features
+#### Client Features
 
 ||
 |:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -34,7 +34,7 @@ http://who.nfshost.com
 | - Group related search results together by entity, IP block, etc., 
 | - Browse related records from a single search result |
 
-####API Features
+#### API Features
 
 ||
 |:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
