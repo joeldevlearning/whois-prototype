@@ -1,4 +1,4 @@
-#Selectors
+# Selectors
 User input consists of four variables (called **"selectors"**) sent via GET:
 - `pr`, primary search string (e.g. **"SomeCompany"**)
 - `prFlag`, code to specify the type of record "pr" should match (an **"org"** matching **"SomeCompany"** ) 
@@ -7,7 +7,7 @@ User input consists of four variables (called **"selectors"**) sent via GET:
 
 ---
 
-###Selectors and Allowed Values 
+### Selectors and Allowed Values 
 | Selector | Allowed Values | Our Term | RWS Term  |
 |:----------:|:---------|:---------|:---------|
 | **pr** | alphanumeric string with `*` and/or `-` | primary |directly addressable "handle"
@@ -17,29 +17,29 @@ User input consists of four variables (called **"selectors"**) sent via GET:
 Case is ignored by the API, just as with Whois-RWS.
 
 
-##Selector Side-Effects
+## Selector Side-Effects
 
-###Combinations and Order
+### Combinations and Order
 The order of selectors is ignored, but their **combination** is meaningful. Certain combinations are rejected (because of ambiguity). Acceptable combinations are mapped Whois-RWS queries.
 
-###Complex Cases
+### Complex Cases
 The `se` and `seflag` act as conditions on the overall query. When both are set, `se` matches to the field defined by `seflag`. 
 
 If only `se` is set, it's value is used to filter record results (returning records where any field matches `se`). 
 
 Using `seflag` without `se` is ambigious and invalid. `seflag` sets the field for `se`; without a value to search for, the type of field is irrelevant (the API returns records, not individual fields.)
 
-####Multi-step Queries
+#### Multi-step Queries
 Whois-RWS exposes some fields as indexes (we can query their contents). These we access with the `pr` (`primary`) selector. But most fields are not searchable. We access these with the `se` (`secondary`) selector.
 
 Suppose the user selects for records using a  `secondary` field (like city or phone number). We support this with a multistep query: `fetch` results by a `primary` selector, then `filter` said results by a `secondary` selector.
 
-####Multiple Fetching Steps
+#### Multiple Fetching Steps
 In some cases we need _multiple_ `fetch` and `filter` steps. This happens when we must first inspect one type of record to glean information on the actual target records. 
 
 For example, suppose we want to find IP addresses for a specific entity _SomeCompany_. We first `fetch` a set of records (org, customer, etc.) and `filter` these for references to net records. We then `fetch` for these net records, which we finally `return` to the client.
 
-###List of Selector Combinations and Effects 
+### List of Selector Combinations and Effects 
 > `fetch` = call Whois-RWS
 
 >`filter` = select subset of Whois-RWS results
@@ -57,7 +57,7 @@ For example, suppose we want to find IP addresses for a specific entity _SomeCom
 
 
 
-##Invalid Selector Combinations
+## Invalid Selector Combinations
 There are two cases for rejecting selector combinations.
 
 1) Whois-RWS only indexes a few fields for each record. Thus all our queries **require** a `pr` selector. 
@@ -66,7 +66,7 @@ There are two cases for rejecting selector combinations.
  
 At present, we favor rejecting badly formed queries rather than modifying them.
 
-####List of Invalid Selector Combinations
+#### List of Invalid Selector Combinations
 | Selector Combination | Effect | Reason
 |:----------:|:---------|:---------|
 | **(se)**              | `REJECT` | No `pr` to search for records
