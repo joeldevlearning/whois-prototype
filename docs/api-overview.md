@@ -26,7 +26,7 @@ The API respects the following rules for `pr` and `se` selectors:
 - REJECT any non-alphanumeric characters (excluding `*` and `-`)
 - REJECT a string longer than 100 characters
 
-[More details about Selectors](/api-selectors.md/)
+[More details about Selectors](api-selectors.md/)
 
 ---
 ###Parameters
