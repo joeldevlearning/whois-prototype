@@ -42,20 +42,18 @@ For example, suppose we want to find IP addresses for a specific entity _SomeCom
 ###List of Selector Combinations and Effects 
 > `fetch` = call Whois-RWS
 
->`mapExtract` = extract a certain value from Whois-RWS results
-
->`filterHas` = select subset of Whois-RWS results that have a certain value
+>`filter` = select subset of Whois-RWS results
 
 >`return` = return results to the client
 
-| Selector Combination | Actions | Example Query | Example Actions  
+| Selector Combination | Effect | Example | Inverted Example  
 |:----------:|:---------|:---------|:---------|
-| **(pr)**                  | `fetch`-> `return` | find _any_ records matching "Orange" | `fetch` any records matching "Orange"
-| **(pr,prflag)**           | `fetch`-> `return` | find _org_ records "Orange" | `fetch` org records matching "Orange"
-| **(pr,prflag,se)**        | `fetch`-> `mapExtract`-> `fetch`-> `return` | find IP addresses for _org_ record matching "Orange" | 1) `fetch` _org_ records matching "Orange" 2) `mapExtract` IP 3) `fetch` IP records
-| **(pr,prflag,se,seflag)** | `fetch`-> `filterHas`-> `return`| find _org_ records matching "Orange", where IP matches "192.168.1.1" | 1) `fetch` org records matching Apple 2) `filterHas` IP range containing 192.168.1.1 
-| **(pr,se)**               | `fetch`-> `mapExtract`-> `fetch`-> `filterHas`-> `return` | find _any_ records matching "Orange", where IP matches "192.168.1.1" | 1) `fetch` any records matching "Orange" 2) `mapExtract` net records 3) `fetch` net records 4) `filterHas` IP range containing 192.168.1.1
-| **(pr,se,seflag)**        | `fetch`-> `filterHas`-> `return`| find _any_ record for "Orange", where IP matches "192.192.0.0" | 1) `fetch` any records matching "Orange" 2) `filterHas` CA
+| **(pr)**                  | `fetch`-> `return` | find records for "Apple" | none
+| **(pr,prflag)**           | `fetch`-> `return` | find org "Apple" | none
+| **(pr,prflag,se)**        | `fetch`-> `filter`-> `fetch`-> `return` | find IP addresses for org "Apple" | find IP address "192.192.0.0" for "Apple"
+| **(pr,prflag,se,seflag)** | `fetch`-> `filter`-> `return` | find record for org "Apple", where IP matches "192.192.0.0" | find IP address "192.192.0.0", where org matches "Apple" 
+| **(pr,se)**               | `fetch`-> `filter`-> `fetch`-> `filter`-> `return` | find record for "Apple", where any field is "Cupertino" | none
+| **(pr,se,seflag)**        | `fetch`-> `filter`-> `fetch`-> `return`| find record for "Apple", where IP matches "192.192.0.0" | find IP address, where organization matches "Apple"
 
 
 
