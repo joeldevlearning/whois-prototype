@@ -22,9 +22,6 @@ class BuildStringHelper
      */
     public static function HasEndingWildCard(Query $query)
     {
-
-        /*Bad condition is if there is */
-        if (isset($query->qSelectors[ 'pr' ])) {
             if (strpos($query->qSelectors[ 'pr' ], '*') !== false) {
                 //if exists, check if it is at end
                 if (substr($query->qSelectors[ 'pr' ], -1) === '*') {
@@ -34,5 +31,4 @@ class BuildStringHelper
                 }
             }
         }
-    }
 }

@@ -149,8 +149,8 @@ class TypeMatchLogic
          */
         $value = strtolower($value);
         preg_match('/(\-arin)$/', $value, $arinLabel);
-        var_dump($arinLabel);
-        if($arinLabel[1] === "-arin")
+        if(isset($arinLabel[1]) &&
+            $arinLabel[1]=== "-arin")
         {
                 return TRUE;
         }

@@ -25,59 +25,30 @@ use RestQuery\Action\{AnalyzeLookUp as lookup, AnalyzeParse as parse};
 
 class Analyze
 {
-    /*
-     * Wrapper method, parses user input and wraps it in an object derived from AbstractType
-     *
-     * @param Query $query
-     *
-     * WHAT ARE TYPES FOR?
-     * types allow us to match user input against fields in ARIN-RWS's model
-     * ARIN-RWS has no formal types, just database fields exposed via json/xml
-     * we assign types so that we can abstract our logic from arin's model
-     */
-
-    public static function AssignType(Query $query)
-    {
-
-    }
-
     /**
      * Wrapper method, gives number to $q->qType, later used to generate calls to RWS
      * @param Query $query
      */
+    //TODO probably do not need this method
     public static function SelectQueryType(Query $query)
     {
         parse::WhatQueryType($query);
     }
 
-    //TODO only works for Q1 right now
+    //TODO only works for ORG or ALL right now
     public static function WhatRecordsToQuery(Query $query)
     {
         $lookup = new lookup(); //call AnalyzeLookUp class
 
-        switch ($query->qType) {
+        if ($query->getPrimary()->getFlag() === 'org')
+        {
+            $query->qBuildQueue = $lookup->LookUpRecordField('ORG_RECORDS_HINT_NAME');
+        }
+        else
+        {
+            $query->qBuildQueue = $lookup->LookUpRecordField('ALL_RECORDS_HINT_NAME');
+        }
 
-            case 1: // pr only
-                if (!$query->qParameters[ 'enable_hinting' ]) {
-                    switch ($query->qSelectors[ 'prflag' ]) {
-
-                        case 'org':
-                            $query->qBuildQueue = $lookup->LookUpRecordField('ORG_RECORDS_HINT_NAME');
-                            break;//must break to avoid default
-                        default:
-                            $query->qBuildQueue = $lookup->LookUpRecordField('ALL_RECORDS_HINT_NAME');
-                    }
-                } else {
-                    if ($query->qParameters[ 'enable_hinting' ] === 1) {
-                        //add custom validator for name/number type
-                        //should correspond to possible rules for all record types
-                        //foreach($query->qRecordList as $key => &$record){ }
-                    }
-                }
-                break;//end case 1
-            default: //should never reach here
-
-        }//end switch
     }
 
 }
