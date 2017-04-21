@@ -6,13 +6,13 @@ namespace RestQuery;
  */
 
 use RestQuery\Query;
-use RestQuery\Model\Type\AbstractTypeInterface;
+use RestQuery\Model\Type\TypeInterface;
 
 interface QueryInterface
 {
-    public function getPrimary() : AbstractTypeInterface;
+    public function getPrimary() : TypeInterface;
 
-    public function getSecondary() : AbstractTypeInterface;
+    public function getSecondary() : TypeInterface;
 
     public function getParameters() : array;
 

@@ -6,9 +6,7 @@ namespace RestQuery\Model\Type;
  * not sure how to use this
  */
 
-use RestQuery\Model\Type\AbstractType as type;
-
-class Ip4Partial extends type
+class Ip4Partial extends AbstractType
 {
     use CanReportType;
 }

@@ -7,9 +7,10 @@ namespace RestQuery\Model\Type;
  * Called directly TypeFactory::build(), indirectly by Create::Selector()
  */
 
-interface AbstractTypeInterface
+interface TypeInterface
 {
     /*
+     *
      * implemented by trait CanReportType
      */
     public function getType() : string;
@@ -18,5 +19,5 @@ interface AbstractTypeInterface
 
     public function getFlag() : string;
 
-    public function __construct(string $type, string $value, $flag);
+    public function __construct(string $value, $flag);
 }

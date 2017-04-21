@@ -3,12 +3,9 @@ namespace RestQuery\Model\Type;
 
 /*
  * Alphanumeric string
- *
  */
 
-use RestQuery\Model\Type\AbstractType as type;
-
-class AlphaNumeric extends type
+class AlphaNumeric extends AbstractType
 {
     use CanReportType;
 }

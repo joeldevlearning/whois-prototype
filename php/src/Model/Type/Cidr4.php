@@ -6,9 +6,7 @@ namespace RestQuery\Model\Type;
  *
  */
 
-use RestQuery\Model\Type\AbstractType as type;
-
-class Cidr4 extends type
+class Cidr4 extends AbstractType
 {
     use CanReportType;
 }

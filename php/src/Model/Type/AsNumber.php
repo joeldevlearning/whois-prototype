@@ -6,9 +6,9 @@ namespace RestQuery\Model\Type;
  *
  */
 
-use RestQuery\Model\Type\AbstractType as type;
+use RestQuery\Model\Type\AbstractType;
 
-class AsNumber extends type
+class AsNumber extends AbstractType
 {
     use CanReportType;
 }

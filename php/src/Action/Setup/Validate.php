@@ -6,24 +6,27 @@ namespace RestQuery\Action\Setup;
  * Validates combination of selectors from user input
  *
  */
-use RestQuery\Exception\QueryCombinationWasInvalid;
 use RestQuery\Query;
+use RestQuery\Model\Type\TypeInterface;
 use Respect\Validation\Validator as v;
 use RestQuery\Action\Setup\IsEmpty;
+
 use RestQuery\Exception\QueryInputWasInvalid;
+use RestQuery\Exception\QueryCombinationWasInvalid;
+
 
 class Validate
 {
-    public static function allInput($qSelectors)
+    public static function input($qSelectors)
     {
-            if (self::content($qSelectors) === FALSE ||
-                self::flag($qSelectors) === FALSE
+            if (self::isCleanSelector($qSelectors) === FALSE ||
+                self::isCleanFlag($qSelectors) === FALSE
             )
             {
                 throw new QueryInputWasInvalid("Validation failed: Bad string input.");
             }
 
-            if(self::combination($qSelectors) === FALSE)
+            if(self::isSufficientInput($qSelectors) === FALSE)
             {
                 throw new QueryCombinationWasInvalid("Validation failed: Bad combination of input variables.");
             }
@@ -34,7 +37,7 @@ class Validate
      * @param Query $query
      * @return Query
      */
-    public static function content(array $qSelectors): bool
+    private static function isCleanSelector(array $qSelectors): bool
     {
         $stringFilter = v::alnum('*-.:/@')->length(1, 101); //allow * and - characters
 
@@ -55,7 +58,7 @@ class Validate
         return TRUE;
     }
 
-    public static function flag(array $qSelectors)
+    private static function isCleanFlag(array $qSelectors)
     {
         $flagFilter = v::alnum()->length(1, 40);
 
@@ -77,7 +80,7 @@ class Validate
         return true;
     }
 
-    public static function combination(array $qSelectors): bool
+    private static function isSufficientInput(array $qSelectors): bool
     {
         /**
          * Invalid query combinations are:

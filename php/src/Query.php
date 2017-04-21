@@ -7,7 +7,7 @@ namespace RestQuery;
  * Is mutated by various "Action" objects
  */
 use RestQuery\Action\Request;
-use RestQuery\Model\Type\AbstractTypeInterface;
+use RestQuery\Model\Type\TypeInterface;
 
 class Query implements QueryInterface
 {
@@ -15,12 +15,12 @@ class Query implements QueryInterface
     private $secondary;
     private $qParameters = array();
 
-    public function getPrimary() : AbstractTypeInterface
+    public function getPrimary() : TypeInterface
     {
         return $this->primary;
     }
 
-    public function getSecondary() : AbstractTypeInterface
+    public function getSecondary() : TypeInterface
     {
         return $this->secondary;
     }

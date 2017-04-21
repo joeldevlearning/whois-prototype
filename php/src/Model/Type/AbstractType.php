@@ -3,18 +3,17 @@
 namespace RestQuery\Model\Type;
 
 /*
- * Base definition of all types
+ * Base class for all types
  * User input (Primary and Secondary) is stored in a type that extends AbstractType
  *
  */
 
-abstract class AbstractType implements AbstractTypeInterface
+abstract class AbstractType implements TypeInterface
 {
-    protected $type;
     protected $value;
     protected $flag;
 
-    /* REMOVED in favor of CanReportType()
+    /* REMOVED in favor of CanReportType trait
     public function getType(): string
     {
         return $this->getClass($stripNamespace = 'true');
@@ -58,9 +57,8 @@ abstract class AbstractType implements AbstractTypeInterface
     }
     */
 
-    public function __construct(string $type, string $value, $flag)
+    public function __construct(string $value, $flag)
     {
-        $this->type = $type;
         $this->value = $value;
         $this->flag = $flag;
     }

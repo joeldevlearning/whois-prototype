@@ -4,13 +4,13 @@ namespace RestQuery\Action\Setup;
 
 use RestQuery\Model\Type\NullAndEmpty;
 use RestQuery\Query;
-use RestQuery\Model\Type\AbstractTypeInterface;
+use RestQuery\Model\Type\TypeInterface;
 use RestQuery\Model\Type\TypeFactory as type;
 use RestQuery\Model\Type\TypeInspector;
 
 class Create
 {
-    public static function Selector(string $selector, array $qSelectors) : AbstractTypeInterface
+    public static function Selector(string $selector, array $qSelectors) : TypeInterface
     {
         $typeObject = NULL;
         $inspector = new TypeInspector();

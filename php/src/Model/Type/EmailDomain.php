@@ -8,7 +8,7 @@ namespace RestQuery\Model\Type;
 
 use RestQuery\Model\Type\AbstractType as type;
 
-class EmailDomain extends type
+class EmailDomain extends AbstractType
 {
     use CanReportType;
 }
