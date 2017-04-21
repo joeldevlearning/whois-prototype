@@ -10,5 +10,5 @@ use RestQuery\Model\Type\AbstractType as type;
 
 class Ip4Partial extends type
 {
-
+    use CanReportType;
 }

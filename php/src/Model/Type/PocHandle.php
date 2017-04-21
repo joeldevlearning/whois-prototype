@@ -11,6 +11,5 @@ use RestQuery\Model\Type\AbstractType as type;
 
 class PocHandle extends type
 {
-
-
+    use CanReportType;
 }

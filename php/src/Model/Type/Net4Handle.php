@@ -10,6 +10,5 @@ use RestQuery\Model\Type\AbstractType as type;
 
 class Net4Handle extends type
 {
-
-
+    use CanReportType;
 }

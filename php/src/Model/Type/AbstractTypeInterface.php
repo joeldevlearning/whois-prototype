@@ -9,6 +9,9 @@ namespace RestQuery\Model\Type;
 
 interface AbstractTypeInterface
 {
+    /*
+     * implemented by trait CanReportType
+     */
     public function getType() : string;
 
     public function getValue() : string;

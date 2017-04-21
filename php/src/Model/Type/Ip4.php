@@ -10,5 +10,6 @@ use RestQuery\Model\Type\AbstractType as type;
 
 class Ip4 extends type
 {
+    use CanReportType;
 
 }

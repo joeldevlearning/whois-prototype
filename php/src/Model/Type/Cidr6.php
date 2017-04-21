@@ -10,6 +10,5 @@ use RestQuery\Model\Type\AbstractType as type;
 
 class Cidr6 extends type
 {
-
-
+    use CanReportType;
 }

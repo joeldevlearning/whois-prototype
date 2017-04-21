@@ -10,5 +10,5 @@ use RestQuery\Model\Type\AbstractType as type;
 
 class EmailDomain extends type
 {
-
+    use CanReportType;
 }

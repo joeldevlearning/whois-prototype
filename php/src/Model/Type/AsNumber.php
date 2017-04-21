@@ -10,6 +10,5 @@ use RestQuery\Model\Type\AbstractType as type;
 
 class AsNumber extends type
 {
-
-
+    use CanReportType;
 }

@@ -14,10 +14,11 @@ abstract class AbstractType implements AbstractTypeInterface
     protected $value;
     protected $flag;
 
+    /* REMOVED in favor of CanReportType()
     public function getType(): string
     {
         return $this->getClass($stripNamespace = 'true');
-    }
+    }*/
 
     public function getValue(): string
     {
@@ -42,7 +43,7 @@ abstract class AbstractType implements AbstractTypeInterface
     /*
      * strip the namespace from the results of get_class()
      * borrowed from http://php.net/manual/en/function.get-class.php#114568
-     */
+
     private function getClass(bool $stripNamespace): string
     {
         if ($stripNamespace === true) {
@@ -55,6 +56,7 @@ abstract class AbstractType implements AbstractTypeInterface
         //else
         return get_class($this);
     }
+    */
 
     public function __construct(string $type, string $value, $flag)
     {

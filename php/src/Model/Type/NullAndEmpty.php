@@ -10,5 +10,5 @@ use RestQuery\Model\Type\AbstractType as type;
 
 class NullAndEmpty extends type
 {
-
+    use CanReportType;
 }

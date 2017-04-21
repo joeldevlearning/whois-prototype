@@ -9,5 +9,5 @@ use RestQuery\Model\Type\AbstractType as type;
 
 class NumericDate extends type
 {
-
+    use CanReportType;
 }
