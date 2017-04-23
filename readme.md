@@ -3,7 +3,7 @@
 ### Experimental client and API for ARIN's RESTful whois service
 
 # Purpose
-To prototype the features of a search-friendly interface to ARIN's whois REST service (known as **Whois RWS**). 
+Prototype a search-friendly interface to ARIN's whois REST service (known as **Whois RWS**). 
 
 #### Why a prototype?
 This is a learning project: Discover features, try to implement them, and experiment. The choice of languages, libraries, etc. are part of this effort.  
@@ -27,10 +27,8 @@ http://who.nfshost.com
 
 ||
 |:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| - Four search controls to vary specificity 
-| - As-you-type feedback 
-| - Warn on formatting mistakes 
-| - Formatting cues for specific types of records and fields 
+| - Four search controls to adjust specificity 
+| - As-you-type feedback, formatting cues 
 | - Group related search results together by entity, IP block, etc., 
 | - Browse related records from a single search result |
 
@@ -38,9 +36,8 @@ http://who.nfshost.com
 
 ||
 |:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| - Generate multiple RWS calls from a single query 
-| - "hint" feature to avoid unnecessary RWS calls 
-| - "auto-wildcard" feature to lower chance of 404 returns |
+| - Dynamically generate multiple RWS calls from a single query
+| - Combine scraping and recursive RWS calls to reach "non-searchable" fields 
 
 ####Wishlist
 (unlikely to implemented)

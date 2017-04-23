@@ -1,9 +1,11 @@
-# Selectors
-User input consists of four variables (called **"selectors"**) sent via GET:
-- `pr`, primary search string (e.g. **"SomeCompany"**)
-- `prFlag`, code to specify the type of record "pr" should match (an **"org"** matching **"SomeCompany"** ) 
-- `se`, string that adds specificity to the primary search (an **"org"** matching **"SomeCompany"** WHERE )
-- `seFlag`, code to specify the type of field "se" should match
+# NOT CURRENT
+
+### Selectors
+User input consists of four variables (called **"selectors"**) sent via HTTP GET:
+- `primary` (GET `pr`), main search string (e.g. **"SomeCompany"**)
+- `prflag`, predefined string that specifies the type of entity that primary needs to match (an **"org"** matching **"SomeCompany"** ) 
+- `secondary` (GET `pr`), string that adds specificity to the primary search (an **"org"** matching **"SomeCompany"** AND **"192.168.1.1"**)
+- `seflag`, predefined string that specifies the type of entity that secondary needs to match (an **"org"** matching **"SomeCompany"** AND an **IP** matching **"192.168.1.1"**)
 
 ---
 
@@ -15,6 +17,26 @@ User input consists of four variables (called **"selectors"**) sent via GET:
 | **se** | alphanumeric string with  `*` and/or `-` | secondary | none
 | **seflag** | variable-length ASCII code (predefined) | secondary record/field type | "field"
 Case is ignored by the API, just as with Whois-RWS.
+
+Selectors are automatically assigned types that correspond to fields in the RWS data model. The API will compare the type of input with the RWS model to determine how a query can be fulfilled.
+
+### Flags
+Each selector can optionally be paired with a flag. Flags answer the question "what type of entity are we looking for?"
+
+- Primary Flag `prFlag`, code to specify the type of record "pr" should match (an **"org"** matching **"SomeCompany"** ) 
+- Secondary Flag `seFlag`, code to specify the type of field "se" should match
+
+#### Summary of Valid/Invalid Input
+The API respects the following rules for `primary` and `se` selectors:
+- ACCEPT Any alphanumeric string 
+- ACCEPT any string of 100 characters or less
+- ACCEPT one or more wildcard `*` symbols in a string
+- ACCEPT one or more dash `-` symbols in a string
+
+
+- REJECT any non-alphanumeric characters (excluding `*` and `-`)
+- REJECT a string longer than 100 characters
+
 
 
 ## Selector Side-Effects

@@ -3,7 +3,7 @@ namespace RestQuery;
 
 /**
  * Encapsulates a single whois-RWS exchange (request and result)
- * Queryable are created by QueryTargetFactory
+ * Target are created by QueryTargetFactory
  * They are stored in Query->qTargetList[]
  * They are manipulated by the Analyze, Build, and Request classes
  * And they are read by the Transform class
@@ -21,7 +21,7 @@ class Queryable implements QueryableInterface
     private $queryString; //full "/orgs;name=Apple*"
 
     //these should fall under a QueryableResult object
-    //we can embed this object into eac Queryable
+    //we can embed this object into eac Target
     private $resultHttpCode; 
     private $resultHttpMessage;
     private $resultJsonBody;

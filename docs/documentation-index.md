@@ -7,3 +7,5 @@
 [API Overview](/api-overview.md/)
 
 [Selectors](/api-selectors.md/)
+
+[Parameters](/api-parameters.md/)

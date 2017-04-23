@@ -4,7 +4,7 @@ namespace RestQuery\Action;
 /*
  * TODO maybe change this to "Format" class
  * TODO CreateUri($query) would read better as Serialize($query)
- * TODO Serialize can change its formatter based on Queryable->getType() and getFormat() (strategy pattern)
+ * TODO Serialize can change its formatter based on Target->getType() and getFormat() (strategy pattern)
  */
 use RestQuery\Query;
 use RestQuery\Model\ArinConfig as config;
