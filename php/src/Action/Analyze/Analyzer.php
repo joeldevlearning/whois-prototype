@@ -2,30 +2,46 @@
 
 namespace RestQuery\Action\Analyze;
 
-use RestQuery\Query;
-
+/*
+ * intended to be called with a fluent interface
+ * e.g. Analyzer->loadRuleBook()->findTargets()
+ *
+ */
+use RestQuery\QueryInterface;
 
 class Analyzer
 {
-    private $ruleBook = null;
+    private $query;
+    private $rules;
+    private $analyzerResults;
 
-    public function findTargets(Query $query) : array
+    public function matchRules() : self
     {
-        if(!$query->getPrimary()->getFlag() && !$query->getSecondary()->getFlag())
+        if($this->query->hasPrimaryOnly()
+        )
         {
-            $this->ruleBook->loadRule($query, 'primaryOnly');
+            $this->analyzerResults = $this->rules->applyFor('primaryOnly');
         }
+
         /*
-        - what condition do we meet? (primaryOnly, etc.), ensure ONLY one catch here
+        - 1) what condition do we meet? (primaryOnly, etc.), ensure ONLY one catch here
 	    - match condition to rulebook rules ()
 	    - ruleset calls model to get records
 	    - return array of records:fields to call
          *
          */
+
+        return $this;
     }
 
-    public function __construct(RuleBook $ruleBook)
+    public function getAnalyzerResults() : array
     {
-        $this->ruleBook = $ruleBook;
+        return $this->analyzerResults;
+    }
+
+    public function __construct(QueryInterface $query)
+    {
+        $this->query = $query;
+        $this->rules = new RuleBook($query);
     }
 }

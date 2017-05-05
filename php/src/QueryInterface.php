@@ -21,4 +21,6 @@ interface QueryInterface
     public function setSecondary($secondary) : Query;
 
     public function setParameters(array $qParameters) : Query;
+
+    public function hasPrimaryOnly() : bool;
 }

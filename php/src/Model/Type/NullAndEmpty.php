@@ -7,5 +7,5 @@ namespace RestQuery\Model\Type;
 
 class NullAndEmpty extends AbstractType
 {
-    use CanReportType;
+    use CanReportNull;
 }

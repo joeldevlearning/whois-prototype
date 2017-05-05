@@ -39,7 +39,7 @@ class Create
                 $typeObject = type::build(
                     $type,
                     $qSelectors[ 'pr' ],
-                    null
+                    NULL
                 );
             }
         }

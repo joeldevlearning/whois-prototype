@@ -34,9 +34,7 @@ class TypeFactory implements TypeFactoryInterface
      */
     public static function buildNullAndEmpty() : TypeInterface
     {
-        $value = '';
-        $flag = '';
-        return new NullAndEmpty($value, $flag);
+        return new NullAndEmpty(NULL, NULL);
     }
 }
 

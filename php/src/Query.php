@@ -65,6 +65,14 @@ class Query implements QueryInterface
         return new self();
     }
 
+    public function hasPrimaryOnly() : bool
+    {
+        return ($this->getPrimary()->getFlag() === NULL &&
+                $this->getSecondary()->getType() === NULL
+                ? true : false
+        );
+    }
+
     /* @var integer Indicates what type of hint is available
      * "0" = no hint, hinting disabled
      * "1" = hint available, hinting enabled
