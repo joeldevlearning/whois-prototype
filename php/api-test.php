@@ -16,7 +16,7 @@ use GuzzleHttp\Promise;
 $qSelectors = Filter::httpGetSelectors();
 $qParameters = Filter::httpGetParameters();
 //var_dump($qSelectors);
-Validate::allInput($qSelectors);
+Validate::input($qSelectors);
 
 //create selector objects
 $primary = Create::Selector('primary', $qSelectors);

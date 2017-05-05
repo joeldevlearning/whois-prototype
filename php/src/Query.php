@@ -48,8 +48,6 @@ class Query implements QueryInterface
         return $this;
     }
 
-    public function something() {}
-
     public function setParameters(array $qParameters) : Query
     {
         $this->qParameters = $qParameters;
